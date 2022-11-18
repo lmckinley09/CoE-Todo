@@ -13,3 +13,15 @@ By breaking up tasks onto a visual board rather than a single list, which can be
 ## Why
 
 The aim is to provide accountabilty to users, with a variation on task management they may be familiar in other applications. Organising work into categories and prioritising work can aid in reducing the stress of users.
+
+## Domain Model
+
+```mermaid
+erDiagram
+ USERS ||--o{ BOARDS : owns
+ USERS ||--o{ SHARED_BOARDS : views
+ BOARDS ||--o{ SHARED_BOARDS : exists
+ BOARDS ||--o{ TICKS : contains
+ BOARDS ||--o{ TASKS : contains
+ BOARDS ||--o{ PROJECTS : contains
+```
