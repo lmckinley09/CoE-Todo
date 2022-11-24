@@ -18,10 +18,10 @@ The aim is to provide accountabilty to users, with a variation on task managemen
 
 ```mermaid
 erDiagram
- USERS ||--o{ BOARDS : owns
- USERS ||--o{ SHARED_BOARDS : views
- BOARDS ||--o{ SHARED_BOARDS : exists
- BOARDS ||--o{ TICKS : contains
- BOARDS ||--o{ TASKS : contains
- BOARDS ||--o{ PROJECTS : contains
+ USERS ||--o{ BOARDS : ""
+ USERS ||--o{ SHARED_BOARDS : ""
+ BOARDS ||--o{ SHARED_BOARDS : ""
+ BOARDS ||--o{ TICKS : ""
+ BOARDS ||--o{ TASKS : ""
+ BOARDS ||--o{ PROJECTS : ""
 ```
