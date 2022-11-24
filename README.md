@@ -14,6 +14,22 @@ By breaking up tasks onto a visual board rather than a single list, which can be
 
 The aim is to provide accountabilty to users, with a variation on task management they may be familiar in other applications. Organising work into categories and prioritising work can aid in reducing the stress of users.
 
+## MVP
+
+- User account creation/login
+- Create Ticks/Tasks/Projects
+- Track status of tasks
+- Users can share/view other users boards
+- Filter tasks by project
+- Simple view with 3 ticks/tasks to complete (updates on completion of task)
+
+## Stretch Goals
+
+- Progress Bar
+- Read/Write permissions for shared boards
+- Mind Mapping (Mermaid js experimental)
+- View completed (inactive) tasks
+
 ## Domain Model
 
 ```mermaid
