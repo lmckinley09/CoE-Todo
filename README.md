@@ -34,9 +34,79 @@ The aim is to provide accountabilty to users, with a variation on task managemen
 
 ```mermaid
 erDiagram
- USERS ||--o{ BOARDS : ""
- BOARDS ||--o{ TICKS : ""
- BOARDS ||--o{ TASKS : ""
- BOARDS ||--o{ PROJECTS : ""
+ USER ||--o{ BOARD : ""
+ BOARD ||--o{ TICKS : ""
+ BOARD ||--o{ TASKS : ""
+ BOARD ||--o{ PROJECTS : ""
  PROJECTS ||--o{ TASKS : ""
+```
+
+# Entity Relationship Diagram
+```mermaid
+erDiagram
+ user ||--o{ user_board : ""
+ board ||--o{ user_board : ""
+ board ||--o{ tick : ""
+ board ||--o{ task : ""
+ board ||--o{ project : ""
+ project ||--o{ task : ""
+
+    user {
+        serial id PK
+        string email_address
+        string first_name
+        string last_name
+        string password
+        date date_of_birth
+        timestamp created
+        timestamp last_modified
+    }
+    
+    board {
+        serial id PK
+        numeric owner FK
+        timestamp created
+        timestamp last_modified
+    }
+    
+    user_board {
+        numeric user FK
+        numeric board FK
+        boolean owner 
+    }
+    
+    tick {
+        serial id PK
+        numeric board FK
+        string title
+        string description
+        string status
+        date completion_date
+        timestamp created
+        timestamp last_modified
+    }
+    
+     task {
+        serial id PK
+        numeric board FK
+        numeric project FK
+        string title
+        string description
+        string status
+        date completion_date
+        timestamp created
+        timestamp last_modified
+    }
+    
+      project {
+        serial id PK
+        numeric board FK
+        string title
+        string description
+        string status
+        date completion_date
+        timestamp created
+        timestamp last_modified
+    }
+
 ```
