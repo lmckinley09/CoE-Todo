@@ -45,6 +45,7 @@ erDiagram
 ```mermaid
 erDiagram
  user ||--o{ user_board : ""
+ user_type ||--o{ user_board : ""
  board ||--o{ user_board : ""
  board ||--o{ tick : ""
  board ||--o{ task : ""
@@ -62,22 +63,28 @@ erDiagram
         timestamp last_modified
     }
     
+    user_board {
+        integer user FK
+        integer board FK
+        integer type FK
+    }
+    
+    user_type {
+        serial id PK
+        boolean read
+        boolean write
+        boolean owner
+    }
+    
     board {
         serial id PK
-        numeric owner FK
         timestamp created
         timestamp last_modified
     }
     
-    user_board {
-        numeric user FK
-        numeric board FK
-        boolean owner 
-    }
-    
     tick {
         serial id PK
-        numeric board FK
+        integer board FK
         string title
         string description
         string status
@@ -88,8 +95,8 @@ erDiagram
     
      task {
         serial id PK
-        numeric board FK
-        numeric project FK
+        integer board FK
+        integer project FK
         string title
         string description
         string status
@@ -100,7 +107,7 @@ erDiagram
     
       project {
         serial id PK
-        numeric board FK
+        integer  board FK
         string title
         string description
         string status
