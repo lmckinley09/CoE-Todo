@@ -11,9 +11,9 @@ CREATE TABLE user (
 
 CREATE TABLE user_type (
     id serial PRIMARY KEY,
+    owner boolean,
     read boolean,
-    write boolean,
-    owner boolean
+    write boolean
 );
 
 CREATE TABLE board (
