@@ -47,17 +47,18 @@ erDiagram
  user ||--o{ user_board : ""
  user_type ||--o{ user_board : ""
  board ||--o{ user_board : ""
- board ||--o{ tick : ""
- board ||--o{ task : ""
- board ||--o{ project : ""
+ board ||--o{ job : ""
+ job ||--|| tick : ""
+ job ||--|| task : ""
+ job ||--|| project : ""
  project ||--o{ task : ""
 
     user {
         serial id PK
-        string email_address
-        string first_name
-        string last_name
-        string password
+        varchar email_address
+        varchar first_name
+        varchar last_name
+        varchar password
         date date_of_birth
         timestamp created
         timestamp last_modified
@@ -78,42 +79,36 @@ erDiagram
     
     board {
         serial id PK
+        string name
+        timestamp created
+        timestamp last_modified
+    }
+    
+    job {
+        serial id PK
+        integer board FK
+        varchar title
+        varchar description
+        varchar status
+        date completion_date
         timestamp created
         timestamp last_modified
     }
     
     tick {
         serial id PK
-        integer board FK
-        string title
-        string description
-        string status
-        date completion_date
-        timestamp created
-        timestamp last_modified
+        integer job FK
     }
     
      task {
         serial id PK
-        integer board FK
+        integer job FK
         integer project FK
-        string title
-        string description
-        string status
-        date completion_date
-        timestamp created
-        timestamp last_modified
     }
     
-      project {
+     project {
         serial id PK
-        integer  board FK
-        string title
-        string description
-        string status
-        date completion_date
-        timestamp created
-        timestamp last_modified
+        integer job FK
     }
 
 ```
