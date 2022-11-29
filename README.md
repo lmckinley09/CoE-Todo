@@ -1,4 +1,4 @@
-# CoE-Todo
+# The Productivity Method
 
 ## What is the application?
 
