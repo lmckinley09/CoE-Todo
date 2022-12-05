@@ -79,7 +79,7 @@ erDiagram
     
     board {
         serial id PK
-        string name
+        varchar name
         timestamp created
         timestamp last_modified
     }
