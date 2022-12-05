@@ -45,9 +45,10 @@ erDiagram
 ```mermaid
 erDiagram
  user ||--o{ user_board : ""
- user_type ||--o{ user_board : ""
+ user_board_type ||--|| user_board : ""
  board ||--o{ user_board : ""
  board ||--o{ job : ""
+ type ||--o{ user_board_type : ""
  job ||--|| tick : ""
  job ||--|| task : ""
  job ||--|| project : ""
@@ -64,22 +65,25 @@ erDiagram
         timestamp last_modified
     }
     
-    user_board {
-        integer user FK
-        integer board FK
+    user_board_type {
+        integer user_board FK
         integer type FK
     }
     
-    user_type {
+    user_board {
         serial id PK
-        boolean read
-        boolean write
-        boolean owner
+        integer user FK
+        integer board FK
+    }
+    
+    type {
+        serial id PK
+        varchar description 
     }
     
     board {
         serial id PK
-        string name
+        varchar name
         timestamp created
         timestamp last_modified
     }
