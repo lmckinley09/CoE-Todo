@@ -1,4 +1,4 @@
-CREATE TABLE user (
+CREATE TABLE app_user (
     id serial PRIMARY KEY,
     email_address varchar NOT NULL,
     first_name varchar NOT NULL,
@@ -9,11 +9,9 @@ CREATE TABLE user (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_type (
+CREATE TABLE type (
     id serial PRIMARY KEY,
-    owner boolean,
-    read boolean,
-    write boolean
+    description varchar NOT NULL
 );
 
 CREATE TABLE board (
@@ -24,15 +22,21 @@ CREATE TABLE board (
 );
 
 CREATE TABLE user_board (
-    user integer,
+    id serial PRIMARY KEY,
+    app_user integer,
     board integer,
-    type integer,
-    CONSTRAINT fk_user FOREIGN KEY (user)
-        REFERENCES user(id),
+    CONSTRAINT fk_user FOREIGN KEY (app_user)
+        REFERENCES app_user(id),
     CONSTRAINT fk_board FOREIGN KEY (board)
-        REFERENCES board(id),
+        REFERENCES board(id)
+);
+CREATE TABLE user_board_type (
+    user_board integer,
+    type integer,
+    CONSTRAINT fk_user_board FOREIGN KEY (user_board)
+        REFERENCES user_board(id),
     CONSTRAINT fk_type FOREIGN KEY (type)
-        REFERENCES user_type(id),
+        REFERENCES type(id)
 );
 
 CREATE TABLE job (
@@ -43,23 +47,23 @@ CREATE TABLE job (
     status varchar,
     completion_date date,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
-    last_modified timestamp DEFAULT CURRENT_TIMESTAMP
+    last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_board FOREIGN KEY (board)
-        REFERENCES board(id),
+        REFERENCES board(id)
 );
 
 CREATE TABLE project (
     id serial PRIMARY KEY,
     job integer,
     CONSTRAINT fk_job FOREIGN KEY (job)
-        REFERENCES job(id),
+        REFERENCES job(id)
 );
 
 CREATE TABLE tick (
     id serial PRIMARY KEY,
     job integer,
     CONSTRAINT fk_job FOREIGN KEY (job)
-        REFERENCES job(id),
+        REFERENCES job(id)
 );
 
 CREATE TABLE task (
@@ -69,5 +73,5 @@ CREATE TABLE task (
     CONSTRAINT fk_job FOREIGN KEY (job)
         REFERENCES job(id),
     CONSTRAINT fk_project FOREIGN KEY (project)
-        REFERENCES project(id),
+        REFERENCES project(id)
 );
