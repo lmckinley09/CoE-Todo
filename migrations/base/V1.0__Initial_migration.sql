@@ -4,7 +4,7 @@ CREATE TABLE app_user (
     first_name varchar NOT NULL,
     last_name varchar NOT NULL,
     password varchar NOT NULL,
-    date_of_birth timestamp,
+    date_of_birth date,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
