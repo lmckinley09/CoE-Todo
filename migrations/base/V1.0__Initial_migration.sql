@@ -23,55 +23,55 @@ CREATE TABLE board (
 
 CREATE TABLE user_board (
     id serial PRIMARY KEY,
-    app_user integer,
-    board integer,
-    CONSTRAINT fk_user FOREIGN KEY (app_user)
+    user_id integer,
+    board_id integer,
+    CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES app_user(id),
-    CONSTRAINT fk_board FOREIGN KEY (board)
+    CONSTRAINT fk_board FOREIGN KEY (board_id)
         REFERENCES board(id)
 );
 CREATE TABLE user_board_type (
-    user_board integer,
-    type integer,
-    CONSTRAINT fk_user_board FOREIGN KEY (user_board)
+    user_board_id integer,
+    type_id integer,
+    CONSTRAINT fk_user_board FOREIGN KEY (user_board_id)
         REFERENCES user_board(id),
-    CONSTRAINT fk_type FOREIGN KEY (type)
+    CONSTRAINT fk_type FOREIGN KEY (type_id)
         REFERENCES type(id)
 );
 
 CREATE TABLE job (
     id serial PRIMARY KEY,
-    board integer,
+    board_id integer,
     title varchar NOT NULL,
     description varchar,
     status varchar,
     completion_date date,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_board FOREIGN KEY (board)
+    CONSTRAINT fk_board FOREIGN KEY (board_id)
         REFERENCES board(id)
 );
 
 CREATE TABLE project (
     id serial PRIMARY KEY,
-    job integer,
-    CONSTRAINT fk_job FOREIGN KEY (job)
+    job_id integer,
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
         REFERENCES job(id)
 );
 
 CREATE TABLE tick (
     id serial PRIMARY KEY,
-    job integer,
-    CONSTRAINT fk_job FOREIGN KEY (job)
+    job_id integer,
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
         REFERENCES job(id)
 );
 
 CREATE TABLE task (
     id serial PRIMARY KEY,
-    job integer,
-    project integer,
-    CONSTRAINT fk_job FOREIGN KEY (job)
+    job_id integer,
+    project_id integer,
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
         REFERENCES job(id),
-    CONSTRAINT fk_project FOREIGN KEY (project)
+    CONSTRAINT fk_project FOREIGN KEY (project_id)
         REFERENCES project(id)
 );

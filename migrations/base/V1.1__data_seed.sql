@@ -1,0 +1,13 @@
+-- insert into board (name,created,last_modified) VALUES 
+--   ("Lorna's Board", current_date(), current_date())
+--
+--
+--
+--   insert into user(email_address,first_name, etc.) VALUES
+--       ("lorna@lorna.com", "Lorna")
+--
+--
+--
+--   insert into user_board(user_id,board_id) values
+--       (select id from users where first_name = "Lorna"),
+--       (select id from board where name = "A new board")

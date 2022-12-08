@@ -6,18 +6,18 @@ services:
       ports:
         - 5433:5432
       environment:
-        POSTGRES_DB: routefinder
+        POSTGRES_DB: productivityMethod
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: password
       volumes:
         - db:/var/lib/postgresql/data
-  # flyway:
-  #       image: flyway/flyway
-  #       command: -url=jdbc:postgresql://db/routefinder -schemas=public -user=postgres
-  #         -password=password -connectRetries=5 migrate
-  #       volumes:
-  #         - ./migrations:/flyway/sql
-  #       depends_on:
-  #         - db
+  flyway:
+        image: flyway/flyway
+        command: -url=jdbc:postgresql://db/productivityMethod -schemas=public -user=postgres
+          -password=password -connectRetries=5 migrate
+        volumes:
+          - ./migrations:/flyway/sql
+        depends_on:
+          - db
 volumes:
   db:
