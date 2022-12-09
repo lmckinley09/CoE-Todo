@@ -1,8 +1,10 @@
 DO $$
 
-DECLARE USER_BOARD_ID integer;
 DECLARE USER_ID integer;
 DECLARE BOARD_ID integer;
+DECLARE TASK_JOB_ID integer;
+DECLARE PROJECT_JOB_ID integer;
+DECLARE PROJECT_ID integer;
 
 BEGIN
 
@@ -24,30 +26,33 @@ INSERT INTO type
 (description)
 VALUES('editer');
 
-INSERT INTO user_board
-(user_id, board_id)
-VALUES(
-(select id from app_user where email_address = 'lorna@lorna.com'),
-(select id from board where name = 'Lorna''s Board')
-) RETURNING id INTO USER_BOARD_ID;
-
 INSERT INTO user_board_type
-(user_board_id, type_id)
-VALUES(
-USER_BOARD_ID,
-1
-);
+(user_id, board_id, type_id)
+VALUES( USER_ID, BOARD_ID,(select id from type where description = 'owner'));
 
- INSERT INTO job
+INSERT INTO job
 (board_id, title, description, status, completion_date, created, last_modified)
 VALUES(
-  (select id from board where name = 'Lorna''s Board'),
- 'Lorna''s First Task', '', 'Not Started',CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+  BOARD_ID, 'Lorna''s First Task', '', 'Not Started',CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+  RETURNING id INTO TASK_JOB_ID;
 
- INSERT INTO task
+INSERT INTO job
+  (board_id, title, description, status, completion_date, created, last_modified)
+  VALUES(
+    BOARD_ID, 'Lorna''s First Project', '', 'Not Started',CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    RETURNING id INTO PROJECT_JOB_ID;
+
+INSERT INTO task
  (job_id)
- VALUES(
-   (select id from job where title = 'Lorna''s First Task')
- );
+ VALUES(TASK_JOB_ID);
+
+ INSERT INTO project
+  (job_id)
+  VALUES(PROJECT_JOB_ID)
+  RETURNING id INTO PROJECT_ID;
+
+  INSERT INTO project_job
+   (project_id,job_id)
+   VALUES(PROJECT_ID,TASK_JOB_ID);
 
  END $$;

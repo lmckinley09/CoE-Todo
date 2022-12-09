@@ -21,22 +21,17 @@ CREATE TABLE board (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_board (
+CREATE TABLE user_board_type (
     id serial PRIMARY KEY,
     user_id integer,
     board_id integer,
+    type_id integer,
     CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES app_user(id),
     CONSTRAINT fk_board FOREIGN KEY (board_id)
-        REFERENCES board(id)
-);
-CREATE TABLE user_board_type (
-    user_board_id integer,
-    type_id integer,
-    CONSTRAINT fk_user_board FOREIGN KEY (user_board_id)
-        REFERENCES user_board(id),
-    CONSTRAINT fk_type FOREIGN KEY (type_id)
-        REFERENCES type(id)
+        REFERENCES board(id),
+        CONSTRAINT fk_type FOREIGN KEY (type_id)
+            REFERENCES type(id)
 );
 
 CREATE TABLE job (
@@ -52,13 +47,6 @@ CREATE TABLE job (
         REFERENCES board(id)
 );
 
-CREATE TABLE project (
-    id serial PRIMARY KEY,
-    job_id integer,
-    CONSTRAINT fk_job FOREIGN KEY (job_id)
-        REFERENCES job(id)
-);
-
 CREATE TABLE tick (
     id serial PRIMARY KEY,
     job_id integer,
@@ -69,9 +57,22 @@ CREATE TABLE tick (
 CREATE TABLE task (
     id serial PRIMARY KEY,
     job_id integer,
-    project_id integer,
     CONSTRAINT fk_job FOREIGN KEY (job_id)
-        REFERENCES job(id),
+        REFERENCES job(id)
+);
+
+CREATE TABLE project (
+    id serial PRIMARY KEY,
+    job_id integer,
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
+        REFERENCES job(id)
+);
+
+CREATE TABLE project_job (
+    project_id integer,
+    job_id integer,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
-        REFERENCES project(id)
+        REFERENCES project(id),
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
+            REFERENCES job(id)
 );
