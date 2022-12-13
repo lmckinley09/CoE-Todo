@@ -150,7 +150,7 @@ Response 200
 
 ---
 
-`GET /users/{id}`
+`GET /users/{user_id}`
 Return a user
 
 Response 200
@@ -188,7 +188,7 @@ Response - `201 Created`
 
 ---
 
-`PATCH /users/{id}`
+`PATCH /users/{user_id}`
 Update a user by id
 
 Request
@@ -201,9 +201,72 @@ Response - `200 OK`
 
 ---
 
-`DELETE /users/{id}`
+`DELETE /users/{user_id}`
 Delete a user by id
 
 Response - `204 No Content`
 
 ---
+
+#### BOARDS
+`GET /boards/user/{user_id}`
+Return all boards for a user
+
+Response 200
+```json
+[
+  {
+    "id": 5,
+    "name": "Lorna's Board",
+    "last_modified": "2022-11-12 14:29:20.012024"
+  },
+ {
+    "id": 6,
+    "name": "Christmas Party",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  }
+]
+```
+
+---
+
+`GET /boards/{board_id}`
+Return a board by id
+
+Response 200
+```json
+{
+"board":{
+  "id": 5,
+  "name": "Lorna's Board",
+  "owner": 1
+  "created": "2022-12-12 14:29:20.012024",
+  "last_modified": "2022-11-12 14:29:20.012024",
+  "ticks": [
+    "id": 123,
+    "title": "aTitle",
+    "description": "aDescription"
+  ],
+  "tasks": [
+    "id": 123,
+    "title": "aTitle",
+    "description": "aDescription"
+  ],
+  "projects": [
+    "id": 123,
+    "title": "aTitle",
+    "description": "aDescription"
+  ]
+ }
+}
+```
+
+---
+
+`DELETE /boards/{board_id}`
+Delete a user by id
+
+Response - `204 No Content`
+
+---
+
