@@ -260,13 +260,37 @@ Response 200
  }
 }
 ```
+---
+
+
+`POST /boards`
+Create a board
+
+Request
+```json
+{
+  "name": "Jane's Board",
+}
+```
+Response - `201 Created`
+
+---
+
+`PATCH /boards/{board_id}`
+Update a board by id
+
+Request
+```json
+{
+"title": "Halloween Party",
+"last_modified": "2022-12-18 14:29:20.012024"
+}
+```
+Response - `200 OK`
 
 ---
 
 `DELETE /boards/{board_id}`
-Delete a user by id
+Delete a board by id
 
 Response - `204 No Content`
-
----
-
