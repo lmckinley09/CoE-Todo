@@ -116,3 +116,94 @@ erDiagram
     }
 
 ```
+# API Specification
+
+#### USERS
+`GET /users`
+Return a list of all users
+
+Response 200
+```json
+[
+  {
+    "id": 1,
+    "email_address": "lorna@lorna.com",
+    "first_name": "Lorna",
+    "last_name": "McKinley",
+    "password": "password",
+    "date_of_birth": "1996-09-26",
+    "created": "2022-12-12 14:29:20.012024",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  },
+  {
+    "id": 2,
+    "email_address": "jane@jane.com",
+    "first_name": "Jane",
+    "last_name": "McKinley",
+    "password": "password2",
+    "date_of_birth": "1986-11-26",
+    "created": "2022-12-14 14:29:20.012024",
+    "last_modified": "2022-12-14 14:29:20.012024"
+  }
+]
+```
+
+---
+
+`GET /users/{id}`
+Return a user
+
+Response 200
+```json
+  {
+    "id": 1,
+    "email_address": "lorna@lorna.com",
+    "first_name": "Lorna",
+    "last_name": "McKinley",
+    "password": "password",
+    "date_of_birth": "1996-09-26",
+    "created": "2022-12-12 14:29:20.012024",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  }
+```
+
+---
+
+`POST /users`
+Create a user
+
+Request
+```json
+{
+  "email_address": "pat@pat.com",
+    "first_name": "Patrick",
+    "last_name": "Tazz",
+    "password": "password3",
+    "date_of_birth": "1995-07-14",
+    "created": "2022-12-18 14:29:20.012024",
+    "last_modified": "2022-12-18 14:29:20.012024"
+}
+```
+Response - `201 Created`
+
+---
+
+`PATCH /users/{id}`
+Update a user by id
+
+Request
+```json
+{
+"password": "password2"
+}
+```
+Response - `200 OK`
+
+---
+
+`DELETE /users/{id}`
+Delete a user by id
+
+Response - `204 No Content`
+
+---
