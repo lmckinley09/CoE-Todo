@@ -48,7 +48,7 @@ erDiagram
  user_board_type ||--|| user_board : ""
  board ||--o{ user_board : ""
  board ||--o{ job : ""
- type ||--o{ user_board_type : ""
+ access_type ||--o{ user_board_type : ""
  job ||--|| tick : ""
  job ||--|| task : ""
  job ||--|| project : ""
@@ -76,7 +76,7 @@ erDiagram
         integer board FK
     }
     
-    type {
+    access_type {
         serial id PK
         varchar description 
     }
