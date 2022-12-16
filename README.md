@@ -239,23 +239,34 @@ Response 200
 "board":{
   "id": 5,
   "name": "Lorna's Board",
-  "owner": 1
+  "owner_id": 1
   "created": "2022-12-12 14:29:20.012024",
   "last_modified": "2022-11-12 14:29:20.012024",
   "ticks": [
+    {
     "id": 123,
     "title": "aTitle",
     "description": "aDescription"
+    },
+     {
+    "id": 126,
+    "title": "aTitle2",
+    "description": "aDescription2"
+    }
   ],
   "tasks": [
-    "id": 123,
-    "title": "aTitle",
-    "description": "aDescription"
+    {
+    "id": 124,
+    "title": "aTitle3",
+    "description": "aDescription3"
+    }
   ],
   "projects": [
-    "id": 123,
-    "title": "aTitle",
-    "description": "aDescription"
+    {
+    "id": 125,
+    "title": "aTitle4",
+    "description": "aDescription4"
+    }
   ]
  }
 }
