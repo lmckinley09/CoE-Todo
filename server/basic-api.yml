@@ -1,0 +1,27 @@
+openapi: 3.0.0
+info:
+  title: Training Type API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+servers:
+  - url: https://api.example.com/v1
+    description: Production server (uses live data)
+  - url: https://sandbox-api.example.com:8443/v1
+    description: Sandbox server (uses test data)
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Returns a list of every user
+      description: Returns a list of every user
+      responses:
+        200:
+          description: Successfully retrieved users
+          content:
+            application/json:
+              schema:
+              type: array
+                items: 
+                  type: string
+   
