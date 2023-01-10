@@ -9,7 +9,7 @@ CREATE TABLE app_user (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE type (
+CREATE TABLE access_type (
     id serial PRIMARY KEY,
     description varchar NOT NULL
 );
@@ -31,7 +31,7 @@ CREATE TABLE user_board_type (
     CONSTRAINT fk_board FOREIGN KEY (board_id)
         REFERENCES board(id),
         CONSTRAINT fk_type FOREIGN KEY (type_id)
-            REFERENCES type(id)
+            REFERENCES access_type(id)
 );
 
 CREATE TABLE job (

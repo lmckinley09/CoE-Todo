@@ -16,19 +16,19 @@ INSERT INTO board
 ("name", created, last_modified)
 VALUES('Lorna''s Board', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO BOARD_ID;
 
-INSERT INTO type
+INSERT INTO access_type
 (description)
 VALUES('owner');
-INSERT INTO type
+INSERT INTO access_type
 (description)
 VALUES('viewer');
-INSERT INTO type
+INSERT INTO access_type
 (description)
 VALUES('editer');
 
 INSERT INTO user_board_type
 (user_id, board_id, type_id)
-VALUES( USER_ID, BOARD_ID,(select id from type where description = 'owner'));
+VALUES( USER_ID, BOARD_ID,(select id from access_type where description = 'owner'));
 
 INSERT INTO job
 (board_id, title, description, status, completion_date, created, last_modified)
