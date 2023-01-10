@@ -48,7 +48,7 @@ erDiagram
  user_board_type ||--|| user_board : ""
  board ||--o{ user_board : ""
  board ||--o{ job : ""
- type ||--o{ user_board_type : ""
+ access_type ||--o{ user_board_type : ""
  job ||--|| tick : ""
  job ||--|| task : ""
  job ||--|| project : ""
@@ -76,7 +76,7 @@ erDiagram
         integer board FK
     }
     
-    type {
+    access_type {
         serial id PK
         varchar description 
     }
@@ -116,3 +116,192 @@ erDiagram
     }
 
 ```
+# API Specification
+
+#### USERS
+`GET /users`
+Return a list of all users
+
+Response 200
+```json
+[
+  {
+    "id": 1,
+    "email_address": "lorna@lorna.com",
+    "first_name": "Lorna",
+    "last_name": "McKinley",
+    "password": "password",
+    "date_of_birth": "1996-09-26",
+    "created": "2022-12-12 14:29:20.012024",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  },
+  {
+    "id": 2,
+    "email_address": "jane@jane.com",
+    "first_name": "Jane",
+    "last_name": "McKinley",
+    "password": "password2",
+    "date_of_birth": "1986-11-26",
+    "created": "2022-12-14 14:29:20.012024",
+    "last_modified": "2022-12-14 14:29:20.012024"
+  }
+]
+```
+
+---
+
+`GET /users/{user_id}`
+Return a user
+
+Response 200
+```json
+  {
+    "id": 1,
+    "email_address": "lorna@lorna.com",
+    "first_name": "Lorna",
+    "last_name": "McKinley",
+    "password": "password",
+    "date_of_birth": "1996-09-26",
+    "created": "2022-12-12 14:29:20.012024",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  }
+```
+
+---
+
+`POST /users`
+Create a user
+
+Request
+```json
+{
+  "email_address": "pat@pat.com",
+    "first_name": "Patrick",
+    "last_name": "Tazz",
+    "password": "password3",
+    "date_of_birth": "1995-07-14",
+    "created": "2022-12-18 14:29:20.012024",
+    "last_modified": "2022-12-18 14:29:20.012024"
+}
+```
+Response - `201 Created`
+
+---
+
+`PATCH /users/{user_id}`
+Update a user by id
+
+Request
+```json
+{
+"password": "password2"
+}
+```
+Response - `200 OK`
+
+---
+
+`DELETE /users/{user_id}`
+Delete a user by id
+
+Response - `204 No Content`
+
+---
+
+#### BOARDS
+`GET /boards/user/{user_id}`
+Return all boards for a user
+
+Response 200
+```json
+[
+  {
+    "id": 5,
+    "name": "Lorna's Board",
+    "last_modified": "2022-11-12 14:29:20.012024"
+  },
+ {
+    "id": 6,
+    "name": "Christmas Party",
+    "last_modified": "2022-12-12 14:29:20.012024"
+  }
+]
+```
+
+---
+
+`GET /boards/{board_id}`
+Return a board by id
+
+Response 200
+```json
+{
+"board":{
+  "id": 5,
+  "name": "Lorna's Board",
+  "owner_id": 1
+  "created": "2022-12-12 14:29:20.012024",
+  "last_modified": "2022-11-12 14:29:20.012024",
+  "ticks": [
+    {
+    "id": 123,
+    "title": "aTitle",
+    "description": "aDescription"
+    },
+     {
+    "id": 126,
+    "title": "aTitle2",
+    "description": "aDescription2"
+    }
+  ],
+  "tasks": [
+    {
+    "id": 124,
+    "title": "aTitle3",
+    "description": "aDescription3"
+    }
+  ],
+  "projects": [
+    {
+    "id": 125,
+    "title": "aTitle4",
+    "description": "aDescription4"
+    }
+  ]
+ }
+}
+```
+---
+
+
+`POST /boards`
+Create a board
+
+Request
+```json
+{
+  "name": "Jane's Board",
+}
+```
+Response - `201 Created`
+
+---
+
+`PATCH /boards/{board_id}`
+Update a board by id
+
+Request
+```json
+{
+"title": "Halloween Party",
+"last_modified": "2022-12-18 14:29:20.012024"
+}
+```
+Response - `200 OK`
+
+---
+
+`DELETE /boards/{board_id}`
+Delete a board by id
+
+Response - `204 No Content`
