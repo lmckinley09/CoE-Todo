@@ -130,7 +130,6 @@ Response 200
     "email_address": "lorna@lorna.com",
     "first_name": "Lorna",
     "last_name": "McKinley",
-    "password": "password",
     "date_of_birth": "1996-09-26",
     "created": "2022-12-12 14:29:20.012024",
     "last_modified": "2022-12-12 14:29:20.012024"
@@ -140,7 +139,6 @@ Response 200
     "email_address": "jane@jane.com",
     "first_name": "Jane",
     "last_name": "McKinley",
-    "password": "password2",
     "date_of_birth": "1986-11-26",
     "created": "2022-12-14 14:29:20.012024",
     "last_modified": "2022-12-14 14:29:20.012024"
@@ -160,7 +158,6 @@ Response 200
     "email_address": "lorna@lorna.com",
     "first_name": "Lorna",
     "last_name": "McKinley",
-    "password": "password",
     "date_of_birth": "1996-09-26",
     "created": "2022-12-12 14:29:20.012024",
     "last_modified": "2022-12-12 14:29:20.012024"
