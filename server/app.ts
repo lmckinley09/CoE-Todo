@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
-import { Users, Boards } from "./routers";
+import { Users, Boards, Jobs } from "./routers";
 
 const app = express();
 const port = 3001;
@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", Users);
 app.use("/boards", Boards);
+app.use("/jobs", Jobs);
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
