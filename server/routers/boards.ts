@@ -10,11 +10,6 @@ const Boards = express.Router();
  *       Boards
  *     ]
  *     summary: Returns a boards for a user
- *     parameters:
- *       - name: userId
- *         in: path
- *         type: integer
- *         description: The ID of the requested user.
  *     responses:
  *       200:
  *         description: OK
@@ -23,7 +18,8 @@ const Boards = express.Router();
  *             examples:
  *               jsonObject:
  *                 summary: An example JSON response
- *                 value: '[{"id": 5,"name": "Lorna's Board","last_modified": "2022-11-12 14:29:20.012024"}]'
+ *                 value: '[{"id": 100, "name": "Lornas Board", "last_modified": "2022-11-12 14:29:20.012024"},
+ *                              {"id": 101, "name": "Christmas Board", "last_modified": "2022-11-12 14:29:20.012026"}]'
  *       204:
  *         description: No content
  */
