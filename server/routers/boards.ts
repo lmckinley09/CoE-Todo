@@ -29,8 +29,8 @@ const Boards = express.Router();
  *       204:
  *         description: No content
  */
-Boards.route("/user/:userId(\\d+)").get((req: Request, res: Response) => {
-  const { userId } = req.params;
+Boards.route("/").get((req: Request, res: Response) => {
+  const { userId } = req.query;
   res.status(200).json({ name: `lorna's ${userId}` });
 });
 
