@@ -290,7 +290,7 @@ Update a board by id
 Request
 ```json
 {
-"title": "Halloween Party",
+"name": "Halloween Party",
 "last_modified": "2022-12-18 14:29:20.012024"
 }
 ```
