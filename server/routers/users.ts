@@ -63,7 +63,7 @@ Users.get("/", (req: Request, res: Response) => {
  *       - name: userId
  *         in: path
  *         type: integer
- *         description: The ID of the requested project.
+ *         description: The ID of the requested user.
  *     responses:
  *       200:
  *         description: OK
