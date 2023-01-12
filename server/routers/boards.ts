@@ -128,8 +128,8 @@ Boards.post("/", (req: Request, res: Response) => {
  *       200:
  *         description: OK
  */
-Boards.post("/:boardId(\\d+)", (req: Request, res: Response) => {
-  res.sendStatus(201);
+Boards.patch("/:boardId(\\d+)", (req: Request, res: Response) => {
+  res.sendStatus(200);
 });
 
 /**
