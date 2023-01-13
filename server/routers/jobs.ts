@@ -24,17 +24,33 @@ const Jobs = express.Router();
  *             examples:
  *               jsonObject:
  *                 summary: An example JSON response
- *                 value: '[ {"id": 123,"title": "aTitle","description": "aDescription"},{"id": 126,"title": "aTitle2","description": "aDescription2"} ]'
+ *                 value: '[ {"id": 123,"title": "aTitle","description": "aDescription",type: "tick"},{"id": 126,"title": "aTitle2","description": "aDescription2",type: "tick"} ]'
  *       204:
  *         description: No content
  */
 Jobs.get("/", (req: Request, res: Response) => {
-  const { name } = req.query;
+  const { boardId } = req.query;
 
-  // example of using query for filtering
-  // res.status(200).json({ name: `${name} helllo` });
-
-  res.status(200);
+  res.status(200).json([
+    {
+      id: 123,
+      title: "aTitle",
+      description: "aDescription",
+      type: "tick",
+    },
+    {
+      id: 126,
+      title: "aTitle2",
+      description: "aDescription2",
+      type: "tick",
+    },
+    {
+      id: 124,
+      title: "aTitle3",
+      description: "aDescription3",
+      type: "task",
+    },
+  ]);
 });
 
 /**
