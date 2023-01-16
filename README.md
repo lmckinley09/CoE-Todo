@@ -44,11 +44,10 @@ erDiagram
 # Entity Relationship Diagram
 ```mermaid
 erDiagram
- user ||--o{ user_board : ""
- user_board_type ||--|| user_board : ""
- board ||--o{ user_board : ""
- board ||--o{ job : ""
+ user ||--o{ user_board_type : ""
  access_type ||--o{ user_board_type : ""
+ board ||--o{ user_board_type : ""
+ board ||--o{ job : ""
  job ||--|| tick : ""
  job ||--|| task : ""
  job ||--|| project : ""
@@ -65,22 +64,18 @@ erDiagram
         timestamp last_modified
     }
     
-    user_board_type {
-        integer user_board FK
-        integer type FK
-    }
-    
-    user_board {
-        serial id PK
-        integer user FK
-        integer board FK
-    }
-    
     access_type {
         serial id PK
         varchar description 
     }
     
+    user_board_type {
+        serial id PK
+        integer user_id FK
+        integer board_id FK
+        integer type_id FK
+    }
+        
     board {
         serial id PK
         varchar name
