@@ -67,13 +67,13 @@ CREATE TABLE project (
         REFERENCES job(id)
 );
 
-CREATE TABLE project_job (
+CREATE TABLE project_task (
     id serial PRIMARY KEY,
     project_id integer,
-    job_id integer,
+    task_id integer,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
         REFERENCES project(id),
-    CONSTRAINT fk_job FOREIGN KEY (job_id)
-            REFERENCES job(id),
-            UNIQUE (project_id, job_id)
+    CONSTRAINT fk_task FOREIGN KEY (task_id)
+            REFERENCES task(id),
+            UNIQUE (project_id, task_id)
 );

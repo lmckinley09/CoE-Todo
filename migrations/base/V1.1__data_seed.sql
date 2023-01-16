@@ -54,8 +54,8 @@ INSERT INTO task
   VALUES(PROJECT_JOB_ID)
   RETURNING id INTO PROJECT_ID;
 
-  INSERT INTO project_job
-   (project_id,job_id)
+  INSERT INTO project_task
+   (project_id,task_id)
    VALUES(PROJECT_ID,TASK_JOB_ID);
 
  END $$;
