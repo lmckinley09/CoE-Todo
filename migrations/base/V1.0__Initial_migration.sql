@@ -20,22 +20,15 @@ CREATE TABLE board (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_board (
+CREATE TABLE user_board_type (
     id serial PRIMARY KEY,
     user_id integer,
     board_id integer,
+    type_id integer,
      CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES app_user(id),
     CONSTRAINT fk_board FOREIGN KEY (board_id)
-        REFERENCES board(id)
-);
-
-CREATE TABLE user_board_type (
-    id serial PRIMARY KEY,
-    user_board_id integer,
-    type_id integer,
-    CONSTRAINT fk_user FOREIGN KEY (user_board_id)
-        REFERENCES user_board(id),
+        REFERENCES board(id),
     CONSTRAINT fk_type FOREIGN KEY (type_id)
         REFERENCES access_type(id)
 );
