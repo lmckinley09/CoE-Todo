@@ -10,7 +10,10 @@ BEGIN
 
 INSERT INTO app_user
 (email_address, first_name, last_name, password, date_of_birth, created, last_modified)
-VALUES('lorna@lorna.com', 'Lorna', 'Mckinley', 'password', '1996-09-26', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES('lorna@email.com', 'Lorna', 'Mckinley', 'password', '1996-09-26', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO app_user
+(email_address, first_name, last_name, password, date_of_birth, created, last_modified)
+VALUES('jane@email.com', 'Jane', 'Mckinley', 'password', '1986-11-26', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO board
 ("name", created, last_modified)

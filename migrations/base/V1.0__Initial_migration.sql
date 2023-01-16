@@ -6,7 +6,8 @@ CREATE TABLE app_user (
     password varchar NOT NULL,
     date_of_birth date,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
-    last_modified timestamp DEFAULT CURRENT_TIMESTAMP
+    last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(email_address)
 );
 
 CREATE TABLE access_type (
@@ -69,10 +70,12 @@ CREATE TABLE project (
 );
 
 CREATE TABLE project_job (
+    project_job_id serial PRIMARY KEY,
     project_id integer,
     job_id integer,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
         REFERENCES project(id),
     CONSTRAINT fk_job FOREIGN KEY (job_id)
-            REFERENCES job(id)
+            REFERENCES job(id),
+            UNIQUE (project_id, job_id)
 );

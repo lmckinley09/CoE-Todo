@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { validate } from "./../utils/validation";
 import { body } from "express-validator";
+import { getUsers } from "../controllers";
 
 const Users = express.Router();
 
@@ -25,33 +26,7 @@ const Users = express.Router();
  *       204:
  *         description: No content
  */
-Users.get("/", (req: Request, res: Response) => {
-  const { name } = req.query;
-
-  // example of using query for filtering
-  // res.status(200).json({ name: `${name} helllo` });
-
-  res.status(200).json([
-    {
-      id: 1,
-      email_address: "lorna@email.com",
-      first_name: "Lorna",
-      last_name: "McKinley",
-      date_of_birth: "1996-09-26",
-      created: "2022-12-12 14:29:20.012024",
-      last_modified: "2022-12-12 14:29:20.012024",
-    },
-    {
-      id: 2,
-      email_address: "jane@email.com",
-      first_name: "Jane",
-      last_name: "McKinley",
-      date_of_birth: "1986-11-26",
-      created: "2022-12-12 14:29:20.012025",
-      last_modified: "2022-12-12 14:29:20.012025",
-    },
-  ]);
-});
+Users.get("/", getUsers);
 
 /**
  * @swagger
@@ -126,7 +101,11 @@ Users.route("/:userId(\\d+)").get((req: Request, res: Response) => {
 Users.post(
   "/",
   [
-    body("email_address").isString().isLength({ min: 3 }).isEmail().trim(),
+    body("email_address")
+      .isString()
+      .isLength({ min: 3 })
+      .isEmail()
+      .normalizeEmail(),
     body("first_name").isString().isLength({ min: 2 }).trim(),
     body("last_name").isString().isLength({ min: 2 }).trim(),
     body("password")

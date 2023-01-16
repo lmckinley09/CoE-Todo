@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model access_type {
+  id              Int               @id @default(autoincrement())
+  description     String            @db.VarChar
+  user_board_type user_board_type[]
+}
+
+model app_user {
+  id              Int               @id @default(autoincrement())
+  email_address   String            @unique @db.VarChar
+  first_name      String            @db.VarChar
+  last_name       String            @db.VarChar
+  password        String            @db.VarChar
+  date_of_birth   DateTime?         @db.Date
+  created         DateTime?         @default(now()) @db.Timestamp(6)
+  last_modified   DateTime?         @default(now()) @db.Timestamp(6)
+  user_board_type user_board_type[]
+}
+
+model board {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar
+  created         DateTime?         @default(now()) @db.Timestamp(6)
+  last_modified   DateTime?         @default(now()) @db.Timestamp(6)
+  job             job[]
+  user_board_type user_board_type[]
+}
+
+model flyway_schema_history {
+  installed_rank Int      @id(map: "flyway_schema_history_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "flyway_schema_history_s_idx")
+}
+
+model job {
+  id              Int           @id @default(autoincrement())
+  board_id        Int?
+  title           String        @db.VarChar
+  description     String?       @db.VarChar
+  status          String?       @db.VarChar
+  completion_date DateTime?     @db.Date
+  created         DateTime?     @default(now()) @db.Timestamp(6)
+  last_modified   DateTime?     @default(now()) @db.Timestamp(6)
+  board           board?        @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  project         project[]
+  project_job     project_job[]
+  task            task[]
+  tick            tick[]
+}
+
+model project {
+  id          Int           @id @default(autoincrement())
+  job_id      Int?
+  job         job?          @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  project_job project_job[]
+}
+
+model project_job {
+  project_job_id Int      @id @default(autoincrement())
+  project_id     Int?
+  job_id         Int?
+  job            job?     @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  project        project? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+
+  @@unique([project_id, job_id])
+}
+
+model task {
+  id     Int  @id @default(autoincrement())
+  job_id Int?
+  job    job? @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+}
+
+model tick {
+  id     Int  @id @default(autoincrement())
+  job_id Int?
+  job    job? @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+}
+
+model user_board_type {
+  id          Int          @id @default(autoincrement())
+  user_id     Int?
+  board_id    Int?
+  type_id     Int?
+  board       board?       @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  access_type access_type? @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_type")
+  app_user    app_user?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+}
