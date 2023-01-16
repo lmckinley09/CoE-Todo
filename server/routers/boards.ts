@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import { validate } from "./../utils/validation";
+import { body } from "express-validator";
 
 const Boards = express.Router();
 
@@ -95,9 +97,20 @@ Boards.route("/:boardId(\\d+)").get((req: Request, res: Response) => {
  *       201:
  *         description: Board Created
  */
-Boards.post("/", (req: Request, res: Response) => {
-  res.sendStatus(201);
-});
+Boards.post(
+  "/",
+  [
+    body("name")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("your board name should have minimum length of 3")
+      .trim(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    res.sendStatus(201);
+  }
+);
 
 /**
  * @swagger
@@ -128,9 +141,20 @@ Boards.post("/", (req: Request, res: Response) => {
  *       200:
  *         description: OK
  */
-Boards.patch("/:boardId(\\d+)", (req: Request, res: Response) => {
-  res.sendStatus(200);
-});
+Boards.patch(
+  "/:boardId(\\d+)",
+  [
+    body("name")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("your board name should have minimum length of 3")
+      .trim(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
 
 /**
  * @swagger

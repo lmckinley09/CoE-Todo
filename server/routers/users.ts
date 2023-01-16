@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import { validate } from "./../utils/validation";
+import { body } from "express-validator";
 
 const Users = express.Router();
 
@@ -121,25 +123,34 @@ Users.route("/:userId(\\d+)").get((req: Request, res: Response) => {
  *       201:
  *         description: User Created
  */
-Users.post("/", (req: Request, res: Response) => {
-  const { email_address, first_name, last_name, date_of_birth } = req.body;
-  console.log(
-    "email:",
-    email_address,
-    "firstname:",
-    first_name,
-    "lastname:",
-    last_name,
-    "dob:",
-    date_of_birth
-  );
-  res.sendStatus(201);
-});
+Users.post(
+  "/",
+  [
+    body("email_address").isString().isLength({ min: 3 }).isEmail().trim(),
+    body("first_name").isString().isLength({ min: 2 }).trim(),
+    body("last_name").isString().isLength({ min: 2 }).trim(),
+    body("password")
+      .isString()
+      .isLength({ min: 8, max: 15 })
+      .withMessage("your password should have min and max length between 8-15")
+      .matches(/\d/)
+      .withMessage("your password should have at least one number")
+      .matches(/[!@#$%^&*(),.?":{}|<>]/)
+      .withMessage("your password should have at least one special character"),
+    body("date_of_birth").isString(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    const { email_address, first_name, last_name, date_of_birth } = req.body;
+
+    res.sendStatus(201);
+  }
+);
 
 /**
  * @swagger
  * /users/{userId}:
- *   patch:
+ *   put:
  *     tags: [
  *       Users
  *     ]
@@ -177,25 +188,24 @@ Users.post("/", (req: Request, res: Response) => {
  *       204:
  *         description: User Updated
  */
-Users.patch("/:userId(\\d+)", (req: Request, res: Response) => {
-  const { userId } = req.params;
-  const { email_address, first_name, last_name, date_of_birth } = req.body;
-  console.log(
-    "id:",
-    userId,
-    "email:",
-    email_address,
-    "firstname:",
-    first_name,
-    "lastname:",
-    last_name,
-    "dob:",
-    date_of_birth
-  );
-  res
-    .status(200)
-    .json({ name: `lorna ${userId} updated`, email: `${email_address}` });
-});
+Users.put(
+  "/:userId(\\d+)",
+  [
+    body("email_address").isString().isLength({ min: 3 }).isEmail().trim(),
+    body("first_name").isString().isLength({ min: 2 }).trim(),
+    body("last_name").isString().isLength({ min: 2 }).trim(),
+    body("date_of_birth").isString(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const { email_address, first_name, last_name, date_of_birth } = req.body;
+
+    res
+      .status(200)
+      .json({ name: `lorna ${userId} updated`, email: `${email_address}` });
+  }
+);
 
 /**
  * @swagger

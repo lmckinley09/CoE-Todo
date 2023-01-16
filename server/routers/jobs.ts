@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+import { validate } from "./../utils/validation";
+import { body } from "express-validator";
 
 const Jobs = express.Router();
 
@@ -97,9 +99,28 @@ Jobs.get("/", (req: Request, res: Response) => {
  *       201:
  *         description: Job Created
  */
-Jobs.post("/", (req: Request, res: Response) => {
-  res.sendStatus(201);
-});
+Jobs.post(
+  "/",
+  [
+    body("title")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("job title should have minimum length of 3")
+      .trim(),
+    body("description")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("description should have minimum length of 3")
+      .trim(),
+    body("completion_date").isString(),
+    body("type").isString().isLength({ min: 4 }).trim(),
+    body("project").isNumeric(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    res.sendStatus(201);
+  }
+);
 
 /**
  * @swagger
@@ -146,8 +167,51 @@ Jobs.post("/", (req: Request, res: Response) => {
  *       200:
  *         description: OK
  */
-Jobs.put("/:boardId(\\d+)", (req: Request, res: Response) => {
-  res.sendStatus(200);
+Jobs.put(
+  "/:boardId(\\d+)",
+  [
+    body("title")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("board name should have minimum length of 3")
+      .trim(),
+    body("description")
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage("description should have minimum length of 3")
+      .trim(),
+    body("completion_date").isString(),
+    body("type").isString().isLength({ min: 4 }).trim(),
+    body("project").isNumeric(),
+  ],
+  validate,
+  (req: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
+
+/**
+ * @swagger
+ * /jobs/{jobId}:
+ *   delete:
+ *     tags: [
+ *       Jobs
+ *     ]
+ *     summary: Deletes an existing job
+ *     parameters:
+ *       - name: jobId
+ *         in: path
+ *         type: integer
+ *         description: The ID of the requested job.
+ *     responses:
+ *       400:
+ *         description: Bad Request - required values are missing.
+ *       201:
+ *         description: Job Deleted
+ */
+Jobs.delete("/:jobId(\\d+)", (req: Request, res: Response) => {
+  const { jobId } = req.params;
+  console.log(`${jobId} deleted`);
 });
 
 export { Jobs };
