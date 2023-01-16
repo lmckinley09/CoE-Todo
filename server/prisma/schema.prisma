@@ -15,11 +15,10 @@ model access_type {
 
 model app_user {
   id              Int               @id @default(autoincrement())
-  email_address   String            @unique @db.VarChar
+  email           String            @db.VarChar
   first_name      String            @db.VarChar
   last_name       String            @db.VarChar
   password        String            @db.VarChar
-  date_of_birth   DateTime?         @db.Date
   created         DateTime?         @default(now()) @db.Timestamp(6)
   last_modified   DateTime?         @default(now()) @db.Timestamp(6)
   user_board_type user_board_type[]

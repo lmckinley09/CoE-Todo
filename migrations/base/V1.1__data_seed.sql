@@ -9,11 +9,11 @@ DECLARE PROJECT_ID integer;
 BEGIN
 
 INSERT INTO app_user
-(email_address, first_name, last_name, password, date_of_birth, created, last_modified)
-VALUES('lorna@email.com', 'Lorna', 'Mckinley', 'password', '1996-09-26', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(email, first_name, last_name, password, created, last_modified)
+VALUES('lorna@email.com', 'Lorna', 'Mckinley', 'password', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO app_user
-(email_address, first_name, last_name, password, date_of_birth, created, last_modified)
-VALUES('jane@email.com', 'Jane', 'Mckinley', 'password', '1986-11-26', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+(email, first_name, last_name, password, created, last_modified)
+VALUES('jane@email.com', 'Jane', 'Mckinley', 'password', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO board
 ("name", created, last_modified)

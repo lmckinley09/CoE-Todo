@@ -1,6 +1,13 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { validate } from "./../utils/validation";
 import { body } from "express-validator";
+import {
+  getBoards,
+  getBoard,
+  createBoard,
+  updateBoard,
+  deleteBoard,
+} from "./../controllers";
 
 const Boards = express.Router();
 
@@ -31,10 +38,7 @@ const Boards = express.Router();
  *       204:
  *         description: No content
  */
-Boards.route("/").get((req: Request, res: Response) => {
-  const { userId } = req.query;
-  res.status(200).json({ name: `lorna's ${userId}` });
-});
+Boards.route("/").get(getBoards);
 
 /**
  * @swagger
@@ -64,10 +68,7 @@ Boards.route("/").get((req: Request, res: Response) => {
  *       204:
  *         description: No content
  */
-Boards.route("/:boardId(\\d+)").get((req: Request, res: Response) => {
-  const { boardId } = req.params;
-  res.status(200).json({ name: `lorna's ${boardId}` });
-});
+Boards.route("/:boardId(\\d+)").get(getBoard);
 
 /**
  * @swagger
@@ -107,15 +108,13 @@ Boards.post(
       .trim(),
   ],
   validate,
-  (req: Request, res: Response) => {
-    res.sendStatus(201);
-  }
+  createBoard
 );
 
 /**
  * @swagger
  * /boards/{boardId}:
- *   patch:
+ *   put:
  *     tags: [
  *       Boards
  *     ]
@@ -141,7 +140,7 @@ Boards.post(
  *       200:
  *         description: OK
  */
-Boards.patch(
+Boards.put(
   "/:boardId(\\d+)",
   [
     body("name")
@@ -151,9 +150,7 @@ Boards.patch(
       .trim(),
   ],
   validate,
-  (req: Request, res: Response) => {
-    res.sendStatus(200);
-  }
+  updateBoard
 );
 
 /**
@@ -175,9 +172,6 @@ Boards.patch(
  *       201:
  *         description: Board Deleted
  */
-Boards.delete("/:boardId(\\d+)", (req: Request, res: Response) => {
-  const { boardId } = req.params;
-  console.log(`${boardId} deleted`);
-});
+Boards.delete("/:boardId(\\d+)", deleteBoard);
 
 export { Boards };

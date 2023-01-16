@@ -1,6 +1,7 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { validate } from "./../utils/validation";
 import { body } from "express-validator";
+import { getJobs, createJob, updateJob, deleteJob } from "./../controllers";
 
 const Jobs = express.Router();
 
@@ -30,30 +31,7 @@ const Jobs = express.Router();
  *       204:
  *         description: No content
  */
-Jobs.get("/", (req: Request, res: Response) => {
-  const { boardId } = req.query;
-
-  res.status(200).json([
-    {
-      id: 123,
-      title: "aTitle",
-      description: "aDescription",
-      type: "tick",
-    },
-    {
-      id: 126,
-      title: "aTitle2",
-      description: "aDescription2",
-      type: "tick",
-    },
-    {
-      id: 124,
-      title: "aTitle3",
-      description: "aDescription3",
-      type: "task",
-    },
-  ]);
-});
+Jobs.get("/", getJobs);
 
 /**
  * @swagger
@@ -117,9 +95,7 @@ Jobs.post(
     body("project").isNumeric(),
   ],
   validate,
-  (req: Request, res: Response) => {
-    res.sendStatus(201);
-  }
+  createJob
 );
 
 /**
@@ -185,9 +161,7 @@ Jobs.put(
     body("project").isNumeric(),
   ],
   validate,
-  (req: Request, res: Response) => {
-    res.sendStatus(200);
-  }
+  updateJob
 );
 
 /**
@@ -209,9 +183,6 @@ Jobs.put(
  *       201:
  *         description: Job Deleted
  */
-Jobs.delete("/:jobId(\\d+)", (req: Request, res: Response) => {
-  const { jobId } = req.params;
-  console.log(`${jobId} deleted`);
-});
+Jobs.delete("/:jobId(\\d+)", deleteJob);
 
 export { Jobs };

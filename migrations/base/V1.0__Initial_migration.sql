@@ -1,13 +1,11 @@
 CREATE TABLE app_user (
     id serial PRIMARY KEY,
-    email_address varchar NOT NULL,
+    email varchar NOT NULL,
     first_name varchar NOT NULL,
     last_name varchar NOT NULL,
     password varchar NOT NULL,
-    date_of_birth date,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
-    last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(email_address)
+    last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE access_type (
