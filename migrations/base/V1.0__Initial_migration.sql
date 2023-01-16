@@ -68,7 +68,7 @@ CREATE TABLE project (
 );
 
 CREATE TABLE project_job (
-    project_job_id serial PRIMARY KEY,
+    id serial PRIMARY KEY,
     project_id integer,
     job_id integer,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
