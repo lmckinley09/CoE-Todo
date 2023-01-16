@@ -15,10 +15,6 @@ INSERT INTO app_user
 (email, first_name, last_name, password, created, last_modified)
 VALUES('jane@email.com', 'Jane', 'Mckinley', 'password', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO board
-("name", created, last_modified)
-VALUES('Lorna''s Board', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO BOARD_ID;
-
 INSERT INTO access_type
 (description)
 VALUES('owner');
@@ -28,6 +24,10 @@ VALUES('viewer');
 INSERT INTO access_type
 (description)
 VALUES('editer');
+
+INSERT INTO board
+("name", created, last_modified)
+VALUES('Lorna''s Board', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO BOARD_ID;
 
 INSERT INTO user_board_type
 (user_id, board_id, type_id)
