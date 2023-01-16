@@ -56,11 +56,10 @@ erDiagram
 
     user {
         serial id PK
-        varchar email_address
+        varchar email
         varchar first_name
         varchar last_name
         varchar password
-        date date_of_birth
         timestamp created
         timestamp last_modified
     }
@@ -127,19 +126,17 @@ Response 200
 [
   {
     "id": 1,
-    "email_address": "lorna@lorna.com",
+    "email": "lorna@lorna.com",
     "first_name": "Lorna",
     "last_name": "McKinley",
-    "date_of_birth": "1996-09-26",
     "created": "2022-12-12 14:29:20.012024",
     "last_modified": "2022-12-12 14:29:20.012024"
   },
   {
     "id": 2,
-    "email_address": "jane@jane.com",
+    "email": "jane@jane.com",
     "first_name": "Jane",
     "last_name": "McKinley",
-    "date_of_birth": "1986-11-26",
     "created": "2022-12-14 14:29:20.012024",
     "last_modified": "2022-12-14 14:29:20.012024"
   }
@@ -155,10 +152,9 @@ Response 200
 ```json
   {
     "id": 1,
-    "email_address": "lorna@lorna.com",
+    "email": "lorna@lorna.com",
     "first_name": "Lorna",
     "last_name": "McKinley",
-    "date_of_birth": "1996-09-26",
     "created": "2022-12-12 14:29:20.012024",
     "last_modified": "2022-12-12 14:29:20.012024"
   }
@@ -172,11 +168,10 @@ Create a user
 Request
 ```json
 {
-  "email_address": "pat@pat.com",
+  "email": "pat@pat.com",
     "first_name": "Patrick",
     "last_name": "Tazz",
     "password": "password3",
-    "date_of_birth": "1995-07-14",
     "created": "2022-12-18 14:29:20.012024",
     "last_modified": "2022-12-18 14:29:20.012024"
 }
