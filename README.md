@@ -52,7 +52,8 @@ erDiagram
  job ||--|| tick : ""
  job ||--|| task : ""
  job ||--|| project : ""
- project ||--o{ task : ""
+ project ||--o{ project_task : ""
+ project_task ||--|| task : ""
 
     user {
         serial id PK
@@ -112,6 +113,12 @@ erDiagram
      project {
         serial id PK
         integer job FK
+    }
+    
+     project_task {
+        serial id PK
+        integer project FK
+        integer task FK
     }
 
 ```
