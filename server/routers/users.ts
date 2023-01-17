@@ -27,8 +27,8 @@ const Users = express.Router();
  *             examples:
  *               jsonObject:
  *                 summary: An example JSON response
- *                 value: '[{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "date_of_birth": "1996-09-26", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"},
- *                            {"id": 2, "email": "jane@email.com", "first_name": "Jane", "last_name": "McKinley", "date_of_birth": "1986-11-26", "created": "2022-12-12 14:29:20.012025", "last_modified": "2022-12-12 14:29:20.012025"}]'
+ *                 value: '[{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"},
+ *                            {"id": 2, "email": "jane@email.com", "first_name": "Jane", "last_name": "McKinley", "created": "2022-12-12 14:29:20.012025", "last_modified": "2022-12-12 14:29:20.012025"}]'
  *       204:
  *         description: No content
  */

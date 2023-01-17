@@ -16,6 +16,8 @@ const getUser = async (req: Request, res: Response) => {
     },
     select: {
       id: true,
+      first_name: true,
+      last_name: true,
     },
   });
   res.status(200).json(user);
