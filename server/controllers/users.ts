@@ -14,6 +14,9 @@ const getUser = async (req: Request, res: Response) => {
     where: {
       id: Number(userId),
     },
+    select: {
+      id: true,
+    },
   });
   res.status(200).json(user);
 };

@@ -8,29 +8,29 @@ datasource db {
 }
 
 model access_type {
-  id              Int               @id @default(autoincrement())
-  description     String            @db.VarChar
-  user_board_type user_board_type[]
+  id                Int                 @id @default(autoincrement())
+  description       String              @db.VarChar
+  user_board_access user_board_access[]
 }
 
 model app_user {
-  id              Int               @id @default(autoincrement())
-  email           String            @db.VarChar
-  first_name      String            @db.VarChar
-  last_name       String            @db.VarChar
-  password        String            @db.VarChar
-  created         DateTime?         @default(now()) @db.Timestamp(6)
-  last_modified   DateTime?         @default(now()) @db.Timestamp(6)
-  user_board_type user_board_type[]
+  id                Int                 @id @default(autoincrement())
+  email             String              @db.VarChar
+  first_name        String              @db.VarChar
+  last_name         String              @db.VarChar
+  password          String              @db.VarChar
+  created           DateTime?           @default(now()) @db.Timestamp(6)
+  last_modified     DateTime?           @default(now()) @db.Timestamp(6)
+  user_board_access user_board_access[]
 }
 
 model board {
-  id              Int               @id @default(autoincrement())
-  name            String            @db.VarChar
-  created         DateTime?         @default(now()) @db.Timestamp(6)
-  last_modified   DateTime?         @default(now()) @db.Timestamp(6)
-  job             job[]
-  user_board_type user_board_type[]
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar
+  created           DateTime?           @default(now()) @db.Timestamp(6)
+  last_modified     DateTime?           @default(now()) @db.Timestamp(6)
+  job               job[]
+  user_board_access user_board_access[]
 }
 
 model flyway_schema_history {
@@ -49,42 +49,42 @@ model flyway_schema_history {
 }
 
 model job {
-  id              Int           @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   board_id        Int?
-  title           String        @db.VarChar
-  description     String?       @db.VarChar
-  status          String?       @db.VarChar
-  completion_date DateTime?     @db.Date
-  created         DateTime?     @default(now()) @db.Timestamp(6)
-  last_modified   DateTime?     @default(now()) @db.Timestamp(6)
-  board           board?        @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  title           String    @db.VarChar
+  description     String?   @db.VarChar
+  status          String?   @db.VarChar
+  completion_date DateTime? @db.Date
+  created         DateTime? @default(now()) @db.Timestamp(6)
+  last_modified   DateTime? @default(now()) @db.Timestamp(6)
+  board           board?    @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
   project         project[]
-  project_job     project_job[]
   task            task[]
   tick            tick[]
 }
 
 model project {
-  id          Int           @id @default(autoincrement())
-  job_id      Int?
-  job         job?          @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
-  project_job project_job[]
+  id           Int            @id @default(autoincrement())
+  job_id       Int?
+  job          job?           @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  project_task project_task[]
 }
 
-model project_job {
-  project_job_id Int      @id @default(autoincrement())
-  project_id     Int?
-  job_id         Int?
-  job            job?     @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
-  project        project? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+model project_task {
+  id         Int     @id @default(autoincrement())
+  project_id Int
+  task_id    Int
+  project    project @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
+  task       task    @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task")
 
-  @@unique([project_id, job_id])
+  @@unique([project_id, task_id])
 }
 
 model task {
-  id     Int  @id @default(autoincrement())
-  job_id Int?
-  job    job? @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  id           Int            @id @default(autoincrement())
+  job_id       Int?
+  project_task project_task[]
+  job          job?           @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
 }
 
 model tick {
@@ -93,12 +93,12 @@ model tick {
   job    job? @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
 }
 
-model user_board_type {
-  id          Int          @id @default(autoincrement())
-  user_id     Int?
-  board_id    Int?
-  type_id     Int?
-  board       board?       @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
-  access_type access_type? @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_type")
-  app_user    app_user?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+model user_board_access {
+  id          Int         @id @default(autoincrement())
+  user_id     Int
+  board_id    Int
+  type_id     Int
+  board       board       @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  access_type access_type @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_type")
+  app_user    app_user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 }

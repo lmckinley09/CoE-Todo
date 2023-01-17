@@ -4,11 +4,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getBoards = async (req: Request, res: Response) => {
-  //search in deifferent table?
-  const { userId } = req.params;
+  const { userId } = req.query;
   const boards = await prisma.board.findMany({
     where: {
-      id: Number(userId),
+      user_board_access: {
+        some: {
+          user_id: Number(userId),
+        },
+      },
     },
   });
   res.status(200).json(boards);
@@ -19,6 +22,9 @@ const getBoard = async (req: Request, res: Response) => {
   const board = await prisma.board.findUnique({
     where: {
       id: Number(boardId),
+    },
+    include: {
+      job: true,
     },
   });
   res.status(200).json(board);

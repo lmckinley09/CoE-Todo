@@ -20,11 +20,11 @@ CREATE TABLE board (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_board_type (
+CREATE TABLE user_board_access (
     id serial PRIMARY KEY,
-    user_id integer,
-    board_id integer,
-    type_id integer,
+    user_id integer NOT NULL,
+    board_id integer NOT NULL,
+    type_id integer NOT NULL,
      CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES app_user(id),
     CONSTRAINT fk_board FOREIGN KEY (board_id)
@@ -69,8 +69,8 @@ CREATE TABLE project (
 
 CREATE TABLE project_task (
     id serial PRIMARY KEY,
-    project_id integer,
-    task_id integer,
+    project_id integer NOT NULL,
+    task_id integer NOT NULL,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
         REFERENCES project(id),
     CONSTRAINT fk_task FOREIGN KEY (task_id)
