@@ -57,7 +57,7 @@ model job {
   completion_date DateTime? @db.Date
   created         DateTime? @default(now()) @db.Timestamp(6)
   last_modified   DateTime? @default(now()) @db.Timestamp(6)
-  board           board?    @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  board           board?    @relation(fields: [board_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_board")
   project         project[]
   task            task[]
   tick            tick[]
@@ -66,7 +66,7 @@ model job {
 model project {
   id           Int            @id @default(autoincrement())
   job_id       Int?
-  job          job?           @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  job          job?           @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
   project_task project_task[]
 }
 
@@ -74,8 +74,8 @@ model project_task {
   id         Int     @id @default(autoincrement())
   project_id Int
   task_id    Int
-  project    project @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_project")
-  task       task    @relation(fields: [task_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_task")
+  project    project @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project")
+  task       task    @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_task")
 
   @@unique([project_id, task_id])
 }
@@ -84,13 +84,13 @@ model task {
   id           Int            @id @default(autoincrement())
   job_id       Int?
   project_task project_task[]
-  job          job?           @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  job          job?           @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
 }
 
 model tick {
   id     Int  @id @default(autoincrement())
   job_id Int?
-  job    job? @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_job")
+  job    job? @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
 }
 
 model user_board_access {
@@ -98,7 +98,7 @@ model user_board_access {
   user_id     Int
   board_id    Int
   type_id     Int
-  board       board       @relation(fields: [board_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_board")
+  board       board       @relation(fields: [board_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_board")
   access_type access_type @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_type")
-  app_user    app_user    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  app_user    app_user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
 }

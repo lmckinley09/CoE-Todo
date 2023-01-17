@@ -78,6 +78,12 @@ Boards.route("/:boardId(\\d+)").get(getBoard);
  *       Boards
  *     ]
  *     summary: Creates a new board
+ *     parameters:
+ *       - name: userId
+ *         in: query
+ *         type: integer
+ *         description: The ID of the requested user.
+ *         required: true
  *     requestBody:
  *       content:
  *         application/json:
@@ -88,10 +94,6 @@ Boards.route("/:boardId(\\d+)").get(getBoard);
  *                 type: string
  *                 required: true
  *                 description: The name of the board
- *               user:
- *                 type: number
- *                 required: true
- *                 description: The user creating the board
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -169,7 +171,7 @@ Boards.put(
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       201:
+ *       204:
  *         description: Board Deleted
  */
 Boards.delete("/:boardId(\\d+)", deleteBoard);
