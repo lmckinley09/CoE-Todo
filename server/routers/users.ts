@@ -186,7 +186,7 @@ Users.put(
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       201:
+ *       204:
  *         description: User Deleted
  */
 Users.delete("/:userId(\\d+)", deleteUser);

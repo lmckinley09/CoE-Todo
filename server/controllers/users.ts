@@ -60,7 +60,7 @@ const deleteUser = async (req: Request, res: Response) => {
       id: Number(userId),
     },
   });
-  res.status(201);
+  res.sendStatus(204);
 };
 
 export { getUsers, getUser, createUser, updateUser, deleteUser };

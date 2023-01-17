@@ -180,7 +180,7 @@ Jobs.put(
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       201:
+ *       204:
  *         description: Job Deleted
  */
 Jobs.delete("/:jobId(\\d+)", deleteJob);
