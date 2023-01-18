@@ -51,14 +51,19 @@ const createBoard = async (req: Request, res: Response) => {
     },
   });
 
-  const createdBoard = await prisma.board.create({ data: board });
-  await prisma.user_board_access.create({
-    data: {
-      user_id: Number(userId),
-      board_id: createdBoard.id,
-      type_id: owner.id,
-    },
+  let createdBoard;
+
+  await prisma.$transaction(async (tx) => {
+    createdBoard = await tx.board.create({ data: board });
+    await tx.user_board_access.create({
+      data: {
+        user_id: Number(userId),
+        board_id: createdBoard.id,
+        type_id: owner.id,
+      },
+    });
   });
+
   res.status(201).json(createdBoard);
 };
 

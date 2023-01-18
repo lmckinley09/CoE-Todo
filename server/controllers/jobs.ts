@@ -12,6 +12,22 @@ const getJobs = async (req: Request, res: Response) => {
       },
     },
   });
+  console.log(jobs);
+
+  //  const ticks = await prisma.tick.findMany({
+  //    where: {
+  //      job: {
+  //        board: {
+  //          id: Number(boardId),
+  //        },
+  //      },
+  //    },
+  //    include:{
+
+  //    }
+  //  });
+
+  // console.log(ticks);
   //get what table they are linked too
   res.status(200).json(jobs);
 };
