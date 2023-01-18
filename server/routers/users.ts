@@ -27,8 +27,8 @@ const Users = express.Router();
  *             examples:
  *               jsonObject:
  *                 summary: An example JSON response
- *                 value: '[{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"},
- *                            {"id": 2, "email": "jane@email.com", "first_name": "Jane", "last_name": "McKinley", "created": "2022-12-12 14:29:20.012025", "last_modified": "2022-12-12 14:29:20.012025"}]'
+ *                 value: '[{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "profile_picture": "default_profile.png", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"},
+ *                            {"id": 2, "email": "jane@email.com", "first_name": "Jane", "last_name": "McKinley", "profile_picture": "default_profile.png", "created": "2022-12-12 14:29:20.012025", "last_modified": "2022-12-12 14:29:20.012025"}]'
  *       204:
  *         description: No content
  */
@@ -55,7 +55,7 @@ Users.get("/", getUsers);
  *             examples:
  *               jsonObject:
  *                 summary: An example JSON response
- *                 value: '{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "date_of_birth": "1996-09-26", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"}'
+ *                 value: '{"id": 1, "email": "lorna@email.com", "first_name": "Lorna", "last_name": "McKinley", "profile_picture": "default_profile.png", "created": "2022-12-12 14:29:20.012024", "last_modified": "2022-12-12 14:29:20.012024"}'
  *       204:
  *         description: No content
  */
@@ -93,6 +93,11 @@ Users.route("/:userId(\\d+)").get(getUser);
  *                 required: true
  *                 description: The password for the user
  *                 example: password!1
+ *               profile_picture:
+ *                 type: string
+ *                 required: false
+ *                 description: The profile picture for the user
+ *                 example: default_profile.png
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -153,6 +158,10 @@ Users.post(
  *                 type: string
  *                 required: false
  *                 description: The password for the user
+ *               profile_picture:
+ *                 type: string
+ *                 required: false
+ *                 description: The profile picture for the user
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
