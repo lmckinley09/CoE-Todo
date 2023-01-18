@@ -4,14 +4,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getJobs = async (req: Request, res: Response) => {
-  //board id tired to job
-  const { boardId } = req.params;
-  // const jobs = await prisma.job.findMany(
-  //    where: {
-  //     id: Number(boardId),
-  //   },
-  // );
-  // res.status(200).json(jobs);
+  const { boardId } = req.query;
+  const jobs = await prisma.job.findMany({
+    where: {
+      board: {
+        id: Number(boardId),
+      },
+    },
+  });
+  //get what table they are linked too
+  res.status(200).json(jobs);
 };
 
 const createJob = async (req: Request, res: Response) => {

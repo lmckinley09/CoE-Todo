@@ -52,7 +52,6 @@ const createBoard = async (req: Request, res: Response) => {
   });
 
   const createdBoard = await prisma.board.create({ data: board });
-  //check best way to get owner type
   await prisma.user_board_access.create({
     data: {
       user_id: Number(userId),
