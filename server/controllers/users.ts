@@ -1,66 +1,36 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { UserService } from "./../services";
 
-const prisma = new PrismaClient();
-
-const getUsers = async (res: Response) => {
-  const users = await prisma.app_user.findMany();
-  res.status(200).json(users);
+const getAllUsers = async (req: Request, res: Response) => {
+  const users = await UserService.getAll();
+  return res.status(200).json(users);
 };
 
 const getUser = async (req: Request, res: Response) => {
+  // const { userId } = req.headers;
   const { userId } = req.params;
-  const user = await prisma.app_user.findUnique({
-    where: {
-      id: Number(userId),
-    },
-    select: {
-      id: true,
-      first_name: true,
-      last_name: true,
-    },
-  });
-  res.status(200).json(user);
+
+  const user = await UserService.getSingle(Number(userId));
+  return !user ? res.sendStatus(404) : res.status(200).json(user);
 };
 
 const createUser = async (req: Request, res: Response) => {
-  const { email, first_name, last_name, password } = req.body;
-  const user = {
-    email,
-    first_name,
-    last_name,
-    password,
-  };
-  const createdUser = await prisma.app_user.create({ data: user });
-  res.status(201).json(createdUser);
+  const createdUser = UserService.createOne(req.body);
+  return !createdUser ? res.sendStatus(400) : res.status(200).json(createdUser);
 };
 
 const updateUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const { email, first_name, last_name, password } = req.body;
-  const user = {
-    email,
-    first_name,
-    last_name,
-    password,
-  };
-  const updatedUser = await prisma.app_user.update({
-    where: {
-      id: Number(userId),
-    },
-    data: user,
-  });
-  res.status(201).json(updatedUser);
+
+  const updatedUser = await UserService.updateOne(Number(userId), req.body);
+  return !updatedUser ? res.sendStatus(404) : res.sendStatus(200);
 };
 
 const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
-  await prisma.app_user.delete({
-    where: {
-      id: Number(userId),
-    },
-  });
+
+  await UserService.deleteOne(Number(userId));
   res.sendStatus(204);
 };
 
-export { getUsers, getUser, createUser, updateUser, deleteUser };
+export { getAllUsers, getUser, createUser, updateUser, deleteUser };

@@ -2,7 +2,7 @@ import express from "express";
 import { validate } from "./../utils/validation";
 import { body } from "express-validator";
 import {
-  getUsers,
+  getAllUsers,
   getUser,
   createUser,
   updateUser,
@@ -32,7 +32,7 @@ const Users = express.Router();
  *       204:
  *         description: No content
  */
-Users.get("/", getUsers);
+Users.get("/", getAllUsers);
 
 /**
  * @swagger
@@ -101,7 +101,7 @@ Users.route("/:userId(\\d+)").get(getUser);
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       201:
+ *       200:
  *         description: User Created
  */
 Users.post(
@@ -135,7 +135,7 @@ Users.post(
  *       - name: userId
  *         in: path
  *         type: integer
- *         description: The email of the requested user.
+ *         description: The id of the requested user.
  *     requestBody:
  *       content:
  *         application/json:
@@ -146,6 +146,7 @@ Users.post(
  *                 type: string
  *                 required: false
  *                 description: The email for the user
+ *                 example: example@email.com
  *               first_name:
  *                 type: string
  *                 required: false
@@ -158,14 +159,16 @@ Users.post(
  *                 type: string
  *                 required: false
  *                 description: The password for the user
+ *                 example: password!1
  *               profile_picture:
  *                 type: string
  *                 required: false
  *                 description: The profile picture for the user
+ *                 example: default_profile.png
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       204:
+ *       200:
  *         description: User Updated
  */
 Users.put(

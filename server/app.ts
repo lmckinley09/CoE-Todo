@@ -31,13 +31,14 @@ app.use("/swagger.json", (req, res) =>
   res.status(200).json(openapiSpecification)
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello world!!!");
-});
-
 app.use("/users", Users);
 app.use("/boards", Boards);
 app.use("/jobs", Jobs);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
