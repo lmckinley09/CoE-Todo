@@ -3,7 +3,7 @@ import { UserService } from "./../services";
 
 const getAllUsers = async (req: Request, res: Response) => {
   const users = await UserService.getAll();
-  return res.status(200).json(users);
+  return !users ? res.sendStatus(404) : res.status(200).json(users);
 };
 
 const getUser = async (req: Request, res: Response) => {
