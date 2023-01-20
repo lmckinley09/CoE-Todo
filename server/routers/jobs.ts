@@ -41,21 +41,23 @@ Jobs.get("/", getJobs);
  *       Jobs
  *     ]
  *     summary: Creates a new job
+ *     parameters:
+ *       - name: boardId
+ *         in: query
+ *         type: integer
+ *         description: The ID of the requested board.
+ *         required: true
+ *       - name: typeId
+ *         in: query
+ *         type: integer
+ *         description: The ID of the job type.
+ *         required: true
  *     requestBody:
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               boardId:
- *                 type: number
- *                 required: true
- *                 description: The ID of the board
- *               typeId:
- *                 type: number
- *                 required: true
- *                 description: The ID of the job type
- *                 example: 1
  *               title:
  *                 type: string
  *                 required: true
@@ -76,14 +78,12 @@ Jobs.get("/", getJobs);
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
- *       201:
+ *       200:
  *         description: Job Created
  */
 Jobs.post(
   "/",
   [
-    body("boardId").isNumeric().trim(),
-    body("typeId").isNumeric().trim(),
     body("title")
       .isString()
       .isLength({ min: 3 })
@@ -113,6 +113,11 @@ Jobs.post(
  *         in: path
  *         type: integer
  *         description: The ID of the job.
+ *         required: true
+ *       - name: typeId
+ *         in: query
+ *         type: integer
+ *         description: The ID of the job type.
  *     requestBody:
  *       content:
  *         application/json:
@@ -127,10 +132,15 @@ Jobs.post(
  *                 type: string
  *                 required: false
  *                 description: The job description
+ *               status:
+ *                 type: string
+ *                 required: false
+ *                 description: The job status
  *               completion_date:
  *                 type: string
  *                 required: false
  *                 description: The due date
+ *                 example: 2023-01-20T00:00:00.000Z
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -138,10 +148,8 @@ Jobs.post(
  *         description: OK
  */
 Jobs.put(
-  "/:boardId(\\d+)",
+  "/:jobId(\\d+)",
   [
-    body("board_id").isNumeric().trim(),
-    body("type_id").isNumeric().trim(),
     body("title")
       .isString()
       .isLength({ min: 3 })

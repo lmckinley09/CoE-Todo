@@ -21,7 +21,7 @@ const getAll = async (boardId: number) => {
       },
     },
     select: {
-      board_id: true,
+      id: true,
       title: true,
       description: true,
       status: true,
@@ -38,11 +38,11 @@ const getAll = async (boardId: number) => {
   });
 };
 
-const createOne = async (job: IJob) => {
+const createOne = async (boardId: number, typeId: number, job: IJob) => {
   return await prisma.job.create({
     data: {
-      board_id: job.boardId,
-      type_id: job.typeId,
+      board_id: boardId,
+      type_id: typeId,
       title: job.title,
       description: job.description,
       status: job.status,
@@ -53,14 +53,13 @@ const createOne = async (job: IJob) => {
   });
 };
 
-const updateOne = async (jobId: number, job: IJob) => {
+const updateOne = async (jobId: number, typeId: number, job: IJob) => {
   return await prisma.job.update({
     where: {
       id: jobId,
     },
     data: {
-      board_id: job.boardId,
-      type_id: job.typeId,
+      type_id: typeId,
       title: job.title,
       description: job.description,
       status: job.status,
