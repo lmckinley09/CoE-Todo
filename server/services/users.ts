@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-
+// import prisma from "../utils/prisma";
 const prisma = new PrismaClient();
-
 interface IUser {
   email: string;
   first_name: string;

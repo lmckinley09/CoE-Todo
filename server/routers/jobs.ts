@@ -51,6 +51,11 @@ Jobs.get("/", getJobs);
  *                 type: number
  *                 required: true
  *                 description: The ID of the board
+ *               typeId:
+ *                 type: number
+ *                 required: true
+ *                 description: The ID of the job type
+ *                 example: 1
  *               title:
  *                 type: string
  *                 required: true
@@ -59,18 +64,15 @@ Jobs.get("/", getJobs);
  *                 type: string
  *                 required: false
  *                 description: The job description
+ *               status:
+ *                 type: string
+ *                 required: false
+ *                 description: The job status
  *               completion_date:
  *                 type: string
  *                 required: false
  *                 description: The due date
- *               type:
- *                 type: string
- *                 required: true
- *                 description: The type of job
- *               project:
- *                 type: number
- *                 required: false
- *                 description: The project the task falls under
+ *                 example: 2023-01-20T00:00:00.000Z
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -80,6 +82,8 @@ Jobs.get("/", getJobs);
 Jobs.post(
   "/",
   [
+    body("boardId").isNumeric().trim(),
+    body("typeId").isNumeric().trim(),
     body("title")
       .isString()
       .isLength({ min: 3 })
@@ -91,8 +95,6 @@ Jobs.post(
       .withMessage("description should have minimum length of 3")
       .trim(),
     body("completion_date").isString(),
-    body("type").isString().isLength({ min: 4 }).trim(),
-    body("project").isNumeric(),
   ],
   validate,
   createJob
@@ -129,14 +131,6 @@ Jobs.post(
  *                 type: string
  *                 required: false
  *                 description: The due date
- *               type:
- *                 type: string
- *                 required: true
- *                 description: The type of job
- *               project:
- *                 type: number
- *                 required: false
- *                 description: The project the task falls under
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -146,6 +140,8 @@ Jobs.post(
 Jobs.put(
   "/:boardId(\\d+)",
   [
+    body("board_id").isNumeric().trim(),
+    body("type_id").isNumeric().trim(),
     body("title")
       .isString()
       .isLength({ min: 3 })
@@ -157,8 +153,6 @@ Jobs.put(
       .withMessage("description should have minimum length of 3")
       .trim(),
     body("completion_date").isString(),
-    body("type").isString().isLength({ min: 4 }).trim(),
-    body("project").isNumeric(),
   ],
   validate,
   updateJob

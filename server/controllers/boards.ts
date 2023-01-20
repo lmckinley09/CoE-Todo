@@ -11,8 +11,6 @@ const getBoard = async (req: Request, res: Response) => {
   const { boardId } = req.params;
   const board = await BoardService.getSingle(Number(boardId));
 
-  //can i get what table they came from?
-  //eg tick and add a field to say where
   return !board ? res.sendStatus(404) : res.status(200).json(board);
 };
 

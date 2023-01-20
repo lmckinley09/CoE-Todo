@@ -1,76 +1,30 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { JobService } from "./../services";
 
 const getJobs = async (req: Request, res: Response) => {
   const { boardId } = req.query;
-  const jobs = await prisma.job.findMany({
-    where: {
-      board: {
-        id: Number(boardId),
-      },
-    },
-  });
-  console.log(jobs);
+  const jobs = await JobService.getAll(Number(boardId));
 
-  //  const ticks = await prisma.tick.findMany({
-  //    where: {
-  //      job: {
-  //        board: {
-  //          id: Number(boardId),
-  //        },
-  //      },
-  //    },
-  //    include:{
-
-  //    }
-  //  });
-
-  // console.log(ticks);
-  //get what table they are linked too
-  res.status(200).json(jobs);
+  return !jobs ? res.sendStatus(404) : res.status(200).json(jobs);
 };
 
 const createJob = async (req: Request, res: Response) => {
-  const { title, description, completion_date, type, project } = req.body;
-  const job = {
-    title,
-    description,
-    completion_date,
-    type,
-    project,
-  };
-  const createdJob = await prisma.job.create({ data: job });
-  res.status(201).json(createdJob);
+  const createdJob = await JobService.createOne(req.body);
+  return !createdJob ? res.sendStatus(404) : res.status(200).json(createdJob);
 };
 
 const updateJob = async (req: Request, res: Response) => {
   const { jobId } = req.params;
-  const { title, description, completion_date, type, project } = req.body;
-  const job = {
-    title,
-    description,
-    completion_date,
-    type,
-    project,
-  };
-  const updatedJob = await prisma.job.update({
-    where: {
-      id: Number(jobId),
-    },
-    data: job,
-  });
-  res.status(201).json(updatedJob);
+
+  const updatedJob = await JobService.updateOne(Number(jobId), req.body);
+
+  return !updatedJob ? res.sendStatus(404) : res.status(200);
 };
 
 const deleteJob = async (req: Request, res: Response) => {
-  const { userId } = req.params;
-  await prisma.job.delete({
-    where: {
-      id: Number(userId),
-    },
-  });
+  const { jobId } = req.params;
+  await JobService.deleteOne(Number(jobId));
+
   res.sendStatus(204);
 };
 
