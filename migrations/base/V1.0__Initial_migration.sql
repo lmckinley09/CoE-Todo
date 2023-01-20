@@ -21,6 +21,11 @@ CREATE TABLE board (
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE job_type (
+    id serial PRIMARY KEY,
+    description varchar NOT NULL
+);
+
 CREATE TABLE user_board_access (
     id serial PRIMARY KEY,
     user_id integer NOT NULL,
@@ -36,45 +41,27 @@ CREATE TABLE user_board_access (
 
 CREATE TABLE job (
     id serial PRIMARY KEY,
-    board_id integer,
+    board_id integer NOT NULL,
     title varchar NOT NULL,
     description varchar,
     status varchar,
     completion_date date,
+    type_id integer NOT NULL,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_board FOREIGN KEY (board_id)
-        REFERENCES board(id) ON DELETE CASCADE
+        REFERENCES board(id) ON DELETE CASCADE,
+    CONSTRAINT fk_type FOREIGN KEY (type_id)
+        REFERENCES job_type(id)
 );
 
-CREATE TABLE tick (
-    id serial PRIMARY KEY,
-    job_id integer,
-    CONSTRAINT fk_job FOREIGN KEY (job_id)
-        REFERENCES job(id) ON DELETE CASCADE
-);
-
-CREATE TABLE task (
-    id serial PRIMARY KEY,
-    job_id integer,
-    CONSTRAINT fk_job FOREIGN KEY (job_id)
-        REFERENCES job(id) ON DELETE CASCADE
-);
-
-CREATE TABLE project (
-    id serial PRIMARY KEY,
-    job_id integer,
-    CONSTRAINT fk_job FOREIGN KEY (job_id)
-        REFERENCES job(id) ON DELETE CASCADE
-);
-
-CREATE TABLE project_task (
+CREATE TABLE project_job (
     id serial PRIMARY KEY,
     project_id integer NOT NULL,
-    task_id integer NOT NULL,
+    job_id integer NOT NULL,
     CONSTRAINT fk_project FOREIGN KEY (project_id)
-        REFERENCES project(id) ON DELETE CASCADE,
-    CONSTRAINT fk_task FOREIGN KEY (task_id)
-        REFERENCES task(id) ON DELETE CASCADE,
-            UNIQUE (project_id, task_id)
+        REFERENCES job(id) ON DELETE CASCADE,
+    CONSTRAINT fk_job FOREIGN KEY (job_id)
+        REFERENCES job(id) ON DELETE CASCADE,
+            UNIQUE (project_id, job_id)
 );

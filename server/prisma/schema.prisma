@@ -50,48 +50,35 @@ model flyway_schema_history {
 }
 
 model job {
-  id              Int       @id @default(autoincrement())
-  board_id        Int?
-  title           String    @db.VarChar
-  description     String?   @db.VarChar
-  status          String?   @db.VarChar
-  completion_date DateTime? @db.Date
-  created         DateTime? @default(now()) @db.Timestamp(6)
-  last_modified   DateTime? @default(now()) @db.Timestamp(6)
-  board           board?    @relation(fields: [board_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_board")
-  project         project[]
-  task            task[]
-  tick            tick[]
+  id                                      Int           @id @default(autoincrement())
+  board_id                                Int
+  title                                   String        @db.VarChar
+  description                             String?       @db.VarChar
+  status                                  String?       @db.VarChar
+  completion_date                         DateTime?     @db.Date
+  type_id                                 Int
+  created                                 DateTime?     @default(now()) @db.Timestamp(6)
+  last_modified                           DateTime?     @default(now()) @db.Timestamp(6)
+  board                                   board         @relation(fields: [board_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_board")
+  job_type                                job_type      @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_type")
+  project_job_project_job_job_idTojob     project_job[] @relation("project_job_job_idTojob")
+  project_job_project_job_project_idTojob project_job[] @relation("project_job_project_idTojob")
 }
 
-model project {
-  id           Int            @id @default(autoincrement())
-  job_id       Int?
-  job          job?           @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
-  project_task project_task[]
+model job_type {
+  id          Int    @id @default(autoincrement())
+  description String @db.VarChar
+  job         job[]
 }
 
-model project_task {
-  id         Int     @id @default(autoincrement())
-  project_id Int
-  task_id    Int
-  project    project @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project")
-  task       task    @relation(fields: [task_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_task")
+model project_job {
+  id                              Int @id @default(autoincrement())
+  project_id                      Int
+  job_id                          Int
+  job_project_job_job_idTojob     job @relation("project_job_job_idTojob", fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
+  job_project_job_project_idTojob job @relation("project_job_project_idTojob", fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_project")
 
-  @@unique([project_id, task_id])
-}
-
-model task {
-  id           Int            @id @default(autoincrement())
-  job_id       Int?
-  project_task project_task[]
-  job          job?           @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
-}
-
-model tick {
-  id     Int  @id @default(autoincrement())
-  job_id Int?
-  job    job? @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_job")
+  @@unique([project_id, job_id])
 }
 
 model user_board_access {
