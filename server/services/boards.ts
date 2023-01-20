@@ -25,9 +25,6 @@ const getSingle = async (boardId: number) => {
     where: {
       id: Number(boardId),
     },
-    include: {
-      job: true,
-    },
   });
 };
 

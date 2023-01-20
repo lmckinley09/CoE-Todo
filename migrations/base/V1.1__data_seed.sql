@@ -37,6 +37,9 @@ VALUES('project');
 INSERT INTO board
 ("name", created, last_modified)
 VALUES('Lorna''s Board', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO BOARD_ID;
+INSERT INTO board
+("name", created, last_modified)
+VALUES('Party Board', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO BOARD_ID;
 
 INSERT INTO user_board_access
 (user_id, board_id, type_id)
