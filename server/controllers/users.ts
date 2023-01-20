@@ -15,7 +15,7 @@ const getUser = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
-  const createdUser = UserService.createOne(req.body);
+  const createdUser = await UserService.createOne(req.body);
   return !createdUser ? res.sendStatus(400) : res.status(200).json(createdUser);
 };
 
