@@ -25,13 +25,13 @@ INSERT INTO access_type
 VALUES('editer');
 
 INSERT INTO job_type
-(description)
+(type_description)
 VALUES('tick');
 INSERT INTO job_type
-(description)
+(type_description)
 VALUES('task');
 INSERT INTO job_type
-(description)
+(type_description)
 VALUES('project');
 
 INSERT INTO board
@@ -43,15 +43,15 @@ INSERT INTO user_board_access
 VALUES( USER_ID, BOARD_ID,(select id from access_type where description = 'owner'));
 
 INSERT INTO job
-(board_id, title, description, status, completion_date, type_id, created, last_modified)
+(board_id, type_id, title, description, status, completion_date, created, last_modified)
 VALUES(
-  BOARD_ID, 'Lorna''s First Task', '', 'Not Started',CURRENT_DATE, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+  BOARD_ID, 2, 'Lorna''s First Task', '', 'Not Started',CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
   RETURNING id INTO TASK_JOB_ID;
 
 INSERT INTO job
-  (board_id, title, description, status, completion_date, type_id, created, last_modified)
+  (board_id, type_id, title, description, status, completion_date, created, last_modified)
   VALUES(
-    BOARD_ID, 'Lorna''s First Project', '', 'Not Started',CURRENT_DATE, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    BOARD_ID, 3, 'Lorna''s First Project', '', 'Not Started',CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     RETURNING id INTO PROJECT_JOB_ID;
 
 INSERT INTO project_job

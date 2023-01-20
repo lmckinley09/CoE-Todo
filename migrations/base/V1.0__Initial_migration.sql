@@ -23,7 +23,7 @@ CREATE TABLE board (
 
 CREATE TABLE job_type (
     id serial PRIMARY KEY,
-    description varchar NOT NULL
+    type_description varchar NOT NULL
 );
 
 CREATE TABLE user_board_access (
@@ -42,11 +42,11 @@ CREATE TABLE user_board_access (
 CREATE TABLE job (
     id serial PRIMARY KEY,
     board_id integer NOT NULL,
+    type_id integer NOT NULL,
     title varchar NOT NULL,
     description varchar,
     status varchar,
     completion_date date,
-    type_id integer NOT NULL,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
     last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_board FOREIGN KEY (board_id)
