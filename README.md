@@ -44,15 +44,12 @@ erDiagram
 # Entity Relationship Diagram
 ```mermaid
 erDiagram
- user ||--o{ user_board_type : ""
- access_type ||--o{ user_board_type : ""
- board ||--o{ user_board_type : ""
+ user ||--o{ user_board_access : ""
+ access_type ||--o{ user_board_access : ""
+ board ||--o{ user_board_access : ""
  board ||--o{ job : ""
- job ||--|| tick : ""
- job ||--|| task : ""
- job ||--|| project : ""
- project ||--o{ project_task : ""
- project_task ||--|| task : ""
+ job ||--|| job_type : ""
+ job ||--o{ project_job : ""
 
     user {
         serial id PK
@@ -69,7 +66,7 @@ erDiagram
         varchar description 
     }
     
-    user_board_type {
+    user_board_access {
         serial id PK
         integer user_id FK
         integer board_id FK
@@ -83,9 +80,15 @@ erDiagram
         timestamp last_modified
     }
     
+    job_type {
+        serial id PK
+        varchar type_description 
+    }
+    
     job {
         serial id PK
-        integer board FK
+        integer board_id FK
+        integer type_id FK
         varchar title
         varchar description
         varchar status
@@ -94,26 +97,10 @@ erDiagram
         timestamp last_modified
     }
     
-    tick {
+     project_job {
         serial id PK
-        integer job FK
-    }
-    
-     task {
-        serial id PK
-        integer job FK
-        integer project FK
-    }
-    
-     project {
-        serial id PK
-        integer job FK
-    }
-    
-     project_task {
-        serial id PK
-        integer project FK
-        integer task FK
+        integer project_id FK
+        integer job_id FK
     }
 
 ```
