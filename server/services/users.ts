@@ -29,6 +29,19 @@ const getSingle = async (userId: number) => {
   });
 };
 
+const getUserByEmail = async (email: string) => {
+  return await prisma.app_user.findFirst({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+      email: true,
+      password: true,
+    },
+  });
+};
+
 const createOne = async (user: IUser) => {
   const hashedPassword = await bcrypt.hash(user.password, 10);
   return await prisma.app_user.create({
@@ -77,6 +90,7 @@ const UserService = {
   createOne,
   updateOne,
   deleteOne,
+  getUserByEmail,
 };
 
 export { UserService };

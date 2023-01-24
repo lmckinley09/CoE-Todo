@@ -9,10 +9,10 @@ BEGIN
 
 INSERT INTO app_user
 (email, first_name, last_name, password, profile_picture, created, last_modified)
-VALUES('lorna@email.com', 'Lorna', 'Mckinley', 'password','default_profile.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO USER_ID;
+VALUES('lorna@email.com', 'Lorna', 'Mckinley', '$2b$10$YbhhvMreSNFbLzptqnj29.zY4tSL0JgzQxREPZ6vVX8vLGamC3wm.','default_profile.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id INTO USER_ID;
 INSERT INTO app_user
 (email, first_name, last_name, password, profile_picture, created, last_modified)
-VALUES('jane@email.com', 'Jane', 'Mckinley', 'password','default_profile.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES('jane@email.com', 'Jane', 'Mckinley', '$2b$10$YbhhvMreSNFbLzptqnj29.zY4tSL0JgzQxREPZ6vVX8vLGamC3wm.','default_profile.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO access_type
 (description)
