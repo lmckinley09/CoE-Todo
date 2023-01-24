@@ -6,7 +6,7 @@ const getAllUsers = async (req: Request, res: Response) => {
   return !users ? res.sendStatus(404) : res.status(200).json(users);
 };
 
-const getUser = async (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response) => {
   // const { userId } = req.headers;
   const { userId } = req.params;
 
@@ -33,4 +33,4 @@ const deleteUser = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
-export { getAllUsers, getUser, createUser, updateUser, deleteUser };
+export { getAllUsers, getUserById, createUser, updateUser, deleteUser };

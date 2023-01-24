@@ -3,7 +3,7 @@ import { validate } from "./../utils/validation";
 import { body } from "express-validator";
 import {
   getAllUsers,
-  getUser,
+  getUserById,
   createUser,
   updateUser,
   deleteUser,
@@ -59,7 +59,7 @@ Users.get("/", getAllUsers);
  *       204:
  *         description: No content
  */
-Users.route("/:userId(\\d+)").get(getUser);
+Users.route("/:userId(\\d+)").get(getUserById);
 
 /**
  * @swagger
