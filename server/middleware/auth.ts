@@ -12,7 +12,10 @@ const handleTest = (res: Response, next: NextFunction) => {
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   if (process.env.NODE_ENV === "test") return handleTest(res, next);
 
-  if ((req.path === "/auth" || req.path === "/member") && req.method == "POST")
+  if (
+    (req.path === "/authenticate" || req.path === "/user") &&
+    req.method == "POST"
+  )
     return next();
 
   const splitAuth = req.headers.authorization?.split(" ");

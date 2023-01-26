@@ -41,8 +41,10 @@ Auth.route("/refresh").get(refresh);
  *                  properties:
  *                      email:
  *                          type: string
+ *                          example: email@email.com
  *                      password:
  *                          type: string
+ *                          example: password1!
  *     responses:
  *       200:
  *         description: OK

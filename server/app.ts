@@ -49,9 +49,9 @@ app.use("/swagger.json", (req, res) =>
   res.status(200).json(openapiSpecification)
 );
 
-app.use("/authenticate", Auth);
 app.all("*", verifyToken);
 
+app.use("/authenticate", Auth);
 app.use("/users", Users);
 app.use("/boards", Boards);
 app.use("/jobs", Jobs);
