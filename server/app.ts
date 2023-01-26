@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
-import { Users, Boards, Jobs } from "./routers";
+import { Users, Boards, Jobs, Auth } from "./routers";
+import { verifyToken } from "./middleware/auth";
 
 const app = express();
 const port = 3001;
@@ -18,6 +19,23 @@ const swaggerDefinition = {
     title: "Productivity API",
     version: "v1",
   },
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        in: "header",
+        name: "Authorization",
+        description: "Bearer token to access these api endpoints",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+    },
+  },
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
 };
 
 const openapiSpecification = swaggerJsdoc({
@@ -30,6 +48,9 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 app.use("/swagger.json", (req, res) =>
   res.status(200).json(openapiSpecification)
 );
+
+app.use("/authenticate", Auth);
+app.all("*", verifyToken);
 
 app.use("/users", Users);
 app.use("/boards", Boards);

@@ -3,7 +3,7 @@ import { validate } from "../utils/validation";
 import { check } from "express-validator";
 import { authenticate, refresh } from "./../controllers";
 
-const Authenticate = express.Router();
+const Auth = express.Router();
 
 /**
  * @swagger
@@ -16,12 +16,10 @@ const Authenticate = express.Router();
  *     responses:
  *       200:
  *         description: OK
- *         content:
- *           application/json:
- *       204:
- *         description: No content
+ *       400:
+ *         description: Error
  */
-Authenticate.route("/refresh").get(refresh);
+Auth.route("/refresh").get(refresh);
 
 /**
  * @swagger
@@ -30,22 +28,28 @@ Authenticate.route("/refresh").get(refresh);
  *     tags: [
  *       Authenticate
  *     ]
- *     summary: Returns all boards for a user
- *     parameters:
- *       - name: email
- *         in: body
- *         type: integer
- *         description: The ID of the requested user.
- *         required: true
+ *     summary: Authenticate user
+ *     requestBody:
+ *         description: JSON object used for auethentication
+ *         content:
+ *          application/json:
+ *                schema:
+ *                  type: object
+ *                  required:
+ *                    - email
+ *                    - password
+ *                  properties:
+ *                      email:
+ *                          type: string
+ *                      password:
+ *                          type: string
  *     responses:
  *       200:
  *         description: OK
- *         content:
- *           application/json:
- *       204:
- *         description: No content
+ *       400:
+ *         description: Error
  */
-Authenticate.route("/").post(
+Auth.route("/").post(
   [
     check("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
     check("password")
@@ -55,3 +59,5 @@ Authenticate.route("/").post(
   validate,
   authenticate
 );
+
+export { Auth };
