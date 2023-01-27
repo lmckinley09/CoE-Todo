@@ -15,7 +15,7 @@ const getBoard = async (req: Request, res: Response) => {
 };
 
 const createBoard = async (req: Request, res: Response) => {
-  const { userId } = req.query;
+  const { userId } = res.locals;
   const createdBoard = await BoardService.createOne(Number(userId), req.body);
   return !createdBoard
     ? res.sendStatus(400)

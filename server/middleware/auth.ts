@@ -31,7 +31,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
       );
 
       if (tokenVerified) {
-        res.locals.user = tokenVerified.sub;
+        res.locals.userId = tokenVerified.sub;
         return next();
       }
     } catch {
