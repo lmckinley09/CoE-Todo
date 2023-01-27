@@ -1,11 +1,12 @@
 import { prisma } from "../utils/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 interface IUser {
   email: string;
   first_name: string;
   last_name: string;
   password: string;
   profile_picture?: string;
+  role_id?: number;
   created?: string;
   last_modified?: string;
 }
@@ -37,6 +38,7 @@ const getUserByEmail = async (email: string) => {
     select: {
       id: true,
       email: true,
+      role_id: true,
       password: true,
     },
   });
@@ -50,6 +52,7 @@ const createOne = async (user: IUser) => {
       first_name: user.first_name,
       last_name: user.last_name,
       password: hashedPassword,
+      role_id: 2,
       profile_picture: user.profile_picture,
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),

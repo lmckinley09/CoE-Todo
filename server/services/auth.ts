@@ -1,5 +1,5 @@
 import { UserService } from "./../services";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { authConst } from "../constants";
 
