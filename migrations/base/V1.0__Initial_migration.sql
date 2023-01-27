@@ -1,3 +1,8 @@
+CREATE TABLE user_role (
+    id serial PRIMARY KEY,
+    role_description varchar NOT NULL
+);
+
 CREATE TABLE app_user (
     id serial PRIMARY KEY,
     email varchar NOT NULL,
@@ -5,8 +10,11 @@ CREATE TABLE app_user (
     last_name varchar NOT NULL,
     password varchar NOT NULL,
     profile_picture varchar NOT NULL,
+    role_id integer NOT NULL,
     created timestamp DEFAULT CURRENT_TIMESTAMP,
-    last_modified timestamp DEFAULT CURRENT_TIMESTAMP
+    last_modified timestamp DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_role FOREIGN KEY (role_id)
+        REFERENCES user_role(id) 
 );
 
 CREATE TABLE access_type (
