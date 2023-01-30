@@ -26,7 +26,7 @@ const generateTokens = (user) => {
   return new Promise((response, reject) => {
     try {
       const accessToken = jwt.sign(
-        { sub: user.id },
+        { sub: user.id, roles: user.role_id },
         authConst.ACCESS_TOKEN_SECRET,
         {
           expiresIn: 1200,

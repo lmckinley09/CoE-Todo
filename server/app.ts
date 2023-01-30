@@ -3,7 +3,8 @@ import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
 import { Users, Boards, Jobs, Auth } from "./routers";
-import { verifyToken } from "./middleware/auth";
+import { verifyToken } from "./middleware/authenticate";
+import { authorise } from "./middleware/authorise";
 
 const app = express();
 const port = 3001;
@@ -50,6 +51,7 @@ app.use("/swagger.json", (req, res) =>
 );
 
 app.all("*", verifyToken);
+app.all("*", authorise);
 
 app.use("/authenticate", Auth);
 app.use("/users", Users);
