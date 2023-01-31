@@ -14,6 +14,13 @@ const getUserById = async (req: Request, res: Response) => {
   return !user ? res.sendStatus(404) : res.status(200).json(user);
 };
 
+const getUserByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+
+  const user = await UserService.getUserByEmail(email);
+  return !user ? res.sendStatus(404) : res.status(200).json(user);
+};
+
 const createUser = async (req: Request, res: Response) => {
   const createdUser = await UserService.createOne(req.body);
   return !createdUser ? res.sendStatus(400) : res.status(200).json(createdUser);
@@ -33,4 +40,11 @@ const deleteUser = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
-export { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+export {
+  getAllUsers,
+  getUserById,
+  getUserByEmail,
+  createUser,
+  updateUser,
+  deleteUser,
+};

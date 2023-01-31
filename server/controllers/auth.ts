@@ -2,11 +2,8 @@ import { Request, Response } from "express";
 import { AuthService } from "./../services";
 
 const authenticate = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  const authenticationTokens = await AuthService.authenticate(
-    username,
-    password
-  );
+  const { email, password } = req.body;
+  const authenticationTokens = await AuthService.authenticate(email, password);
   res.status(200).json(authenticationTokens);
 };
 
