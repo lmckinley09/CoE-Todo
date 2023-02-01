@@ -52,40 +52,40 @@ describe("Boards Service", () => {
     });
   });
 
-  //   describe("createOne", () => {
-  //     it("return board when created", async () => {
-  //       const userId = 1;
-  //       const name = "board";
-  //       const newBoard = {
-  //         name,
-  //         created: new Date().toISOString(),
-  //         last_modified: new Date().toISOString(),
-  //       };
+  describe("createOne", () => {
+    it("return board when created", async () => {
+      const userId = 1;
+      const name = "board";
+      const newBoard = {
+        name,
+        created: new Date().toISOString(),
+        last_modified: new Date().toISOString(),
+      };
 
-  //       prismaAsAny.$transaction.mockImplementation((callback) =>
-  //         callback(prisma)
-  //       );
+      prismaAsAny.$transaction.mockImplementation((callback) =>
+        callback(prisma)
+      );
 
-  //       prismaAsAny.access_type = {
-  //         findFirst: jest.fn().mockReturnValueOnce(1),
-  //       };
+      prismaAsAny.access_type = {
+        findFirst: jest.fn().mockReturnValueOnce(1),
+      };
 
-  //       prismaAsAny.board = {
-  //         create: jest.fn().mockReturnValueOnce(newBoard),
-  //       };
+      prismaAsAny.board = {
+        create: jest.fn().mockReturnValueOnce(newBoard),
+      };
 
-  //       await BoardService.createOne(userId, newBoard);
+      await BoardService.createOne(userId, newBoard);
 
-  //       expect(prisma.board.create).toHaveBeenCalledTimes(1);
-  //       expect(prisma.board.create).toHaveBeenCalledWith(
-  //         expect.objectContaining({
-  //           data: expect.objectContaining({
-  //             name,
-  //           }),
-  //         })
-  //       );
-  //     });
-  //   });
+      expect(prisma.board.create).toHaveBeenCalledTimes(1);
+      expect(prisma.board.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            name,
+          }),
+        })
+      );
+    });
+  });
 
   describe("updateOne", () => {
     it("return board when updated", async () => {
