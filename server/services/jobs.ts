@@ -47,6 +47,15 @@ const createOne = async (boardId: number, typeId: number, job: IJob) => {
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     },
+    select: {
+      id: true,
+      board_id: true,
+      type_id: true,
+      title: true,
+      description: true,
+      status: true,
+      completion_date: true,
+    },
   });
 };
 

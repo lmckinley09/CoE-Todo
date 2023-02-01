@@ -5,7 +5,7 @@ import { prismaAsAny } from "./../../testUtil/prisma";
 jest.mock("@prisma/client");
 jest.mock("../../utils/prisma");
 
-describe("Users Service", () => {
+describe("Jobs Service", () => {
   describe("getAll", () => {
     it("Should return all jobs", async () => {
       const boardId = 1;
@@ -60,16 +60,15 @@ describe("Users Service", () => {
       expect(prisma.job.create).toHaveBeenCalledTimes(1);
       expect(prisma.job.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          data: expect.objectContaining({
-            board_id: boardId,
-            type_id: typeId,
-            title: newJob.title,
-            description: newJob.description,
-            status: newJob.status,
-            completion_date: newJob.completion_date,
-            created: new Date().toISOString(),
-            last_modified: new Date().toISOString(),
-          }),
+          select: {
+            id: true,
+            board_id: true,
+            type_id: true,
+            title: true,
+            description: true,
+            status: true,
+            completion_date: true,
+          },
         })
       );
     });
