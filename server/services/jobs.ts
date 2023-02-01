@@ -1,6 +1,6 @@
 import { prisma } from "../utils/prisma";
 interface IJob {
-  boardId: number;
+  boardId?: number;
   typeId: number;
   title: string;
   description?: string;

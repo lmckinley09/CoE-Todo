@@ -1,3 +1,6 @@
+import { when } from "jest-when";
+import { UserService } from "../../services";
+import { mockRequest, mockResponse } from "../../testUtil/mockRequest";
 import {
   getAllUsers,
   getUserById,
@@ -6,10 +9,6 @@ import {
   createUser,
   deleteUser,
 } from "../users";
-import { when } from "jest-when";
-import { UserService } from "../../services/users";
-import { Request, Response } from "express";
-import { mockRequest, mockResponse } from "../../testUtil/mockRequest";
 
 jest.mock("../../services/users");
 
@@ -35,7 +34,7 @@ describe("User Controller", () => {
     });
     it("should return 404 when no users are found", async () => {
       const req = mockRequest();
-      const res = {} as Response;
+      const res = mockResponse();
       const mockReturnValue = undefined as any;
 
       when(UserService.getAll)
