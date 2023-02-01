@@ -58,7 +58,7 @@ const createOne = async (userId: number, board: IBoard) => {
 };
 
 const updateOne = async (boardId: number, board: IBoard) => {
-  return await prisma.board.updateMany({
+  return await prisma.board.update({
     where: {
       id: boardId,
     },
