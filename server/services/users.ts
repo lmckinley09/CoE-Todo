@@ -57,6 +57,13 @@ const createOne = async (user: IUser) => {
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      role_id: true,
+    },
   });
 };
 
@@ -75,6 +82,13 @@ const updateOne = async (userId: number, user: IUser) => {
       email: user.email,
       password: hashedPassword,
       last_modified: new Date().toISOString(),
+    },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      role_id: true,
     },
   });
 };
