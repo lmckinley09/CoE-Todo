@@ -60,7 +60,7 @@ describe("Users Service", () => {
       expect(prisma.job.create).toHaveBeenCalledTimes(1);
       expect(prisma.job.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          data: expect.objectContaining({
+          data: {
             board_id: boardId,
             type_id: typeId,
             title: newJob.title,
@@ -69,7 +69,7 @@ describe("Users Service", () => {
             completion_date: newJob.completion_date,
             created: new Date().toISOString(),
             last_modified: new Date().toISOString(),
-          }),
+          },
         })
       );
     });
