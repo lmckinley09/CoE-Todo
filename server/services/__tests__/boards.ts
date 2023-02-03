@@ -3,7 +3,6 @@ import { prisma } from "../../utils/prisma";
 import { prismaAsAny } from "./../../testUtil/prisma";
 
 jest.mock("@prisma/client");
-// jest.mock("../../utils/prisma");
 
 describe("Boards Service", () => {
   describe("getAll", () => {
