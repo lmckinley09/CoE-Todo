@@ -36,7 +36,9 @@ describe("Auth Service", () => {
         );
 
       when(jwt.sign)
-        .calledWith({ sub: id }, ACCESS_TOKEN_SECRET, { expiresIn: 1200 })
+        .calledWith({ sub: id, roles: 2 }, ACCESS_TOKEN_SECRET, {
+          expiresIn: 1200,
+        })
         .mockReturnValueOnce(access);
 
       when(jwt.sign)

@@ -3,7 +3,7 @@ import { prisma } from "../../utils/prisma";
 import { prismaAsAny } from "./../../testUtil/prisma";
 
 jest.mock("@prisma/client");
-jest.mock("../../utils/prisma");
+// jest.mock("../../utils/prisma");
 
 describe("Boards Service", () => {
   describe("getAll", () => {
@@ -62,22 +62,31 @@ describe("Boards Service", () => {
         last_modified: new Date().toISOString(),
       };
 
-      prismaAsAny.$transaction.mockImplementation((callback) =>
-        callback(prisma)
-      );
-
       prismaAsAny.access_type = {
         findFirst: jest.fn().mockReturnValueOnce(1),
       };
 
+      prismaAsAny.$transaction = jest
+        .fn()
+        .mockImplementationOnce(
+          (x) => new Promise((resolve) => resolve(x(prismaAsAny)))
+        );
+
       prismaAsAny.board = {
-        create: jest.fn().mockReturnValueOnce(newBoard),
+        create: jest.fn().mockImplementation(() => {
+          return newBoard;
+        }),
       };
 
-      await BoardService.createOne(userId, newBoard);
+      prismaAsAny.user_board_access = {
+        create: jest.fn().mockImplementation(() => {}),
+      };
 
-      expect(prisma.board.create).toHaveBeenCalledTimes(1);
-      expect(prisma.board.create).toHaveBeenCalledWith(
+      const board = await BoardService.createOne(userId, newBoard);
+
+      expect(board).toEqual(newBoard);
+      expect(prismaAsAny.board.create).toHaveBeenCalledTimes(1);
+      expect(prismaAsAny.board.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
             name,
