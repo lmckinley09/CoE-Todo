@@ -1,8 +1,6 @@
 import request from "supertest";
 import { app } from "./../../app";
 
-// const req = request(app);
-
 describe("/users", () => {
   describe("GET /users", () => {
     it("respond with json containing a list of a users", async () => {

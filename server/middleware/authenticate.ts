@@ -33,7 +33,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 
       if (tokenVerified) {
         res.locals.userId = tokenVerified.sub;
-        res.locals.role_id = tokenVerified.role_id;
+        res.locals.role_id = tokenVerified.roles;
         return next();
       }
     } catch {

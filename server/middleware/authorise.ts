@@ -10,6 +10,7 @@ const authorise = async (req: Request, res: Response, next: NextFunction) => {
     }
     return next();
   }
+  return next();
 };
 
 export { authorise };
