@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "nodemon --watch './**/*.ts' --exec 'ts-node' app.ts",
+    "start": "nodemon --watch './**/*.ts' --exec 'ts-node' index.ts",
     "lint": "eslint . --ext .ts",
-    "test": "NODE_ENV=test jest"
+    "test:unit": "NODE_ENV=test jest --testPathIgnorePatterns ./routers/",
+    "test:integration": "NODE_ENV=test jest --config ./jest.integration.config.ts --testPathPattern ./routers/ --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -21,12 +22,13 @@
     "jest-when": "^3.5.2",
     "prisma": "^4.8.1",
     "supertest": "^6.3.3",
+    "testcontainers": "^9.1.1",
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.4"
   },
   "jest": {
     "clearMocks": true,
-    "testTimeout": 30000,
+    "testTimeout": 15000,
     "testEnvironment": "node",
     "preset": "ts-jest"
   },

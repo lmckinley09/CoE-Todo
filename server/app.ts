@@ -7,7 +7,6 @@ import { verifyToken } from "./middleware/authenticate";
 import { authorise } from "./middleware/authorise";
 
 const app = express();
-const port = 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -63,8 +62,4 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
-
-export default app;
+export { app };

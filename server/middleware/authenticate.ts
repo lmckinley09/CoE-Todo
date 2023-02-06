@@ -6,6 +6,7 @@ const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = authConst;
 
 const handleTest = (res: Response, next: NextFunction) => {
   res.locals.user = 1;
+  res.locals.role_id = 1;
   return next();
 };
 
