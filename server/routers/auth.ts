@@ -54,9 +54,7 @@ Auth.route("/refresh").get(refresh);
 Auth.route("/").post(
   [
     check("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
-    check("password")
-      .isLength({ min: 8, max: 15 })
-      .withMessage("your password should have min and max length between 8-15"),
+    check("password").isLength({ min: 8, max: 15 }),
   ],
   validate,
   authenticate
