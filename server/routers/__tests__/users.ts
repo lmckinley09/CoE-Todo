@@ -20,6 +20,14 @@ describe("/users", () => {
         .expect("Content-Type", /json/)
         .expect(200);
     });
+
+    it("respond with 404 for invalid Id", async () => {
+      await request(app)
+        .get("/users/a")
+        .set("Accept", "application/json")
+        .expect("Content-Type", "text/html; charset=utf-8")
+        .expect(404);
+    });
   });
 
   describe("POST /users", () => {
@@ -76,16 +84,6 @@ describe("/users", () => {
         })
       );
     };
-    it("respond with 400 for missing data", async () => {
-      await request(app)
-        .post("/users")
-        .set("Accept", "application/json")
-        .send({})
-        .expect("Content-Type", /json/)
-        .expect(400)
-        .expect(verifyUserValidation);
-    });
-
     it("respond with 200 when member created successfully", async () => {
       const newUser = {
         email: "email@unosquare.com",
@@ -102,6 +100,16 @@ describe("/users", () => {
         .send(newUser)
         .expect("Content-Type", "application/json; charset=utf-8")
         .expect(200);
+    });
+
+    it("respond with 400 for missing data", async () => {
+      await request(app)
+        .post("/users")
+        .set("Accept", "application/json")
+        .send({})
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .expect(verifyUserValidation);
     });
   });
 
@@ -139,15 +147,6 @@ describe("/users", () => {
         })
       );
     };
-    it("respond with 400 for missing data", async () => {
-      await request(app)
-        .put("/users/1")
-        .set("Accept", "application/json; charset=utf-8")
-        .send({})
-        .expect("Content-Type", "application/json; charset=utf-8")
-        .expect(400)
-        .expect(verifyUserUpdateValidation);
-    });
 
     it("respond with 200 when member updated successfully", async () => {
       const updatedUser = {
@@ -162,6 +161,16 @@ describe("/users", () => {
         .send(updatedUser)
         .expect("Content-Type", "text/plain; charset=utf-8")
         .expect(200);
+    });
+
+    it("respond with 400 for missing data", async () => {
+      await request(app)
+        .put("/users/1")
+        .set("Accept", "application/json; charset=utf-8")
+        .send({})
+        .expect("Content-Type", "application/json; charset=utf-8")
+        .expect(400)
+        .expect(verifyUserUpdateValidation);
     });
   });
 
