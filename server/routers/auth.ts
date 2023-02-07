@@ -41,7 +41,7 @@ Auth.route("/refresh").get(refresh);
  *                  properties:
  *                      email:
  *                          type: string
- *                          example: email@email.com
+ *                          example: admin@email.com
  *                      password:
  *                          type: string
  *                          example: password1!

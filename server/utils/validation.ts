@@ -6,7 +6,7 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
   const hasError = !error.isEmpty();
 
   if (hasError) {
-    res.status(400).json({ error: error.array({ onlyFirstError: true }) });
+    res.status(400).json({ error: error.array() });
   } else {
     next();
   }

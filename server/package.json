@@ -6,7 +6,7 @@
     "start": "nodemon --watch './**/*.ts' --exec 'ts-node' index.ts",
     "lint": "eslint . --ext .ts",
     "test:unit": "NODE_ENV=test jest --testPathIgnorePatterns ./routers/",
-    "test:integration": "NODE_ENV=test jest --config ./jest.integration.config.ts --testPathPattern ./routers/ --forceExit --detectOpenHandles"
+    "test:integration": "NODE_ENV=test jest --config ./jest.integration.config.ts --testPathPattern ./routers/ --forceExit "
   },
   "keywords": [],
   "author": "",

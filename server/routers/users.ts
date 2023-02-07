@@ -108,8 +108,16 @@ Users.post(
   "/",
   [
     body("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
-    body("first_name").isString().isLength({ min: 2 }).trim(),
-    body("last_name").isString().isLength({ min: 2 }).trim(),
+    body("first_name")
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage("first name should have min length of 2")
+      .trim(),
+    body("last_name")
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage("last name should have min length of 2")
+      .trim(),
     body("password")
       .isString()
       .isLength({ min: 8, max: 15 })
@@ -174,9 +182,18 @@ Users.post(
 Users.put(
   "/:userId(\\d+)",
   [
-    body("email").isString().isLength({ min: 3 }).isEmail().trim(),
-    body("first_name").isString().isLength({ min: 2 }).trim(),
-    body("last_name").isString().isLength({ min: 2 }).trim(),
+    body("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
+    body("first_name")
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage("first name should have min length of 2")
+      .trim(),
+
+    body("last_name")
+      .isString()
+      .isLength({ min: 2 })
+      .withMessage("last name should have min length of 2")
+      .trim(),
   ],
   validate,
   updateUser
