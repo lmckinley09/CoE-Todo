@@ -78,12 +78,6 @@ Boards.route("/:boardId(\\d+)").get(getBoard);
  *       Boards
  *     ]
  *     summary: Creates a new board
- *     parameters:
- *       - name: userId
- *         in: query
- *         type: integer
- *         description: The ID of the requested user.
- *         required: true
  *     requestBody:
  *       content:
  *         application/json:
