@@ -44,7 +44,7 @@ describe("/boards", () => {
         })
       );
     };
-    it("respond with 200 when member created successfully", async () => {
+    it("respond with 200 when board created successfully", async () => {
       const newBoard = {
         name: "new name",
         created: new Date().toISOString(),
@@ -84,7 +84,7 @@ describe("/boards", () => {
       );
     };
 
-    it("respond with 200 when member updated successfully", async () => {
+    it("respond with 200 when board updated successfully", async () => {
       const updatedBoard = {
         name: "updated name",
         last_modified: new Date().toISOString(),

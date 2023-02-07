@@ -84,7 +84,7 @@ describe("/users", () => {
         })
       );
     };
-    it("respond with 200 when member created successfully", async () => {
+    it("respond with 200 when user created successfully", async () => {
       const newUser = {
         email: "email@unosquare.com",
         password: "password1!",
@@ -148,7 +148,7 @@ describe("/users", () => {
       );
     };
 
-    it("respond with 200 when member updated successfully", async () => {
+    it("respond with 200 when user updated successfully", async () => {
       const updatedUser = {
         email: "email1@unosquare.com",
         password: "password1!",

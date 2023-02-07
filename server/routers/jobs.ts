@@ -153,7 +153,7 @@ Jobs.put(
     body("title")
       .isString()
       .isLength({ min: 3 })
-      .withMessage("board name should have minimum length of 3")
+      .withMessage("job title should have minimum length of 3")
       .trim(),
     body("description")
       .isString()

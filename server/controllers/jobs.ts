@@ -9,26 +9,25 @@ const getJobs = async (req: Request, res: Response) => {
 };
 
 const createJob = async (req: Request, res: Response) => {
-  const { boardId, typeId } = req.query;
+  const { boardId } = req.query;
   const createdJob = await JobService.createOne(
     Number(boardId),
-    Number(typeId),
+    req.body.type_id,
     req.body
   );
 
-  return !createdJob ? res.sendStatus(404) : res.status(200).json(createdJob);
+  return !createdJob ? res.sendStatus(400) : res.status(200).json(createdJob);
 };
 
 const updateJob = async (req: Request, res: Response) => {
   const { jobId } = req.params;
-  const { typeId } = req.query;
   const updatedJob = await JobService.updateOne(
     Number(jobId),
-    Number(typeId),
+    req.body.type_id,
     req.body
   );
 
-  return !updatedJob ? res.sendStatus(404) : res.sendStatus(200);
+  return !updatedJob ? res.sendStatus(400) : res.sendStatus(200);
 };
 
 const deleteJob = async (req: Request, res: Response) => {
