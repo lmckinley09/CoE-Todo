@@ -1,0 +1,6 @@
+_.css
+_.svg
+/build/**
+/coverage/**
+/docs/**
+/templates/**
