@@ -11,7 +11,6 @@ const App = (): React.ReactElement => {
 				<Routes>
 					<Route path="/" element={<Login />} errorElement={<Error />} />
 					<Route path="/sign-up" element={<SignUp />} />
-					{/* <Route path="/boards" element={<Boards />} /> */}
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
 			</Layout>
