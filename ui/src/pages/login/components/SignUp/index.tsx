@@ -95,7 +95,7 @@ const SignUp = (props: ISignUp) => {
 			<Box
 				sx={{
 					my: 8,
-					mx: 4,
+					mx: 8,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
