@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useCreateUser from '@hooks/integrationHooks/useCreateUser';
-import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -34,11 +33,11 @@ const validationSchema = yup.object({
 
 interface ISignUp {
 	setToggleSignUp: Dispatch<SetStateAction<boolean>>;
+	setNewUserEmail: Dispatch<SetStateAction<string>>;
 }
 
 const SignUp = (props: ISignUp) => {
 	const { mutate } = useCreateUser();
-	const navigate = useNavigate();
 
 	const formik = useFormik({
 		initialValues: {
@@ -54,13 +53,14 @@ const SignUp = (props: ISignUp) => {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
-						console.log('success', response.data);
-						// navigate('/boards');
+						props.setNewUserEmail(values.email);
+						props.setToggleSignUp(false);
 					}
 				},
 				onError: (error: any) => {
 					if (error.response.status === StatusCodes.BAD_REQUEST) {
 						actions.setStatus({ statusCode: error.response.status });
+						props.setNewUserEmail('');
 					}
 				},
 			});
@@ -70,11 +70,7 @@ const SignUp = (props: ISignUp) => {
 	const statusAlert = () => {
 		if (formik.status) {
 			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
-				return (
-					<Alert severity="error">
-						The email or password entered is incorrect. Please try again.
-					</Alert>
-				);
+				return <Alert severity="error">This email is already in use.</Alert>;
 			} else {
 				return (
 					<Alert severity="warning">

@@ -79,7 +79,7 @@ const updateOne = async (userId: number, user: IUser) => {
     data: {
       first_name: user.firstName,
       last_name: user.lastName,
-      profile_picture: user.profile_picture,
+      profile_picture: user.profilePicture,
       email: user.email,
       password: hashedPassword,
       last_modified: new Date().toISOString(),

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Avatar,
 	Alert,
@@ -31,6 +31,11 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const [toggleSignUp, setToggleSignUp] = useState<boolean>(false);
+	const [newUserEmail, setNewUserEmail] = useState<string>('');
+
+	useEffect(() => {
+		formik.setFieldValue('email', newUserEmail);
+	}, [newUserEmail]);
 
 	const formik = useFormik({
 		initialValues: {
@@ -72,6 +77,8 @@ const Login = () => {
 					</Alert>
 				);
 			}
+		} else if (newUserEmail) {
+			return <Alert severity="success">Account created. Please login.</Alert>;
 		}
 	};
 
@@ -91,7 +98,10 @@ const Login = () => {
 				}}
 			/>
 			{toggleSignUp ? (
-				<SignUp setToggleSignUp={setToggleSignUp} />
+				<SignUp
+					setToggleSignUp={setToggleSignUp}
+					setNewUserEmail={setNewUserEmail}
+				/>
 			) : (
 				<Grid
 					item
