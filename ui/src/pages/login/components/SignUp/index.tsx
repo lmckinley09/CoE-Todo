@@ -5,7 +5,6 @@ import {
 	Box,
 	Button,
 	Grid,
-	Link,
 	Paper,
 	TextField,
 	Typography,
@@ -18,11 +17,25 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
+	firstName: yup
+		.string()
+		.min(1, 'Too Short')
+		.max(50, 'Too Long')
+		.required('First Name is Required'),
+	lastName: yup
+		.string()
+		.min(2, 'Too Short')
+		.max(50, 'Too Long')
+		.required('Last Name is Required'),
 	email: yup.string().email('Enter a valid email').required('Email is required'),
 	password: yup.string().required('Password is required'),
 });
 
-const SignUp = (setToggleSignUp: Dispatch<SetStateAction<boolean>>) => {
+interface ISignUp {
+	setToggleSignUp: Dispatch<SetStateAction<boolean>>;
+}
+
+const SignUp = (props: ISignUp) => {
 	const { mutate } = useAuth();
 	const navigate = useNavigate();
 
@@ -84,7 +97,7 @@ const SignUp = (setToggleSignUp: Dispatch<SetStateAction<boolean>>) => {
 			<Box
 				sx={{
 					my: 8,
-					mx: 4,
+					mx: 21,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
@@ -155,13 +168,11 @@ const SignUp = (setToggleSignUp: Dispatch<SetStateAction<boolean>>) => {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link href="#" variant="body2">
-								Forgot password?
-							</Link>
+							<Button variant="text">Forgot password?</Button>
 						</Grid>
 						<Grid item>
-							<Button variant="text" onClick={() => setToggleSignUp(false)}>
-								Sign Up
+							<Button variant="text" onClick={() => props.setToggleSignUp(false)}>
+								Login
 							</Button>
 						</Grid>
 					</Grid>
