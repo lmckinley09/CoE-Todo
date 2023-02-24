@@ -14,6 +14,7 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LandingImage from '@assets/landing_copy.png';
 import useAuth from '@hooks/integrationHooks/useAuth';
+import useTokens from '@hooks/integrationHooks/useTokens';
 import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
@@ -25,7 +26,8 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-	const loginDetailsMutatation = useAuth();
+	const { mutate } = useAuth();
+	const { checkIfValidToken } = useTokens();
 	const navigate = useNavigate();
 
 	const formik = useFormik({
@@ -35,12 +37,13 @@ const Login = () => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
-			loginDetailsMutatation.mutate(values, {
+			mutate(values, {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
 						console.log('success', response.data);
-						navigate('/sign-up');
+						checkIfValidToken(response.data);
+						navigate('/boards');
 					}
 				},
 				onError: (error: any) => {
