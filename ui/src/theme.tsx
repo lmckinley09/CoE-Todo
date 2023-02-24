@@ -40,6 +40,11 @@ const theme = createTheme({
 		},
 		divider: '#804a1c',
 	},
+	typography: {
+		allVariants: {
+			color: '#804a1c',
+		},
+	},
 });
 
 export default theme;

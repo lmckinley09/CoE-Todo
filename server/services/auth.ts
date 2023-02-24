@@ -11,7 +11,7 @@ const authenticate = async (email: string, password: string) => {
       return await generateTokens(user);
     }
   }
-  throw new Error(`Authentication failed for ${email}`);
+  // throw new Error(`Authentication failed for ${email}`);
 };
 
 const refresh = async (userId: number) => {

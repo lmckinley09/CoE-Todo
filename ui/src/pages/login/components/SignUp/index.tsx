@@ -7,9 +7,8 @@ import {
 	Grid,
 	Paper,
 	TextField,
-	Typography,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 import useCreateUser from '@hooks/integrationHooks/useCreateUser';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
@@ -102,11 +101,9 @@ const SignUp = (props: ISignUp) => {
 				}}
 			>
 				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-					<LockOutlinedIcon />
+					<PersonIcon />
 				</Avatar>
-				<Typography component="h1" variant="h5">
-					Sign Up
-				</Typography>
+
 				<Box
 					component="form"
 					noValidate
