@@ -42,22 +42,22 @@ describe("/users", () => {
             }),
             expect.objectContaining({
               location: "body",
-              param: "first_name",
+              param: "firstName",
               msg: "Invalid value",
             }),
             expect.objectContaining({
               location: "body",
-              param: "first_name",
+              param: "firstName",
               msg: "first name should have min length of 2",
             }),
             expect.objectContaining({
               location: "body",
-              param: "last_name",
+              param: "lastName",
               msg: "Invalid value",
             }),
             expect.objectContaining({
               location: "body",
-              param: "last_name",
+              param: "lastName",
               msg: "last name should have min length of 2",
             }),
             expect.objectContaining({
@@ -125,22 +125,22 @@ describe("/users", () => {
             }),
             expect.objectContaining({
               location: "body",
-              param: "first_name",
+              param: "firstName",
               msg: "Invalid value",
             }),
             expect.objectContaining({
               location: "body",
-              param: "first_name",
+              param: "firstName",
               msg: "first name should have min length of 2",
             }),
             expect.objectContaining({
               location: "body",
-              param: "last_name",
+              param: "lastName",
               msg: "Invalid value",
             }),
             expect.objectContaining({
               location: "body",
-              param: "last_name",
+              param: "lastName",
               msg: "last name should have min length of 2",
             }),
           ]),

@@ -1,15 +1,11 @@
-import axios from 'axios';
 import { useMutation } from 'react-query';
-
-const axiosInstance = axios.create({
-	baseURL: 'http://localhost:3001',
-});
+import { axiosInstance } from '@integrations/instance';
 interface IAuthBody {
 	email: string;
 	password: string;
 }
 
-export const fetchAccessTokens = async (userDetails: any) => {
+const fetchAccessTokens = async (userDetails: IAuthBody) => {
 	const response = await axiosInstance.post('/authenticate', userDetails);
 	return response;
 };

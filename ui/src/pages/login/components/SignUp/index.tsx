@@ -10,11 +10,12 @@ import {
 	Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useAuth from '@hooks/integrationHooks/useAuth';
+import useCreateUser from '@hooks/integrationHooks/useCreateUser';
 import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import defaultProfile from '@assets/icons8-user-60.png';
 
 const validationSchema = yup.object({
 	firstName: yup
@@ -36,7 +37,7 @@ interface ISignUp {
 }
 
 const SignUp = (props: ISignUp) => {
-	const { mutate } = useAuth();
+	const { mutate } = useCreateUser();
 	const navigate = useNavigate();
 
 	const formik = useFormik({
@@ -45,6 +46,7 @@ const SignUp = (props: ISignUp) => {
 			lastName: '',
 			email: '',
 			password: '',
+			profilePicture: `url(${defaultProfile})`,
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
@@ -97,7 +99,7 @@ const SignUp = (props: ISignUp) => {
 			<Box
 				sx={{
 					my: 8,
-					mx: 21,
+					mx: 4,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
@@ -122,10 +124,10 @@ const SignUp = (props: ISignUp) => {
 						label="First Name"
 						name="firstName"
 						autoFocus
-						value={formik.values.email}
+						value={formik.values.firstName}
 						onChange={formik.handleChange}
-						error={formik.touched.email && Boolean(formik.errors.email)}
-						helperText={formik.touched.email && formik.errors.email}
+						error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+						helperText={formik.touched.firstName && formik.errors.firstName}
 					/>
 					<TextField
 						margin="normal"
@@ -133,10 +135,10 @@ const SignUp = (props: ISignUp) => {
 						id="lastName"
 						label="Last Name"
 						name="lastName"
-						value={formik.values.email}
+						value={formik.values.lastName}
 						onChange={formik.handleChange}
-						error={formik.touched.email && Boolean(formik.errors.email)}
-						helperText={formik.touched.email && formik.errors.email}
+						error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+						helperText={formik.touched.lastName && formik.errors.lastName}
 					/>
 					<TextField
 						margin="normal"

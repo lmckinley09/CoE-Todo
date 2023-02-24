@@ -2,10 +2,10 @@ import { prisma } from "../utils/prisma";
 import bcrypt from "bcryptjs";
 interface IUser {
   email: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   password: string;
-  profile_picture?: string;
+  profilePicture?: string;
   role_id?: number;
   created?: string;
   last_modified?: string;
@@ -46,14 +46,15 @@ const getUserByEmail = async (email: string) => {
 
 const createOne = async (user: IUser) => {
   const hashedPassword = await bcrypt.hash(user.password, 10);
+
   return await prisma.app_user.create({
     data: {
       email: user.email,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      first_name: user.firstName,
+      last_name: user.lastName,
       password: hashedPassword,
       role_id: 2,
-      profile_picture: user.profile_picture,
+      profile_picture: user.profilePicture || "icons8-user-30.png",
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     },
@@ -76,8 +77,8 @@ const updateOne = async (userId: number, user: IUser) => {
       id: userId,
     },
     data: {
-      first_name: user.first_name,
-      last_name: user.last_name,
+      first_name: user.firstName,
+      last_name: user.lastName,
       profile_picture: user.profile_picture,
       email: user.email,
       password: hashedPassword,

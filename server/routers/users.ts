@@ -108,12 +108,12 @@ Users.post(
   "/",
   [
     body("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
-    body("first_name")
+    body("firstName")
       .isString()
       .isLength({ min: 2 })
       .withMessage("first name should have min length of 2")
       .trim(),
-    body("last_name")
+    body("lastName")
       .isString()
       .isLength({ min: 2 })
       .withMessage("last name should have min length of 2")
@@ -183,13 +183,13 @@ Users.put(
   "/:userId(\\d+)",
   [
     body("email").isString().isLength({ min: 3 }).isEmail().normalizeEmail(),
-    body("first_name")
+    body("firstName")
       .isString()
       .isLength({ min: 2 })
       .withMessage("first name should have min length of 2")
       .trim(),
 
-    body("last_name")
+    body("lastName")
       .isString()
       .isLength({ min: 2 })
       .withMessage("last name should have min length of 2")
