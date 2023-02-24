@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Avatar,
 	Alert,
@@ -6,7 +6,6 @@ import {
 	Button,
 	CssBaseline,
 	Grid,
-	Link,
 	Paper,
 	TextField,
 	Typography,
@@ -19,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import SignUp from './components/SignUp';
 
 const validationSchema = yup.object({
 	email: yup.string().email('Enter a valid email').required('Email is required'),
@@ -29,6 +29,8 @@ const Login = () => {
 	const { mutate } = useAuth();
 	const { checkIfValidToken } = useTokens();
 	const navigate = useNavigate();
+
+	const [toggleSignUp, setToggleSignUp] = useState<boolean>(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -88,89 +90,96 @@ const Login = () => {
 					backgroundPosition: 'center',
 				}}
 			/>
-			<Grid
-				item
-				xs={12}
-				sm={8}
-				md={5}
-				component={Paper}
-				elevation={6}
-				square
-				sx={{ backgroundColor: '#FFFCF9' }}
-			>
-				<Box
-					sx={{
-						my: 8,
-						mx: 4,
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
-					}}
+			{toggleSignUp ? (
+				<SignUp setToggleSignUp={setToggleSignUp} />
+			) : (
+				<Grid
+					item
+					xs={12}
+					sm={8}
+					md={5}
+					component={Paper}
+					elevation={6}
+					square
+					sx={{ backgroundColor: '#FFFCF9' }}
 				>
-					<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component="h1" variant="h5">
-						Sign in
-					</Typography>
 					<Box
-						component="form"
-						noValidate
-						onSubmit={formik.handleSubmit}
-						sx={{ mt: 1 }}
+						sx={{
+							my: 8,
+							mx: 4,
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
 					>
-						<TextField
-							margin="normal"
-							fullWidth
-							id="email"
-							label="Email Address"
-							name="email"
-							autoComplete="email"
-							autoFocus
-							value={formik.values.email}
-							onChange={formik.handleChange}
-							error={formik.touched.email && Boolean(formik.errors.email)}
-							helperText={formik.touched.email && formik.errors.email}
-						/>
-						<TextField
-							margin="normal"
-							fullWidth
-							name="password"
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-							value={formik.values.password}
-							onChange={formik.handleChange}
-							error={formik.touched.password && Boolean(formik.errors.password)}
-							helperText={formik.touched.password && formik.errors.password}
-						/>
-
-						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-							Login
-						</Button>
-						<Grid container>
-							<Grid item xs>
-								<Link href="#" variant="body2">
-									Forgot password?
-								</Link>
-							</Grid>
-							<Grid item>
-								<Link href="#" variant="body2">
-									{'Sign Up'}
-								</Link>
-							</Grid>
-						</Grid>
+						<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+							<LockOutlinedIcon />
+						</Avatar>
+						<Typography component="h1" variant="h5">
+							Sign in
+						</Typography>
 						<Box
-							sx={{
-								marginTop: '10px',
-							}}
+							component="form"
+							noValidate
+							onSubmit={formik.handleSubmit}
+							sx={{ mt: 1 }}
 						>
-							{statusAlert()}
+							<TextField
+								margin="normal"
+								fullWidth
+								id="email"
+								label="Email Address"
+								name="email"
+								autoComplete="email"
+								autoFocus
+								value={formik.values.email}
+								onChange={formik.handleChange}
+								error={formik.touched.email && Boolean(formik.errors.email)}
+								helperText={formik.touched.email && formik.errors.email}
+							/>
+							<TextField
+								margin="normal"
+								fullWidth
+								name="password"
+								label="Password"
+								type="password"
+								id="password"
+								autoComplete="current-password"
+								value={formik.values.password}
+								onChange={formik.handleChange}
+								error={formik.touched.password && Boolean(formik.errors.password)}
+								helperText={formik.touched.password && formik.errors.password}
+							/>
+
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								sx={{ mt: 3, mb: 2 }}
+							>
+								Login
+							</Button>
+							<Grid container>
+								<Grid item xs>
+									<Button variant="text">Forgot password?</Button>
+								</Grid>
+								<Grid item>
+									<Button variant="text" onClick={() => setToggleSignUp(true)}>
+										Sign Up
+									</Button>
+								</Grid>
+							</Grid>
+							<Box
+								sx={{
+									marginTop: '10px',
+								}}
+							>
+								{statusAlert()}
+							</Box>
 						</Box>
 					</Box>
-				</Box>
-			</Grid>
+				</Grid>
+			)}
 		</Grid>
 	);
 };

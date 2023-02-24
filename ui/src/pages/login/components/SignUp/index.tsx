@@ -1,0 +1,181 @@
+import React, { Dispatch, SetStateAction } from 'react';
+import {
+	Avatar,
+	Alert,
+	Box,
+	Button,
+	Grid,
+	Link,
+	Paper,
+	TextField,
+	Typography,
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import useAuth from '@hooks/integrationHooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { StatusCodes } from 'http-status-codes';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object({
+	email: yup.string().email('Enter a valid email').required('Email is required'),
+	password: yup.string().required('Password is required'),
+});
+
+const SignUp = (setToggleSignUp: Dispatch<SetStateAction<boolean>>) => {
+	const { mutate } = useAuth();
+	const navigate = useNavigate();
+
+	const formik = useFormik({
+		initialValues: {
+			firstName: '',
+			lastName: '',
+			email: '',
+			password: '',
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values, actions) => {
+			mutate(values, {
+				onSuccess: (response) => {
+					actions.setStatus();
+					if (response.status === StatusCodes.OK) {
+						console.log('success', response.data);
+						// navigate('/boards');
+					}
+				},
+				onError: (error: any) => {
+					if (error.response.status === StatusCodes.BAD_REQUEST) {
+						actions.setStatus({ statusCode: error.response.status });
+					}
+				},
+			});
+		},
+	});
+
+	const statusAlert = () => {
+		if (formik.status) {
+			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
+				return (
+					<Alert severity="error">
+						The email or password entered is incorrect. Please try again.
+					</Alert>
+				);
+			} else {
+				return (
+					<Alert severity="warning">
+						Something went wrong, please try again later.
+					</Alert>
+				);
+			}
+		}
+	};
+
+	return (
+		<Grid
+			item
+			xs={12}
+			sm={8}
+			md={5}
+			component={Paper}
+			elevation={6}
+			square
+			sx={{ backgroundColor: '#FFFCF9' }}
+		>
+			<Box
+				sx={{
+					my: 8,
+					mx: 4,
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+					<LockOutlinedIcon />
+				</Avatar>
+				<Typography component="h1" variant="h5">
+					Sign Up
+				</Typography>
+				<Box
+					component="form"
+					noValidate
+					onSubmit={formik.handleSubmit}
+					sx={{ mt: 1 }}
+				>
+					<TextField
+						margin="normal"
+						fullWidth
+						id="firstName"
+						label="First Name"
+						name="firstName"
+						autoFocus
+						value={formik.values.email}
+						onChange={formik.handleChange}
+						error={formik.touched.email && Boolean(formik.errors.email)}
+						helperText={formik.touched.email && formik.errors.email}
+					/>
+					<TextField
+						margin="normal"
+						fullWidth
+						id="lastName"
+						label="Last Name"
+						name="lastName"
+						value={formik.values.email}
+						onChange={formik.handleChange}
+						error={formik.touched.email && Boolean(formik.errors.email)}
+						helperText={formik.touched.email && formik.errors.email}
+					/>
+					<TextField
+						margin="normal"
+						fullWidth
+						id="email"
+						label="Email "
+						name="email"
+						autoComplete="email"
+						value={formik.values.email}
+						onChange={formik.handleChange}
+						error={formik.touched.email && Boolean(formik.errors.email)}
+						helperText={formik.touched.email && formik.errors.email}
+					/>
+					<TextField
+						margin="normal"
+						fullWidth
+						name="password"
+						label="Password"
+						type="password"
+						id="password"
+						value={formik.values.password}
+						onChange={formik.handleChange}
+						error={formik.touched.password && Boolean(formik.errors.password)}
+						helperText={formik.touched.password && formik.errors.password}
+					/>
+
+					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						Register
+					</Button>
+					<Grid container>
+						<Grid item xs>
+							<Link href="#" variant="body2">
+								Forgot password?
+							</Link>
+						</Grid>
+						<Grid item>
+							<Button variant="text" onClick={() => setToggleSignUp(false)}>
+								Sign Up
+							</Button>
+						</Grid>
+					</Grid>
+					<Box
+						sx={{
+							marginTop: '10px',
+						}}
+					>
+						{statusAlert()}
+					</Box>
+				</Box>
+			</Box>
+		</Grid>
+	);
+};
+
+export default SignUp;

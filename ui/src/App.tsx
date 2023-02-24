@@ -24,6 +24,7 @@ const App = (): React.ReactElement => {
 	const AuthenticatedRoutes = (
 		<Routes>
 			<Route path="/boards" element={<SignUp />} errorElement={<Error />} />
+			{/* <Route path="/board" element={<SignUp />} errorElement={<Error />} /> */}
 			<Route path="*" element={<Navigate to="/boards" />} />
 		</Routes>
 	);
