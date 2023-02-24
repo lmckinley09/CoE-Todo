@@ -30,10 +30,10 @@
 		"zustand": "^4.3.3"
 	},
 	"scripts": {
-		"start": "PORT=3002 react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"start": "PORT=3002 craco start",
+		"build": "craco build",
+		"test": "craco test",
+		"eject": "craco eject"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -54,9 +54,11 @@
 		]
 	},
 	"devDependencies": {
+		"@craco/craco": "^7.0.0",
 		"@types/styled-components": "^5.1.26",
 		"@typescript-eslint/eslint-plugin": "^5.53.0",
 		"@typescript-eslint/parser": "^5.53.0",
+		"craco-alias": "^3.0.1",
 		"eslint": "^8.34.0",
 		"eslint-config-prettier": "^8.6.0",
 		"eslint-plugin-prettier": "^4.2.1",

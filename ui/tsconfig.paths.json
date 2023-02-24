@@ -1,0 +1,20 @@
+{
+	// For any folder using an index barrel, setup a path like this:
+	// @components": ["./src/components"]
+
+	// If you want to import directly from a folder, setup a path like this:
+	// @utils/*": ["./src/utils/*"]
+	"compilerOptions": {
+		"baseUrl": "./src",
+		"paths": {
+			"@assets/*": ["./assets/*"],
+			"@components": ["./components"],
+			"@hooks/*": ["./hooks/*"],
+			"@integration": ["./integration"],
+			"@pages": ["./pages"],
+			"@test-utils": ["./test-utils"],
+			"@types": ["./types"],
+			"@utils": ["./utils"]
+		}
+	}
+}
