@@ -1,12 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { axiosInstance } from '@integrations/instance';
-
-export interface IBoard {
-	id: number;
-	name: string;
-	created: string;
-	last_modified: string;
-}
+import { IBoard } from '@interfaces/boards';
 
 interface IBoards {
 	data?: Array<IBoard>;

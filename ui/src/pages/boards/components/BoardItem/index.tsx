@@ -4,16 +4,7 @@ import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import { BoardBox } from './styled';
-
-interface IBoard {
-	id: number;
-	name: string;
-	created: string;
-	last_modified: string;
-}
-interface IBoardItem {
-	board: IBoard;
-}
+import { IBoardItem } from '@interfaces/boards';
 
 const BoardItem = (props: IBoardItem) => {
 	const { name } = props.board;

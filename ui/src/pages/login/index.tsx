@@ -48,7 +48,6 @@ const Login = () => {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
-						console.log('success', response.data);
 						checkIfValidToken(response.data);
 						navigate('/boards');
 					}
