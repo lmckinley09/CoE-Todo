@@ -6,7 +6,7 @@ export const BoardActions = styled(Box)`
 	align-items: center;
 	margin-top: 20px;
 	min-height: 100px;
-	padding: 10px;
+	padding: 10px 0px;
 `;
 
 export const FocusArea = styled(Box)`

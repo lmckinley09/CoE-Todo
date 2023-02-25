@@ -1,10 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { axiosInstance } from '@integrations/instance';
-import { IJob } from '@interfaces/jobs';
-
-interface IGetJobs {
-	data?: Array<IJob>;
-}
+import { IGetJobs } from '@interfaces/jobs';
 
 export const getJobs = async (boardId: number) => {
 	const response = await axiosInstance.get(`/jobs?boardId=${boardId}`);

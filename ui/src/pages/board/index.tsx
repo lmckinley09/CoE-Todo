@@ -15,6 +15,7 @@ import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddC
 import AddIcon from '@mui/icons-material/Add';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
 import useGetJobs from '@hooks/integrationHooks/useGetJobs';
+import { IGetJobs } from '@interfaces/jobs';
 
 const Board = (): JSX.Element => {
 	const params = useParams();
@@ -22,13 +23,20 @@ const Board = (): JSX.Element => {
 	const { data: board } = useGetBoard(Number(params.boardId));
 	const { data: jobs } = useGetJobs(Number(params.boardId));
 
-	const displayTicks = () => {
+	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
 		if (jobs && jobs.data) {
-			return jobs.data.map((tick) => {
-				return <JobItem key={tick.id} job={tick} />;
+			return jobs.data.filter((job) => {
+				return job.job_type?.type_description === jobType;
 			});
+		}
+	};
+
+	const displayByJobType = (jobType: string, errorMessage: string) => {
+		if (jobs) {
+			const filteredJobs = filterByJobType(jobs, jobType);
+			return filteredJobs?.map((job) => <JobItem key={job.id} job={job} />);
 		} else {
-			return <Alert severity="error">Error Loading Quick Ticks</Alert>;
+			return <Alert severity="error">{errorMessage}</Alert>;
 		}
 	};
 
@@ -60,8 +68,7 @@ const Board = (): JSX.Element => {
 										<AddIcon />
 									</IconButton>
 								</Grid>
-								{displayTicks()}
-								<p>1</p>
+								{displayByJobType('tick', 'Error Loading Quick Ticks')}
 							</>
 						</StyledBox>
 					</Grid>
@@ -73,6 +80,7 @@ const Board = (): JSX.Element => {
 									<AddIcon />
 								</IconButton>
 							</Grid>
+							{displayByJobType('task', 'Error Loading Tasks')}
 						</StyledBox>
 					</Grid>
 					<Grid item xs={12} sm={4} md={4}>
@@ -83,6 +91,7 @@ const Board = (): JSX.Element => {
 									<AddIcon />
 								</IconButton>
 							</Grid>
+							{displayByJobType('project', 'Error Loading Projects')}
 						</StyledBox>
 					</Grid>
 				</Grid>
