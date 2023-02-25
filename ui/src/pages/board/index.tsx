@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import { Alert, CssBaseline, Grid, Typography } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
+import useGetJobs from '@hooks/integrationHooks/useGetJobs';
 
 const Board = (): JSX.Element => {
 	const params = useParams();
 
 	const { data: board } = useGetBoard(Number(params.boardId));
+	const { data: jobs } = useGetJobs(Number(params.boardId));
 
 	if (board && board.data) {
 		const { name } = board.data;

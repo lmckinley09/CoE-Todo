@@ -12,7 +12,7 @@ const createJob = async (req: Request, res: Response) => {
   const { boardId } = req.query;
   const createdJob = await JobService.createOne(
     Number(boardId),
-    req.body.type_id,
+    req.body.typeId,
     req.body
   );
 

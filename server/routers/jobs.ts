@@ -47,17 +47,16 @@ Jobs.get("/", getJobs);
  *         type: integer
  *         description: The ID of the requested board.
  *         required: true
- *       - name: typeId
- *         in: query
- *         type: integer
- *         description: The ID of the job type.
- *         required: true
  *     requestBody:
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
+ *               typeId:
+ *                 type: integer
+ *                 required: true
+ *                 example: 1
  *               title:
  *                 type: string
  *                 required: true
