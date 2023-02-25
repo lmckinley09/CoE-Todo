@@ -54,7 +54,7 @@ const Board = (): JSX.Element => {
 					<Grid item xs={12} sm={4} md={4}>
 						<StyledBox>
 							<>
-								<Grid container>
+								<Grid container justifyContent="space-between">
 									<Typography variant="h4">Quick Ticks</Typography>
 									<IconButton color="secondary" aria-label="add quick tick">
 										<AddIcon />
@@ -67,9 +67,9 @@ const Board = (): JSX.Element => {
 					</Grid>
 					<Grid item xs={12} sm={4} md={4}>
 						<StyledBox>
-							<Grid container>
+							<Grid container justifyContent="space-between">
 								<Typography variant="h4">Tasks</Typography>
-								<IconButton color="secondary" aria-label="add quick tick">
+								<IconButton color="secondary" aria-label="add task">
 									<AddIcon />
 								</IconButton>
 							</Grid>
@@ -77,9 +77,9 @@ const Board = (): JSX.Element => {
 					</Grid>
 					<Grid item xs={12} sm={4} md={4}>
 						<StyledBox>
-							<Grid container>
+							<Grid container justifyContent="space-between">
 								<Typography variant="h4">Projects</Typography>
-								<IconButton color="secondary" aria-label="add quick tick">
+								<IconButton color="secondary" aria-label="add project">
 									<AddIcon />
 								</IconButton>
 							</Grid>
