@@ -8,7 +8,7 @@ interface ICreateUser {
 	password: string;
 }
 
-export const createUser = async (userDetails: any) => {
+export const createUser = async (userDetails: ICreateUser) => {
 	const response = await axiosInstance.post('/users', userDetails);
 	return response;
 };

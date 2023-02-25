@@ -9,11 +9,11 @@ import { IBoardItem } from '@interfaces/boards';
 
 const BoardItem = (props: IBoardItem) => {
 	const navigate = useNavigate();
-	const { name } = props.board;
+	const { id, name } = props.board;
 	return (
 		<BoardBox
 			onClick={() => {
-				navigate('/board');
+				navigate(`/board/${id}`);
 			}}
 		>
 			<Stack
@@ -21,7 +21,6 @@ const BoardItem = (props: IBoardItem) => {
 				justifyContent="space-between"
 				alignItems="center"
 				spacing={1}
-				// divider={<Divider orientation="vertical" flexItem />}
 			>
 				<Typography variant="h6">{name}</Typography>
 

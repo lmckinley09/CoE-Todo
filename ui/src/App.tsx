@@ -24,7 +24,7 @@ const App = (): React.ReactElement => {
 		<Layout>
 			<Routes>
 				<Route path="/boards" element={<Boards />} errorElement={<Error />} />
-				<Route path="/board" element={<Board />} />
+				<Route path="/board/:boardId" element={<Board />} />
 				<Route path="*" element={<Navigate to="/boards" />} />
 			</Routes>
 		</Layout>
