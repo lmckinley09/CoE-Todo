@@ -1,9 +1,9 @@
 import { useQuery, UseQueryResult } from 'react-query';
 import { axiosInstance } from '@integrations/instance';
-import { IBoard } from '@interfaces/boards';
+import { IJob } from '@interfaces/jobs';
 
 interface IGetJobs {
-	data?: Array<IBoard>;
+	data?: Array<IJob>;
 }
 
 export const getJobs = async (boardId: number) => {
