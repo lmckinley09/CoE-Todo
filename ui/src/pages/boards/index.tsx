@@ -1,36 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import {
-	Avatar,
-	Alert,
-	Box,
-	Button,
-	CssBaseline,
-	Grid,
-	Paper,
-	TextField,
-	Typography,
-} from '@mui/material';
-import { StyledBox, BoardBox } from './styled';
+import React from 'react';
+import { CssBaseline, Grid, Typography } from '@mui/material';
+import { StyledBox } from './styled';
+import BoardItem from './components/BoardItem';
 
-const boards = () => {
+const Boards = () => {
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
+			<CssBaseline />
 			<Grid item xs={12} sm={6} md={6}>
-				<h1>My Boards</h1>
+				<Typography variant="h5" marginLeft="10px">
+					My Boards
+				</Typography>
+
 				<StyledBox>
-					<BoardBox>1</BoardBox>
-					<BoardBox>1</BoardBox>
-					<BoardBox>1</BoardBox>
+					<BoardItem />
+					<BoardItem />
 				</StyledBox>
 			</Grid>
 			<Grid item xs={12} sm={6} md={6}>
 				<h1>Shared Boards</h1>
 				<StyledBox>
-					<BoardBox>1</BoardBox>
+					<BoardItem />
 				</StyledBox>
 			</Grid>
 		</Grid>
 	);
 };
 
-export default boards;
+export default Boards;

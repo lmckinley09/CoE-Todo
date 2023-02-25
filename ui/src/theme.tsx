@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import '@fontsource/scada';
 
 const theme = createTheme({
 	palette: {
@@ -43,6 +44,17 @@ const theme = createTheme({
 	typography: {
 		allVariants: {
 			color: '#804a1c',
+		},
+		fontFamily: ['DM Sans', 'sans-serif'].join(','),
+	},
+	components: {
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					backgroundColor: '#804a1c',
+					color: '#f6d8c5',
+				},
+			},
 		},
 	},
 });
