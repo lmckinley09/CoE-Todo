@@ -5,7 +5,18 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
 import { BoardBox } from './styled';
 
-const BoardItem = () => {
+interface IBoard {
+	id: number;
+	name: string;
+	created: string;
+	last_modified: string;
+}
+interface IBoardItem {
+	board: IBoard;
+}
+
+const BoardItem = (props: IBoardItem) => {
+	const { name } = props.board;
 	return (
 		<BoardBox>
 			<Stack
@@ -15,7 +26,7 @@ const BoardItem = () => {
 				spacing={1}
 				// divider={<Divider orientation="vertical" flexItem />}
 			>
-				<Typography variant="h6">Board Name </Typography>
+				<Typography variant="h6">{name}</Typography>
 
 				<Box display="inline-flex" alignItems="center">
 					<Typography>1</Typography>

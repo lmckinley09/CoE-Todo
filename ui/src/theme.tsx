@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import '@fontsource/scada';
+import '@fontsource/dm-sans';
 
 const theme = createTheme({
 	palette: {

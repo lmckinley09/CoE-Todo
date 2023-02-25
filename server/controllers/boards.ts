@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { BoardService } from "./../services";
 
 const getBoards = async (req: Request, res: Response) => {
-  const { userId } = req.query;
-  const boards = await BoardService.getAll(Number(userId));
+  const { userId } = res.locals;
+  const boards = await BoardService.getAll(userId);
   return !boards ? res.sendStatus(404) : res.status(200).json(boards);
 };
 
