@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -7,9 +8,14 @@ import { BoardBox } from './styled';
 import { IBoardItem } from '@interfaces/boards';
 
 const BoardItem = (props: IBoardItem) => {
+	const navigate = useNavigate();
 	const { name } = props.board;
 	return (
-		<BoardBox>
+		<BoardBox
+			onClick={() => {
+				navigate('/board');
+			}}
+		>
 			<Stack
 				direction="row"
 				justifyContent="space-between"

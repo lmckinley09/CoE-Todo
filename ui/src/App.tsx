@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from '@components';
-import { Boards, Login, Error } from '@pages';
+import { Board, Boards, Login, Error } from '@pages';
 import { useAuthState } from '@stores/useAuthState';
 import useTokens from '@hooks/integrationHooks/useTokens';
 
@@ -24,6 +24,7 @@ const App = (): React.ReactElement => {
 		<Layout>
 			<Routes>
 				<Route path="/boards" element={<Boards />} errorElement={<Error />} />
+				<Route path="/board" element={<Board />} />
 				<Route path="*" element={<Navigate to="/boards" />} />
 			</Routes>
 		</Layout>
