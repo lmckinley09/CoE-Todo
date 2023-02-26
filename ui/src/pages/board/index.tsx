@@ -8,7 +8,8 @@ import {
 	Typography,
 } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
-import JobItem from './JobItem';
+import JobItem from './components/JobItem';
+import Toggle from './components/Toggle';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
@@ -49,6 +50,7 @@ const Board = (): JSX.Element => {
 					<Grid item xs={12} sm={6} md={4}>
 						<BoardActions>
 							<Typography variant="h4">{name}</Typography>
+							<Toggle />
 						</BoardActions>
 					</Grid>
 					<Grid item xs={12} sm={6} md={8}>
