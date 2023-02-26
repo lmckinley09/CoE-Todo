@@ -5,6 +5,11 @@ export interface IBoard {
 	last_modified: string;
 }
 
+export interface IGetBoards {
+	owner: IBoard[];
+	shared: IBoard[];
+}
+
 export interface IBoardItem {
 	board: IBoard;
 }
