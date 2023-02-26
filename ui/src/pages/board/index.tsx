@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
 	Alert,
@@ -8,21 +8,21 @@ import {
 	Typography,
 } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
-import JobItem from './components/JobItem';
-import Toggle from './components/Toggle';
-import AlarmOnIcon from '@mui/icons-material/AlarmOn';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
+import { CreateModal, JobItem, Toggle } from './components';
+import { IGetJobs } from '@interfaces/jobs';
 import AddIcon from '@mui/icons-material/Add';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
 import useGetJobs from '@hooks/integrationHooks/useGetJobs';
-import { IGetJobs } from '@interfaces/jobs';
 
 const Board = (): JSX.Element => {
-	const params = useParams();
+	const [createModalOpen, setCreateModalOpen] = useState(false);
 
+	const params = useParams();
 	const { data: board } = useGetBoard(Number(params.boardId));
 	const { data: jobs } = useGetJobs(Number(params.boardId));
+
+	const handleCreateModalOpen = () => setCreateModalOpen(true);
+	const handleCreateModalClose = () => setCreateModalOpen(false);
 
 	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
 		if (jobs && jobs.data) {
@@ -66,7 +66,11 @@ const Board = (): JSX.Element => {
 							<>
 								<Grid container justifyContent="space-between">
 									<Typography variant="h4">Quick Ticks</Typography>
-									<IconButton color="secondary" aria-label="add quick tick">
+									<IconButton
+										color="secondary"
+										aria-label="add quick tick"
+										onClick={() => handleCreateModalOpen()}
+									>
 										<AddIcon />
 									</IconButton>
 								</Grid>
@@ -78,7 +82,11 @@ const Board = (): JSX.Element => {
 						<StyledBox>
 							<Grid container justifyContent="space-between">
 								<Typography variant="h4">Tasks</Typography>
-								<IconButton color="secondary" aria-label="add task">
+								<IconButton
+									color="secondary"
+									aria-label="add task"
+									onClick={() => handleCreateModalOpen()}
+								>
 									<AddIcon />
 								</IconButton>
 							</Grid>
@@ -89,7 +97,11 @@ const Board = (): JSX.Element => {
 						<StyledBox>
 							<Grid container justifyContent="space-between">
 								<Typography variant="h4">Projects</Typography>
-								<IconButton color="secondary" aria-label="add project">
+								<IconButton
+									color="secondary"
+									aria-label="add project"
+									onClick={() => handleCreateModalOpen()}
+								>
 									<AddIcon />
 								</IconButton>
 							</Grid>
@@ -97,6 +109,7 @@ const Board = (): JSX.Element => {
 						</StyledBox>
 					</Grid>
 				</Grid>
+				<CreateModal open={createModalOpen} handleClose={handleCreateModalClose} />
 			</Grid>
 		);
 	}
