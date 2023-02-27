@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { StatusCodes } from 'http-status-codes';
 import {
 	Alert,
 	Button,
@@ -15,41 +16,32 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker } from '@mui/x-date-pickers';
-import useCreateJob from '@hooks/integrationHooks/useCreateJob';
-import { IModal } from '@interfaces/modals';
+import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
+import { IEditModal } from '@interfaces/modals';
 import { ModalBox } from '../styled';
 import RichTextEditor from '../../RichTextEditor';
-import { StatusCodes } from 'http-status-codes';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { validationSchema } from '../validation';
 
-const validationSchema = yup.object({
-	title: yup.string().required('Title is required'),
-	description: yup.string().max(2000, '2000 Max Character Length'),
-	typeId: yup.string().required('Job Type required'),
-	completionDate: yup.date().required('Date required'),
-});
-
-const CreateModal = (props: IModal) => {
-	const params = useParams();
-	const { mutate } = useCreateJob(Number(params.boardId));
+const EditModal = (props: IEditModal) => {
+	const { job, open, handleClose } = props;
+	const { mutate } = useUpdateJob(job.id);
 
 	const formik = useFormik({
 		initialValues: {
-			typeId: 1,
-			title: '',
-			description: '',
-			status: 'Not Started',
-			completionDate: new Date().toISOString(),
+			typeId: job.job_type.id,
+			title: job.title,
+			description: job.description,
+			status: job.status,
+			completionDate: job.completion_date,
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
+			console.log('values', values);
 			mutate(values, {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
 						formik.resetForm();
-						props.handleClose(false);
 					}
 				},
 				onError: (error: any) => {
@@ -66,7 +58,7 @@ const CreateModal = (props: IModal) => {
 			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
 				return (
 					<Alert severity="error" sx={{ mt: '10px' }}>
-						Error creating job
+						Error editing job
 					</Alert>
 				);
 			} else {
@@ -80,19 +72,19 @@ const CreateModal = (props: IModal) => {
 	};
 
 	return (
-		<Modal open={props.open} onClose={props.handleClose}>
+		<Modal open={open} onClose={handleClose}>
 			<ModalBox>
 				<Grid container justifyContent="space-between">
 					<Grid item>
 						<Typography id="modal-modal-title" variant="h6" component="h2">
-							Create a new job
+							{job.title}
 						</Typography>
 					</Grid>
 					<Grid item>
 						<IconButton
 							color="secondary"
 							aria-label="close-create-modal"
-							onClick={() => props.handleClose(false)}
+							onClick={() => handleClose(false)}
 						>
 							<CloseIcon />
 						</IconButton>
@@ -168,4 +160,4 @@ const CreateModal = (props: IModal) => {
 	);
 };
 
-export default CreateModal;
+export default EditModal;

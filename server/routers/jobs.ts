@@ -131,11 +131,15 @@ Jobs.post(
  *                 type: string
  *                 required: false
  *                 description: The job status
- *               completion_date:
+ *               completionDate:
  *                 type: string
  *                 required: false
  *                 description: The due date
  *                 example: 2023-01-20T00:00:00.000Z
+ *               typeId:
+ *                 type: integer
+ *                 description: The ID of the job type.
+ *                 required: true
  *     responses:
  *       400:
  *         description: Bad Request - required values are missing.
@@ -151,7 +155,7 @@ Jobs.put(
       .withMessage("job title should have minimum length of 3")
       .trim(),
     body("description").isString().trim(),
-    body("completion_date").isString(),
+    body("completionDate").isString(),
   ],
   validate,
   updateJob

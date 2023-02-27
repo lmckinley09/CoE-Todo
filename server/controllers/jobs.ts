@@ -21,11 +21,7 @@ const createJob = async (req: Request, res: Response) => {
 
 const updateJob = async (req: Request, res: Response) => {
   const { jobId } = req.params;
-  const updatedJob = await JobService.updateOne(
-    Number(jobId),
-    req.body.type_id,
-    req.body
-  );
+  const updatedJob = await JobService.updateOne(Number(jobId), req.body);
 
   return !updatedJob ? res.sendStatus(400) : res.sendStatus(200);
 };

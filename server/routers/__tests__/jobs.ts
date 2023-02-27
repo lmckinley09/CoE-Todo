@@ -52,7 +52,7 @@ describe("POST /jobs", () => {
       type_id: 1,
       title: "new name",
       description: "desc",
-      completion_date: new Date().toISOString(),
+      completionDate: new Date().toISOString(),
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     };
@@ -102,7 +102,7 @@ describe("PUT /jobs/:jobId", () => {
           }),
           expect.objectContaining({
             location: "body",
-            param: "completionDate_date",
+            param: "completionDate",
             msg: "Invalid value",
           }),
         ]),

@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { JobBox } from './styled';
 import { IJobItem } from '@interfaces/jobs';
 import { CheckBox } from '@mui/icons-material';
+import EditModal from '../modals/EditModal';
 
 const JobItem = (props: IJobItem) => {
+	const [modalOpen, setModalOpen] = useState(false);
+
+	const handleModalOpen = () => setModalOpen(true);
+	const handleModalClose = () => setModalOpen(false);
+
+	const { job } = props;
+
 	return (
-		<JobBox>
+		<JobBox onClick={() => handleModalOpen()}>
 			<CheckBox />
-			{props.job.title}
+			{job.title}
+			<EditModal job={job} open={modalOpen} handleClose={handleModalClose} />
 		</JobBox>
 	);
 };

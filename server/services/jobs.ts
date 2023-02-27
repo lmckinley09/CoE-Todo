@@ -59,13 +59,13 @@ const createOne = async (boardId: number, typeId: number, job: IJob) => {
   });
 };
 
-const updateOne = async (jobId: number, typeId: number, job: IJob) => {
+const updateOne = async (jobId: number, job: IJob) => {
   return await prisma.job.update({
     where: {
       id: jobId,
     },
     data: {
-      type_id: typeId,
+      type_id: job.typeId,
       title: job.title,
       description: job.description,
       status: job.status,

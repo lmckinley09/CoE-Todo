@@ -1,5 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { StatusCodes } from 'http-status-codes';
+import { useFormik } from 'formik';
 import {
 	Alert,
 	Button,
@@ -19,18 +21,10 @@ import { IModal } from '@interfaces/modals';
 import useCreateJob from '@hooks/integrationHooks/useCreateJob';
 import { ModalBox } from '../styled';
 import RichTextEditor from '../../RichTextEditor';
-import { StatusCodes } from 'http-status-codes';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-
-const validationSchema = yup.object({
-	title: yup.string().required('Title is required'),
-	description: yup.string().max(2000, '2000 Max Character Length'),
-	typeId: yup.string().required('Job Type required'),
-	completionDate: yup.date().required('Date required'),
-});
+import { validationSchema } from '../validation';
 
 const CreateModal = (props: IModal) => {
+	const { open, handleClose } = props;
 	const params = useParams();
 	const { mutate } = useCreateJob(Number(params.boardId));
 
@@ -49,7 +43,7 @@ const CreateModal = (props: IModal) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
 						formik.resetForm();
-						props.handleClose(false);
+						handleClose(false);
 					}
 				},
 				onError: (error: any) => {
@@ -80,7 +74,7 @@ const CreateModal = (props: IModal) => {
 	};
 
 	return (
-		<Modal open={props.open} onClose={props.handleClose}>
+		<Modal open={open} onClose={handleClose}>
 			<ModalBox>
 				<Grid container justifyContent="space-between">
 					<Grid item>
@@ -92,7 +86,7 @@ const CreateModal = (props: IModal) => {
 						<IconButton
 							color="secondary"
 							aria-label="close-create-modal"
-							onClick={() => props.handleClose(false)}
+							onClick={() => handleClose(false)}
 						>
 							<CloseIcon />
 						</IconButton>
