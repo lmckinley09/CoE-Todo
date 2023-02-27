@@ -74,28 +74,6 @@ const EditModal = (props: IEditModal) => {
 		}
 	};
 
-	const displayEditButton = () => {
-		return editMode ? (
-			<IconButton
-				color="secondary"
-				aria-label="edit-button"
-				onClick={() => setEditMode(false)}
-				sx={{ ml: '5px' }}
-			>
-				<UndoIcon />
-			</IconButton>
-		) : (
-			<IconButton
-				color="secondary"
-				aria-label="view-button"
-				onClick={() => setEditMode(true)}
-				sx={{ ml: '5px' }}
-			>
-				<EditIcon />
-			</IconButton>
-		);
-	};
-
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<ModalBox>
@@ -107,7 +85,18 @@ const EditModal = (props: IEditModal) => {
 									{editMode ? 'Edit job' : job.title}
 								</Typography>
 							</Grid>
-							<Grid item>{displayEditButton()}</Grid>
+							<Grid item>
+								{!editMode && (
+									<IconButton
+										color="secondary"
+										aria-label="view-button"
+										onClick={() => setEditMode(true)}
+										sx={{ ml: '5px' }}
+									>
+										<EditIcon />
+									</IconButton>
+								)}
+							</Grid>
 						</Grid>
 					</Grid>
 
