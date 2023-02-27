@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { StatusCodes } from 'http-status-codes';
 import {
@@ -15,6 +15,8 @@ import {
 	Typography,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import UndoIcon from '@mui/icons-material/Undo';
 import { DatePicker } from '@mui/x-date-pickers';
 import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
 import { IEditModal } from '@interfaces/modals';
@@ -25,6 +27,8 @@ import { validationSchema } from '../validation';
 const EditModal = (props: IEditModal) => {
 	const { job, open, handleClose } = props;
 	const { mutate } = useUpdateJob(job.id);
+
+	const [editMode, setEditMode] = useState(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -71,19 +75,47 @@ const EditModal = (props: IEditModal) => {
 		}
 	};
 
+	const displayEditButton = () => {
+		return editMode ? (
+			<IconButton
+				color="secondary"
+				aria-label="edit-button"
+				onClick={() => setEditMode(false)}
+				sx={{ ml: '5px' }}
+			>
+				<UndoIcon />
+			</IconButton>
+		) : (
+			<IconButton
+				color="secondary"
+				aria-label="view-button"
+				onClick={() => setEditMode(true)}
+				sx={{ ml: '5px' }}
+			>
+				<EditIcon />
+			</IconButton>
+		);
+	};
+
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<ModalBox>
 				<Grid container justifyContent="space-between">
 					<Grid item>
-						<Typography id="modal-modal-title" variant="h6" component="h2">
-							{job.title}
-						</Typography>
+						<Grid container alignItems="center">
+							<Grid item>
+								<Typography id="modal-modal-title" variant="h6" component="h2">
+									{editMode ? 'Edit job' : job.title}
+								</Typography>
+							</Grid>
+							<Grid item>{displayEditButton()}</Grid>
+						</Grid>
 					</Grid>
+
 					<Grid item>
 						<IconButton
 							color="secondary"
-							aria-label="close-create-modal"
+							aria-label="close-edit-modal"
 							onClick={() => handleClose(false)}
 						>
 							<CloseIcon />
@@ -102,6 +134,7 @@ const EditModal = (props: IEditModal) => {
 								label="Job Type"
 								onChange={formik.handleChange}
 								value={formik.values.typeId}
+								disabled={!editMode}
 							>
 								<MenuItem value={1}>Quick Tick</MenuItem>
 								<MenuItem value={2}>Task</MenuItem>
@@ -116,6 +149,7 @@ const EditModal = (props: IEditModal) => {
 								views={['year', 'month', 'day']}
 								value={formik.values.completionDate}
 								onChange={formik.handleChange}
+								disabled={!editMode}
 								renderInput={(params) => (
 									<TextField
 										id="completionDate"
@@ -136,6 +170,7 @@ const EditModal = (props: IEditModal) => {
 						name="title"
 						autoComplete="title"
 						fullWidth
+						disabled={!editMode}
 						value={formik.values.title}
 						onChange={formik.handleChange}
 						error={formik.touched.title && Boolean(formik.errors.title)}
@@ -149,11 +184,29 @@ const EditModal = (props: IEditModal) => {
 						setFieldValue={(val) => formik.setFieldValue('description', val)}
 						value={formik.values.description}
 						error={formik.errors.description}
+						readOnly={!editMode}
+						toolbarHidden={!editMode}
 					/>
+					<InputLabel id="job-type-select-label">Status</InputLabel>
+					<Select
+						fullWidth
+						labelId="job-status-select-label"
+						id="status"
+						name="status"
+						label="Status"
+						onChange={formik.handleChange}
+						value={formik.values.status}
+						disabled={!editMode}
+					>
+						<MenuItem value={'Not Started'}>Not Started</MenuItem>
+						<MenuItem value={'Done'}>Done</MenuItem>
+					</Select>
 					{statusAlert()}
-					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-						Create
-					</Button>
+					{editMode && (
+						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+							Save
+						</Button>
+					)}
 				</Box>
 			</ModalBox>
 		</Modal>

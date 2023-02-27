@@ -42,7 +42,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     }
   }
   res.status(401).json({
-    error: "Access not Permitted!",
+    error: "Access not Permitted",
   });
 };
 

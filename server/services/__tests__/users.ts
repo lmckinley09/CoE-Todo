@@ -82,8 +82,8 @@ describe("Users Service", () => {
       const role_id = 2;
       const newUser = {
         email,
-        first_name,
-        last_name,
+        firstName: first_name,
+        lastName: last_name,
         password: "password1!",
         role_id,
         profile_picture: "picture.png",
@@ -121,8 +121,8 @@ describe("updateOne", () => {
     const role_id = 2;
     const newUser = {
       email,
-      first_name,
-      last_name,
+      firstName: first_name,
+      lastName: last_name,
       password: "password1!",
       role_id,
       profile_picture: "picture.png",
