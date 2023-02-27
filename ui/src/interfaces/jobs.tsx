@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
+export interface IUpdateJob {
+	title: string;
+	description: string;
+	completionDate: string;
+	status: string;
+	typeId: number;
+}
 export interface IJob {
 	id: number;
 	board_id: number;
