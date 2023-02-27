@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import UndoIcon from '@mui/icons-material/Undo';
 import { DatePicker } from '@mui/x-date-pickers';
 import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
 import { IEditModal } from '@interfaces/modals';
@@ -135,8 +134,9 @@ const EditModal = (props: IEditModal) => {
 							<DatePicker
 								openTo="day"
 								views={['year', 'month', 'day']}
+								inputFormat="dd/MM/yyyy"
 								value={formik.values.completionDate}
-								onChange={formik.handleChange}
+								onChange={(value) => formik.setFieldValue('completionDate', value)}
 								disabled={!editMode}
 								renderInput={(params) => (
 									<TextField
