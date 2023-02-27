@@ -1,21 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
 	Alert,
 	CssBaseline,
 	Grid,
 	IconButton,
+	Snackbar,
 	Typography,
 } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
-import { CreateModal, JobItem, Toggle } from './components';
-import { IGetJobs } from '@interfaces/jobs';
+import { CreateModal, EditModal, JobItem, Toggle } from './components';
+import { IJob, IGetJobs } from '@interfaces/jobs';
 import AddIcon from '@mui/icons-material/Add';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
 import useGetJobs from '@hooks/integrationHooks/useGetJobs';
 
 const Board = (): JSX.Element => {
+	const [selectedJob, setSelectedJob] = useState<IJob | undefined>();
 	const [createModalOpen, setCreateModalOpen] = useState(false);
+	const [editModalOpen, setEditModalOpen] = useState(false);
+	const [displayNotification, setDisplayNotification] = useState(false);
+
+	const handleNotificationClose = (
+		event?: React.SyntheticEvent | Event,
+		reason?: string
+	) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setDisplayNotification(false);
+	};
+
+	const displayNotificationMessage = () => {
+		return (
+			<Snackbar
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+				open={displayNotification}
+				autoHideDuration={6000}
+				onClose={handleNotificationClose}
+			>
+				<Alert
+					onClose={handleNotificationClose}
+					severity="success"
+					sx={{ width: '100%' }}
+				>
+					Changes saved
+				</Alert>
+			</Snackbar>
+		);
+	};
 
 	const params = useParams();
 	const { data: board } = useGetBoard(Number(params.boardId));
@@ -23,6 +56,19 @@ const Board = (): JSX.Element => {
 
 	const handleCreateModalOpen = () => setCreateModalOpen(true);
 	const handleCreateModalClose = () => setCreateModalOpen(false);
+
+	const handleEditModalClose = () => {
+		setSelectedJob(undefined);
+		setEditModalOpen(false);
+	};
+
+	useEffect(() => {
+		setEditModalOpen(true);
+	}, [selectedJob]);
+
+	const openEditModal = (job: IJob) => {
+		setSelectedJob(job);
+	};
 
 	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
 		if (jobs && jobs.data) {
@@ -35,7 +81,9 @@ const Board = (): JSX.Element => {
 	const displayByJobType = (jobType: string, errorMessage: string) => {
 		if (jobs) {
 			const filteredJobs = filterByJobType(jobs, jobType);
-			return filteredJobs?.map((job) => <JobItem key={job.id} job={job} />);
+			return filteredJobs?.map((job) => (
+				<JobItem key={job.id} job={job} openEditModal={openEditModal} />
+			));
 		} else {
 			return <Alert severity="error">{errorMessage}</Alert>;
 		}
@@ -110,6 +158,15 @@ const Board = (): JSX.Element => {
 					</Grid>
 				</Grid>
 				<CreateModal open={createModalOpen} handleClose={handleCreateModalClose} />
+				{selectedJob && (
+					<EditModal
+						open={editModalOpen}
+						handleClose={handleEditModalClose}
+						job={selectedJob}
+						setDisplayNotification={setDisplayNotification}
+					/>
+				)}
+				{displayNotificationMessage()}
 			</Grid>
 		);
 	}

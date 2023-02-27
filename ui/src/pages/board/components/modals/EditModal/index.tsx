@@ -11,6 +11,7 @@ import {
 	MenuItem,
 	Modal,
 	Select,
+	Snackbar,
 	TextField,
 	Typography,
 } from '@mui/material';
@@ -24,7 +25,7 @@ import RichTextEditor from '../../RichTextEditor';
 import { validationSchema } from '../validation';
 
 const EditModal = (props: IEditModal) => {
-	const { job, open, handleClose } = props;
+	const { job, open, handleClose, setDisplayNotification } = props;
 	const { mutate } = useUpdateJob(job.id);
 
 	const [editMode, setEditMode] = useState(false);
@@ -43,7 +44,8 @@ const EditModal = (props: IEditModal) => {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
-						formik.resetForm();
+						setDisplayNotification(true);
+						setEditMode(false);
 					}
 				},
 				onError: (error: any) => {

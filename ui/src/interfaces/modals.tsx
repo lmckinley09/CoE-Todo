@@ -8,4 +8,5 @@ export interface IModal {
 
 export interface IEditModal extends IModal {
 	job: IJob;
+	setDisplayNotification: Dispatch<SetStateAction<boolean>>;
 }

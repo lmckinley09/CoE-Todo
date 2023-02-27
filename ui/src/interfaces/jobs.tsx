@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 export interface IJob {
 	id: number;
 	board_id: number;
@@ -10,6 +11,7 @@ export interface IJob {
 }
 
 export interface IJobItem {
+	openEditModal: (job: IJob) => void;
 	job: IJob;
 }
 
