@@ -116,8 +116,9 @@ const CreateModal = (props: IModal) => {
 							<DatePicker
 								openTo="day"
 								views={['year', 'month', 'day']}
+								inputFormat="dd/MM/yyyy"
 								value={formik.values.completionDate}
-								onChange={formik.handleChange}
+								onChange={(value) => formik.setFieldValue('completionDate', value)}
 								renderInput={(params) => (
 									<TextField
 										id="completionDate"
