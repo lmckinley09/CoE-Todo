@@ -113,7 +113,7 @@ describe("Job Controller", () => {
         newJob
       );
       expect(res.sendStatus).toHaveBeenCalledTimes(1);
-      expect(res.sendStatus).toHaveBeenCalledWith(404);
+      expect(res.sendStatus).toHaveBeenCalledWith(400);
     });
   });
 
@@ -132,24 +132,19 @@ describe("Job Controller", () => {
 
       const req = mockRequest({
         params: { jobId },
-        query: { typeId },
         body: newJob,
       });
       const res = mockResponse();
       const mockReturnValue = {} as any;
 
       when(JobService.updateOne)
-        .calledWith(jobId, typeId, newJob)
+        .calledWith(jobId, newJob)
         .mockReturnValueOnce(Promise.resolve(mockReturnValue));
 
       await updateJob(req, res);
 
       expect(JobService.updateOne).toHaveBeenCalledTimes(1);
-      expect(JobService.updateOne).toHaveBeenLastCalledWith(
-        jobId,
-        typeId,
-        newJob
-      );
+      expect(JobService.updateOne).toHaveBeenLastCalledWith(jobId, newJob);
       expect(res.sendStatus).toHaveBeenCalledTimes(1);
       expect(res.sendStatus).toHaveBeenCalledWith(200);
     });
@@ -175,19 +170,15 @@ describe("Job Controller", () => {
       const mockReturnValue = undefined as any;
 
       when(JobService.updateOne)
-        .calledWith(jobId, typeId, newJob)
+        .calledWith(jobId, newJob)
         .mockReturnValueOnce(Promise.resolve(mockReturnValue));
 
       await updateJob(req, res);
 
       expect(JobService.updateOne).toHaveBeenCalledTimes(1);
-      expect(JobService.updateOne).toHaveBeenLastCalledWith(
-        jobId,
-        typeId,
-        newJob
-      );
+      expect(JobService.updateOne).toHaveBeenLastCalledWith(jobId, newJob);
       expect(res.sendStatus).toHaveBeenCalledTimes(1);
-      expect(res.sendStatus).toHaveBeenCalledWith(404);
+      expect(res.sendStatus).toHaveBeenCalledWith(400);
     });
   });
 

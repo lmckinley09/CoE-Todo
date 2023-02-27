@@ -137,8 +137,8 @@ describe("User Controller", () => {
     it("should return 200 when user created", async () => {
       const newUser = {
         email: "email@email.com",
-        first_name: "fname",
-        last_name: "lname",
+        firstName: "fname",
+        lastName: "lname",
         password: "password1!",
         role_id: 2,
         profile_picture: "picture.png",
@@ -167,8 +167,8 @@ describe("User Controller", () => {
     it("should return 400 when error occuers and user is not created", async () => {
       const newUser = {
         email: "email@email.com",
-        first_name: "fname",
-        last_name: "lname",
+        firstName: "fname",
+        lastName: "lname",
         password: "password1!",
         role_id: 2,
         profile_picture: "picture.png",
@@ -198,8 +198,8 @@ describe("User Controller", () => {
       const userId = 1;
       const newUser = {
         email: "email@email.com",
-        first_name: "fname",
-        last_name: "lname",
+        firstName: "fname",
+        lastName: "lname",
         password: "password1!",
         role_id: 2,
         profile_picture: "picture.png",
@@ -226,8 +226,8 @@ describe("User Controller", () => {
       const userId = 1;
       const newUser = {
         email: "email@email.com",
-        first_name: "fname",
-        last_name: "lname",
+        firstName: "fname",
+        lastName: "lname",
         password: "password1!",
         role_id: 2,
         profile_picture: "picture.png",

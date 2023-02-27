@@ -92,7 +92,7 @@ describe("updateOne", () => {
       update: jest.fn().mockReturnValueOnce(newJob),
     };
 
-    await JobService.updateOne(jobId, typeId, newJob);
+    await JobService.updateOne(jobId, newJob);
 
     expect(prisma.job.update).toHaveBeenCalledTimes(1);
     expect(prisma.job.update).toHaveBeenCalledWith(
