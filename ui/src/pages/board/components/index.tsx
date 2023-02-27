@@ -1,4 +1,5 @@
-export { default as CreateModal } from './CreateModal';
+export { default as CreateModal } from './modals/CreateModal';
+export { default as EditModal } from './modals/CreateModal';
 export { default as JobItem } from './JobItem';
-export { default as Toggle } from './Toggle';
 export { default as RichTextEditor } from './RichTextEditor';
+export { default as Toggle } from './Toggle';

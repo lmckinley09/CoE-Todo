@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
 	Alert,
@@ -15,16 +15,13 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker } from '@mui/x-date-pickers';
-import { ModalBox } from './styled';
-import RichTextEditor from '../RichTextEditor';
+import useCreateJob from '@hooks/integrationHooks/useCreateJob';
+import { IModal } from '@interfaces/modals';
+import { ModalBox } from '../styled';
+import RichTextEditor from '../../RichTextEditor';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import useCreateJob from '@hooks/integrationHooks/useCreateJob';
-interface IAddJobModal {
-	open: boolean;
-	handleClose: Dispatch<SetStateAction<boolean>>;
-}
 
 const validationSchema = yup.object({
 	title: yup.string().required('Title is required'),
@@ -33,7 +30,7 @@ const validationSchema = yup.object({
 	completionDate: yup.date().required('Date required'),
 });
 
-const CreateModal = (props: IAddJobModal) => {
+const CreateModal = (props: IModal) => {
 	const params = useParams();
 	const { mutate } = useCreateJob(Number(params.boardId));
 
