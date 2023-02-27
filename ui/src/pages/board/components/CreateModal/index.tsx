@@ -76,55 +76,55 @@ const CreateModal = (props: IAddJobModal) => {
 					</Grid>
 				</Grid>
 
-				<Typography id="modal-modal-description" sx={{ mt: 2 }}>
-					{/* Duis mollis, est non commodo luctus, nisi erat porttitor ligula. */}
-				</Typography>
+				<Grid container spacing={2}>
+					<Grid item width="50%">
+						<InputLabel id="job-type-select-label">Job Type</InputLabel>
+						<Select
+							fullWidth
+							labelId="job-type-select-label"
+							id="job-type-select"
+							label="Job Type"
+							// onChange={handleChange}
+							defaultValue={1}
+						>
+							<MenuItem value={1}>Quick Tick</MenuItem>
+							<MenuItem value={2}>Task</MenuItem>
+							<MenuItem value={3}>Project</MenuItem>
+						</Select>
+					</Grid>
 
-				<InputLabel id="job-type-select-label">Job Type</InputLabel>
-				<Select
-					fullWidth
-					labelId="job-type-select-label"
-					id="job-type-select"
-					label="Job Type"
-					// onChange={handleChange}
-					defaultValue={1}
-				>
-					<MenuItem value={1}>Quick Tick</MenuItem>
-					<MenuItem value={2}>Task</MenuItem>
-					<MenuItem value={3}>Project</MenuItem>
-				</Select>
+					<Grid item width="50%">
+						<InputLabel id="job-completion-date-label">Completion Date</InputLabel>
+						<DatePicker
+							openTo="day"
+							views={['year', 'month', 'day']}
+							value={'2023-01-01'}
+							onChange={() => {
+								console.log('date');
+							}}
+							renderInput={(params) => <TextField fullWidth {...params} />}
+						/>
+					</Grid>
+				</Grid>
 
-				<InputLabel id="job-title-label">Title</InputLabel>
+				<InputLabel id="job-title-label" sx={{ marginTop: '10px' }}>
+					Title
+				</InputLabel>
 				<TextField
-					margin="normal"
-					fullWidth
 					id="title"
 					name="title"
 					autoComplete="title"
-					autoFocus
+					fullWidth
 					value={formik.values.title}
 					onChange={formik.handleChange}
 					error={formik.touched.title && Boolean(formik.errors.title)}
 					helperText={formik.touched.title && formik.errors.title}
 				/>
 
-				<Box sx={{ marginTop: '10px' }}>
-					<InputLabel id="job-description-label">Description</InputLabel>
-					<RichTextEditor />
-				</Box>
-
-				<Box sx={{ marginTop: '20px' }}>
-					<InputLabel id="job-completion-date-label">Completion Date</InputLabel>
-					<DatePicker
-						openTo="day"
-						views={['year', 'month', 'day']}
-						value={'2023-01-01'}
-						onChange={() => {
-							console.log('date');
-						}}
-						renderInput={(params) => <TextField {...params} />}
-					/>
-				</Box>
+				<InputLabel id="job-description-label" sx={{ marginTop: '10px' }}>
+					Description
+				</InputLabel>
+				<RichTextEditor />
 
 				<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 					{`Create`}

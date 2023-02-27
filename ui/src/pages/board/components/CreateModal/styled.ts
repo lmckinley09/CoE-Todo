@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 
 export const ModalBox = styled(Box)`
 	position: absolute;
-	padding: 20px;
+	padding: 30px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);

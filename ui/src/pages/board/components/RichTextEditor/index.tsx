@@ -13,8 +13,12 @@ const RichTextEditor = () => {
 				editorClassName="editorClassName"
 				toolbarClassName="toolbarClassName"
 				toolbarStyle={{ border: 'none', borderBottom: '1px solid #f1f1f1' }}
-				editorStyle={{ padding: '0px 10px' }}
-				wrapperStyle={{ border: '1px solid #c4c4c4', borderRadius: '4px' }}
+				editorStyle={{ padding: '0px 10px', color: 'rgba(0, 0, 0, 0.87)' }}
+				wrapperStyle={{
+					border: '1px solid #c4c4c4',
+					borderRadius: '4px',
+					minHeight: '250px',
+				}}
 				// toolbarHidden={toolbarHidden}
 				// readOnly={readOnly}
 				toolbar={{
