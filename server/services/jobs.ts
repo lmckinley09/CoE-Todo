@@ -5,7 +5,7 @@ interface IJob {
   title: string;
   description?: string;
   status: string;
-  completion_date?: string;
+  completionDate?: string;
   created?: string;
   last_modified: string;
 }
@@ -43,7 +43,7 @@ const createOne = async (boardId: number, typeId: number, job: IJob) => {
       title: job.title,
       description: job.description,
       status: job.status,
-      completion_date: job.completion_date,
+      completion_date: job.completionDate,
       created: new Date().toISOString(),
       last_modified: new Date().toISOString(),
     },
@@ -69,7 +69,7 @@ const updateOne = async (jobId: number, typeId: number, job: IJob) => {
       title: job.title,
       description: job.description,
       status: job.status,
-      completion_date: job.completion_date,
+      completion_date: job.completionDate,
       last_modified: new Date().toISOString(),
     },
   });

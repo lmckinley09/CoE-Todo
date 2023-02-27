@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 import {
+	Alert,
 	Button,
 	Box,
 	Grid,
@@ -18,6 +20,7 @@ import RichTextEditor from '../RichTextEditor';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import useCreateJob from '@hooks/integrationHooks/useCreateJob';
 interface IAddJobModal {
 	open: boolean;
 	handleClose: Dispatch<SetStateAction<boolean>>;
@@ -31,33 +34,53 @@ const validationSchema = yup.object({
 });
 
 const CreateModal = (props: IAddJobModal) => {
+	const params = useParams();
+	const { mutate } = useCreateJob(Number(params.boardId));
+
 	const formik = useFormik({
 		initialValues: {
 			typeId: 1,
 			title: '',
 			description: '',
 			status: 'Not Started',
-			completionDate: new Date(),
+			completionDate: new Date().toISOString(),
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
-			console.log(values);
-			// mutate(values, {
-			// 	onSuccess: (response) => {
-			// 		actions.setStatus();
-			// 		if (response.status === StatusCodes.OK) {
-			// 			checkIfValidToken(response.data);
-			// 			navigate('/boards');
-			// 		}
-			// 	},
-			// 	onError: (error: any) => {
-			// 		if (error.response.status === StatusCodes.BAD_REQUEST) {
-			// 			actions.setStatus({ statusCode: error.response.status });
-			// 		}
-			// 	},
-			// });
+			mutate(values, {
+				onSuccess: (response) => {
+					actions.setStatus();
+					if (response.status === StatusCodes.OK) {
+						formik.resetForm();
+						props.handleClose(false);
+					}
+				},
+				onError: (error: any) => {
+					if (error.response.status === StatusCodes.BAD_REQUEST) {
+						actions.setStatus({ statusCode: error.response.status });
+					}
+				},
+			});
 		},
 	});
+
+	const statusAlert = () => {
+		if (formik.status) {
+			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
+				return (
+					<Alert severity="error" sx={{ mt: '10px' }}>
+						Error creating job
+					</Alert>
+				);
+			} else {
+				return (
+					<Alert severity="warning" sx={{ mt: '10px' }}>
+						Something went wrong, please try again later.
+					</Alert>
+				);
+			}
+		}
+	};
 
 	return (
 		<Modal open={props.open} onClose={props.handleClose}>
@@ -138,7 +161,7 @@ const CreateModal = (props: IAddJobModal) => {
 						value={formik.values.description}
 						error={formik.errors.description}
 					/>
-
+					{statusAlert()}
 					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 						Create
 					</Button>

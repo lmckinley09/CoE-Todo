@@ -69,7 +69,7 @@ Jobs.get("/", getJobs);
  *                 type: string
  *                 required: false
  *                 description: The job status
- *               completion_date:
+ *               completionDate:
  *                 type: string
  *                 required: false
  *                 description: The due date
@@ -88,12 +88,8 @@ Jobs.post(
       .isLength({ min: 3 })
       .withMessage("job title should have minimum length of 3")
       .trim(),
-    body("description")
-      .isString()
-      .isLength({ min: 3 })
-      .withMessage("description should have minimum length of 3")
-      .trim(),
-    body("completion_date").isString(),
+    body("description").isString().trim(),
+    body("completionDate").isString(),
   ],
   validate,
   createJob
@@ -154,11 +150,7 @@ Jobs.put(
       .isLength({ min: 3 })
       .withMessage("job title should have minimum length of 3")
       .trim(),
-    body("description")
-      .isString()
-      .isLength({ min: 3 })
-      .withMessage("description should have minimum length of 3")
-      .trim(),
+    body("description").isString().trim(),
     body("completion_date").isString(),
   ],
   validate,
