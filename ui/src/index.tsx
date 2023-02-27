@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as SCThemeProvider } from 'styled-components';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import theme from './theme';
 
 const queryClient = new QueryClient();
@@ -18,7 +20,9 @@ root.render(
 			<CssBaseline />
 			<SCThemeProvider theme={theme}>
 				<QueryClientProvider client={queryClient}>
-					<App />
+					<LocalizationProvider dateAdapter={AdapterDateFns}>
+						<App />
+					</LocalizationProvider>
 				</QueryClientProvider>
 			</SCThemeProvider>
 		</MuiThemeProvider>
