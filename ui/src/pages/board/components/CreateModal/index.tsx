@@ -24,8 +24,10 @@ interface IAddJobModal {
 }
 
 const validationSchema = yup.object({
-	// email: yup.string().email('Enter a valid email').required('Email is required'),
-	// password: yup.string().required('Password is required'),
+	title: yup.string().required('Title is required'),
+	description: yup.string().max(2000, '2000 Max Character Length'),
+	typeId: yup.string().required('Job Type required'),
+	completionDate: yup.date().required('Date required'),
 });
 
 const CreateModal = (props: IAddJobModal) => {
@@ -34,11 +36,12 @@ const CreateModal = (props: IAddJobModal) => {
 			typeId: 1,
 			title: '',
 			description: '',
-			status: '',
-			completionDate: '',
+			status: 'Not Started',
+			completionDate: new Date(),
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
+			console.log(values);
 			// mutate(values, {
 			// 	onSuccess: (response) => {
 			// 		actions.setStatus();
@@ -75,60 +78,71 @@ const CreateModal = (props: IAddJobModal) => {
 						</IconButton>
 					</Grid>
 				</Grid>
+				<Box component="form" noValidate onSubmit={formik.handleSubmit}>
+					<Grid container spacing={2}>
+						<Grid item width="50%">
+							<InputLabel id="job-type-select-label">Job Type</InputLabel>
+							<Select
+								fullWidth
+								labelId="job-type-select-label"
+								id="typeId"
+								name="typeId"
+								label="Job Type"
+								onChange={formik.handleChange}
+								value={formik.values.typeId}
+							>
+								<MenuItem value={1}>Quick Tick</MenuItem>
+								<MenuItem value={2}>Task</MenuItem>
+								<MenuItem value={3}>Project</MenuItem>
+							</Select>
+						</Grid>
 
-				<Grid container spacing={2}>
-					<Grid item width="50%">
-						<InputLabel id="job-type-select-label">Job Type</InputLabel>
-						<Select
-							fullWidth
-							labelId="job-type-select-label"
-							id="job-type-select"
-							label="Job Type"
-							// onChange={handleChange}
-							defaultValue={1}
-						>
-							<MenuItem value={1}>Quick Tick</MenuItem>
-							<MenuItem value={2}>Task</MenuItem>
-							<MenuItem value={3}>Project</MenuItem>
-						</Select>
+						<Grid item width="50%">
+							<InputLabel id="job-completion-date-label">Completion Date</InputLabel>
+							<DatePicker
+								openTo="day"
+								views={['year', 'month', 'day']}
+								value={formik.values.completionDate}
+								onChange={formik.handleChange}
+								renderInput={(params) => (
+									<TextField
+										id="completionDate"
+										name="completionDate"
+										fullWidth
+										{...params}
+									/>
+								)}
+							/>
+						</Grid>
 					</Grid>
 
-					<Grid item width="50%">
-						<InputLabel id="job-completion-date-label">Completion Date</InputLabel>
-						<DatePicker
-							openTo="day"
-							views={['year', 'month', 'day']}
-							value={'2023-01-01'}
-							onChange={() => {
-								console.log('date');
-							}}
-							renderInput={(params) => <TextField fullWidth {...params} />}
-						/>
-					</Grid>
-				</Grid>
+					<InputLabel id="job-title-label" sx={{ marginTop: '10px' }}>
+						Title
+					</InputLabel>
+					<TextField
+						id="title"
+						name="title"
+						autoComplete="title"
+						fullWidth
+						value={formik.values.title}
+						onChange={formik.handleChange}
+						error={formik.touched.title && Boolean(formik.errors.title)}
+						helperText={formik.touched.title && formik.errors.title}
+					/>
 
-				<InputLabel id="job-title-label" sx={{ marginTop: '10px' }}>
-					Title
-				</InputLabel>
-				<TextField
-					id="title"
-					name="title"
-					autoComplete="title"
-					fullWidth
-					value={formik.values.title}
-					onChange={formik.handleChange}
-					error={formik.touched.title && Boolean(formik.errors.title)}
-					helperText={formik.touched.title && formik.errors.title}
-				/>
+					<InputLabel id="job-description-label" sx={{ marginTop: '10px' }}>
+						Description
+					</InputLabel>
+					<RichTextEditor
+						setFieldValue={(val) => formik.setFieldValue('description', val)}
+						value={formik.values.description}
+						error={formik.errors.description}
+					/>
 
-				<InputLabel id="job-description-label" sx={{ marginTop: '10px' }}>
-					Description
-				</InputLabel>
-				<RichTextEditor />
-
-				<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-					{`Create`}
-				</Button>
+					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						Create
+					</Button>
+				</Box>
 			</ModalBox>
 		</Modal>
 	);
