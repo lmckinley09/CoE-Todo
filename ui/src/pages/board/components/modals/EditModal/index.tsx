@@ -40,7 +40,6 @@ const EditModal = (props: IEditModal) => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
-			console.log('values', values);
 			mutate(values, {
 				onSuccess: (response) => {
 					actions.setStatus();
