@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CssBaseline, Grid, IconButton, Typography } from '@mui/material';
 import { StyledBox } from './styled';
 import BoardItem from './components/BoardItem';
 import useGetBoards from '@hooks/integrationHooks/useGetBoards';
 import AddIcon from '@mui/icons-material/Add';
+import CreateModal from './components/modals/CreateModal';
 
 const Boards = () => {
 	const { data: boards } = useGetBoards();
+
+	const [createModalOpen, setCreateModalOpen] = useState(false);
+
+	const handleCreateModalOpen = () => setCreateModalOpen(true);
+	const handleCreateModalClose = () => setCreateModalOpen(false);
 
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
@@ -19,7 +25,7 @@ const Boards = () => {
 					<IconButton
 						color="secondary"
 						aria-label="add quick tick"
-						// onClick={() => handleCreateModalOpen()}
+						onClick={() => handleCreateModalOpen()}
 					>
 						<AddIcon />
 					</IconButton>
@@ -43,6 +49,7 @@ const Boards = () => {
 						})}
 				</StyledBox>
 			</Grid>
+			<CreateModal open={createModalOpen} handleClose={handleCreateModalClose} />
 		</Grid>
 	);
 };
