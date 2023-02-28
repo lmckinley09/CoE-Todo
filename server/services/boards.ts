@@ -16,6 +16,9 @@ const getAll = async (userId: number) => {
         },
       },
     },
+    include: {
+      job: true,
+    },
   });
   const sharedBoards = await prisma.board.findMany({
     where: {
@@ -26,9 +29,34 @@ const getAll = async (userId: number) => {
         },
       },
     },
+    include: {
+      job: true,
+    },
   });
 
-  const boards = { owner: ownerBoards, shared: sharedBoards };
+  const formattedOwnerBoards =
+    ownerBoards?.map((x) => ({
+      id: x.id,
+      name: x.name,
+      created: x.created,
+      lastModified: x.last_modified,
+      tickCount: x.job.filter((obj) => obj.type_id === 1).length,
+      taskCount: x.job.filter((obj) => obj.type_id === 2).length,
+      projectCount: x.job.filter((obj) => obj.type_id === 3).length,
+    })) || [];
+
+  const formattedSharedBoards =
+    sharedBoards?.map((x) => ({
+      id: x.id,
+      name: x.name,
+      created: x.created,
+      lastModified: x.last_modified,
+      tickCount: x.job.filter((obj) => obj.type_id === 1).length,
+      taskCount: x.job.filter((obj) => obj.type_id === 2).length,
+      projectCount: x.job.filter((obj) => obj.type_id === 3).length,
+    })) || [];
+
+  const boards = { owner: formattedOwnerBoards, shared: formattedSharedBoards };
   return boards;
 };
 

@@ -3,6 +3,9 @@ export interface IBoard {
 	name: string;
 	created: string;
 	last_modified: string;
+	tickCount: number;
+	taskCount: number;
+	projectCount: number;
 }
 
 export interface IGetBoards {
