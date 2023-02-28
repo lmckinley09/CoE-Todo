@@ -40,9 +40,9 @@ const getAll = async (userId: number) => {
       name: x.name,
       created: x.created,
       lastModified: x.last_modified,
-      tickCount: x.job.filter((obj) => obj.type_id === 1).length,
-      taskCount: x.job.filter((obj) => obj.type_id === 2).length,
-      projectCount: x.job.filter((obj) => obj.type_id === 3).length,
+      tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
+      taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
+      projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
     })) || [];
 
   const formattedSharedBoards =
@@ -51,9 +51,9 @@ const getAll = async (userId: number) => {
       name: x.name,
       created: x.created,
       lastModified: x.last_modified,
-      tickCount: x.job.filter((obj) => obj.type_id === 1).length,
-      taskCount: x.job.filter((obj) => obj.type_id === 2).length,
-      projectCount: x.job.filter((obj) => obj.type_id === 3).length,
+      tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
+      taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
+      projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
     })) || [];
 
   const boards = { owner: formattedOwnerBoards, shared: formattedSharedBoards };
