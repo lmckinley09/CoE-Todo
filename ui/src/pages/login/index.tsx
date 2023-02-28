@@ -10,6 +10,7 @@ import {
 	TextField,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import SignUp from './components/SignUp';
 import LandingImage from '@assets/landing_copy.png';
 import useAuth from '@hooks/integrationHooks/useAuth';
 import useTokens from '@hooks/integrationHooks/useTokens';
@@ -17,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import SignUp from './components/SignUp';
 
 const validationSchema = yup.object({
 	email: yup.string().email('Enter a valid email').required('Email is required'),

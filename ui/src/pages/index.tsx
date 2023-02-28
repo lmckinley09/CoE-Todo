@@ -1,4 +1,4 @@
-export { default as Login } from './login';
-export { default as Boards } from './boards';
-export { default as Board } from './board';
-export { default as Error } from './error';
+export { default as Login } from './Login';
+export { default as Boards } from './Boards';
+export { default as Board } from './Board';
+export { default as Error } from './Error';
