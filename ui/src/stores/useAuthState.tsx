@@ -10,7 +10,7 @@ export const useAuthState = create<AuthState>((set) => ({
 	isAuthorized: false,
 	// methods for manipulating state
 	setIsAuthorized: (authorized: boolean) => {
-		set((state) => ({
+		set(() => ({
 			isAuthorized: authorized,
 		}));
 	},

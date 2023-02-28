@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { JobBox } from './styled';
 import { IJobItem, IUpdateJob } from '@interfaces/jobs';
 import { Box, Checkbox, Grid, Typography } from '@mui/material';
@@ -23,14 +23,14 @@ const JobItem = (props: IJobItem) => {
 		};
 		mutate(updatedJob, {
 			onSuccess: (response) => {
-				if (response.status === StatusCodes.OK) {
-					console.log(response);
-				}
+				// if (response.status === StatusCodes.OK) {
+				// 	console.log(response);
+				// }
 			},
 			onError: (error: any) => {
-				if (error.response.status === StatusCodes.BAD_REQUEST) {
-					console.log('no');
-				}
+				// if (error.response.status === StatusCodes.BAD_REQUEST) {
+				// 	console.log('no');
+				// }
 			},
 		});
 	};
