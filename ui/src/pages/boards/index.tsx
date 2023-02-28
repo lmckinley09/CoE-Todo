@@ -17,7 +17,7 @@ const Boards = () => {
 
 				<StyledBox>
 					{boards &&
-						boards?.data?.map((board) => {
+						boards?.data?.owner.map((board) => {
 							return <BoardItem key={board.id} board={board} />;
 						})}
 				</StyledBox>
@@ -26,7 +26,12 @@ const Boards = () => {
 				<Typography variant="h4" marginLeft="20px" mt="10px">
 					Shared Boards
 				</Typography>
-				<StyledBox>{/* <BoardItem /> */}</StyledBox>
+				<StyledBox>
+					{boards &&
+						boards?.data?.shared.map((board) => {
+							return <BoardItem key={board.id} board={board} />;
+						})}
+				</StyledBox>
 			</Grid>
 		</Grid>
 	);

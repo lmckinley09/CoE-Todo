@@ -7,8 +7,7 @@ interface IBoard {
 }
 
 const getAll = async (userId: number) => {
-  // const ownerBoards =
-  return await prisma.board.findMany({
+  const ownerBoards = await prisma.board.findMany({
     where: {
       user_board_access: {
         some: {
@@ -18,18 +17,19 @@ const getAll = async (userId: number) => {
       },
     },
   });
-  // const sharedBoards = await prisma.board.findMany({
-  //   where: {
-  //     user_board_access: {
-  //       some: {
-  //         user_id: Number(userId),
-  //         type_id: 2 || 3,
-  //       },
-  //     },
-  //   },
-  // });
-  // const boards = { owner: ownerBoards, shared: sharedBoards };
-  // return boards;
+  const sharedBoards = await prisma.board.findMany({
+    where: {
+      user_board_access: {
+        some: {
+          user_id: Number(userId),
+          type_id: 2 || 3,
+        },
+      },
+    },
+  });
+
+  const boards = { owner: ownerBoards, shared: sharedBoards };
+  return boards;
 };
 
 const getSingle = async (boardId: number) => {
