@@ -18,8 +18,8 @@ const JobItem = (props: IJobItem) => {
 			title: job.title,
 			description: job.description,
 			status: status,
-			completionDate: job.completion_date,
-			typeId: job.type_id,
+			completionDate: job.completionDate,
+			typeId: job.typeId,
 		};
 		mutate(updatedJob, {
 			onSuccess: (response) => {

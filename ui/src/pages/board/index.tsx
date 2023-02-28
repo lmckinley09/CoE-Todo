@@ -73,7 +73,7 @@ const Board = (): JSX.Element => {
 	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
 		if (jobs && jobs.data) {
 			return jobs.data.filter((job) => {
-				return job.job_type?.type_description === jobType;
+				return job.jobType?.description === jobType;
 			});
 		}
 	};

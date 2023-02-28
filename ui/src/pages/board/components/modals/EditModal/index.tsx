@@ -32,11 +32,11 @@ const EditModal = (props: IEditModal) => {
 
 	const formik = useFormik({
 		initialValues: {
-			typeId: job.job_type.id,
+			typeId: job.jobType.id,
 			title: job.title,
 			description: job.description,
 			status: job.status,
-			completionDate: job.completion_date,
+			completionDate: job.completionDate,
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {

@@ -1,19 +1,24 @@
+export interface IJob {
+	id: number;
+	boardId: number;
+	typeId: number;
+	title: string;
+	description: string;
+	status: string;
+	completionDate: string;
+	jobType: IJobType;
+}
+export interface IJobType {
+	id: number;
+	description: string;
+}
+
 export interface IUpdateJob {
 	title: string;
 	description: string;
 	completionDate: string;
 	status: string;
 	typeId: number;
-}
-export interface IJob {
-	id: number;
-	board_id: number;
-	type_id: number;
-	title: string;
-	description: string;
-	status: string;
-	completion_date: string;
-	job_type: IJobType;
 }
 
 export interface IJobItem {
@@ -23,9 +28,4 @@ export interface IJobItem {
 
 export interface IGetJobs {
 	data?: Array<IJob>;
-}
-
-export interface IJobType {
-	id: number;
-	type_description: string;
 }
