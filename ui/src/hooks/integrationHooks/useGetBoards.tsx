@@ -1,11 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query';
+import { AxiosResponse } from 'axios';
 import { axiosInstance } from '@integrations/instance';
 import { IGetBoards } from '@interfaces/boards';
-import { AxiosResponse } from 'axios';
-
-// interface IGetBoards {
-// 	data?: Array<IBoard>;
-// }
 
 export const getBoards = async () => {
 	const response = await axiosInstance.get('/boards');
