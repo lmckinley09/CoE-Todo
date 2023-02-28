@@ -1,8 +1,9 @@
 import React from 'react';
-import { CssBaseline, Grid, Typography } from '@mui/material';
+import { CssBaseline, Grid, IconButton, Typography } from '@mui/material';
 import { StyledBox } from './styled';
 import BoardItem from './components/BoardItem';
 import useGetBoards from '@hooks/integrationHooks/useGetBoards';
+import AddIcon from '@mui/icons-material/Add';
 
 const Boards = () => {
 	const { data: boards } = useGetBoards();
@@ -11,9 +12,18 @@ const Boards = () => {
 		<Grid container component="main" sx={{ height: '100vh' }}>
 			<CssBaseline />
 			<Grid item xs={12} sm={6} md={6}>
-				<Typography variant="h4" marginLeft="20px" mt="10px">
-					My Boards
-				</Typography>
+				<Grid container alignItems="baseline">
+					<Typography variant="h4" marginLeft="20px" mt="10px">
+						My Boards
+					</Typography>
+					<IconButton
+						color="secondary"
+						aria-label="add quick tick"
+						// onClick={() => handleCreateModalOpen()}
+					>
+						<AddIcon />
+					</IconButton>
+				</Grid>
 
 				<StyledBox>
 					{boards &&
