@@ -77,7 +77,7 @@ const createOne = async (userId: number, board: IBoard) => {
   const x = await Promise.all(usersDetails);
   const validUsers = x.filter((e) => e);
 
-  let createdBoard: IBoard;
+  let createdBoard;
 
   await prisma.$transaction(async (tx) => {
     createdBoard = await tx.board.create({
