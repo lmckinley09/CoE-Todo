@@ -81,10 +81,9 @@ const CreateModal = (props: IModal) => {
 		return displayShare ? (
 			<>
 				<Grid container>
-					<Grid item width="90%">
-						<InputLabel id="board-name-label" sx={{ marginTop: '10px' }}>
-							User Email
-						</InputLabel>
+					<Typography sx={{ marginTop: '15px' }}>Share with...</Typography>
+					<Grid item width="90%" sx={{ marginTop: '5px' }}>
+						<InputLabel id="board-name-label">Email</InputLabel>
 						<TextField
 							id="email"
 							name="email"
@@ -188,6 +187,7 @@ const CreateModal = (props: IModal) => {
 						</IconButton>
 					</Grid>
 				</Grid>
+
 				<Box component="form" noValidate onSubmit={formik.handleSubmit}>
 					<Grid container>
 						<InputLabel id="board-name-label" sx={{ marginTop: '10px' }}>

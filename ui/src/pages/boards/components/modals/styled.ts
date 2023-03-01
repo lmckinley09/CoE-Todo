@@ -8,6 +8,7 @@ export const ModalBox = styled(Box)`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 600px;
+	min-height: 390px;
 	background-color: white;
 	border-radius: 10px;
 	box-shadow: 24;
