@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import {
@@ -22,6 +23,7 @@ import isEmail from 'validator/lib/isEmail';
 
 const CreateModal = (props: IModal) => {
 	const { open, handleClose } = props;
+	const queryClient = useQueryClient();
 
 	const [displayShare, setDisplayShare] = useState(false);
 	const [users, setUsers] = useState<string[]>([]);
@@ -38,9 +40,10 @@ const CreateModal = (props: IModal) => {
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
 			mutate(values, {
-				onSuccess: (response) => {
+				onSuccess: async (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
+						await queryClient.refetchQueries(['boards']);
 						setDisplayShare(false);
 						formik.resetForm();
 						handleClose(false);

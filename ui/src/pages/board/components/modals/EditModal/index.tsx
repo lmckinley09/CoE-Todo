@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
+import { useQueryClient } from 'react-query';
 import { StatusCodes } from 'http-status-codes';
 import {
 	Alert,
@@ -26,6 +27,7 @@ import { validationSchema } from '../validation';
 const EditModal = (props: IEditModal) => {
 	const { job, open, handleClose, setDisplayNotification } = props;
 	const { mutate } = useUpdateJob(job.id);
+	const queryClient = useQueryClient();
 
 	const [editMode, setEditMode] = useState(false);
 
@@ -40,9 +42,10 @@ const EditModal = (props: IEditModal) => {
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
 			mutate(values, {
-				onSuccess: (response) => {
+				onSuccess: async (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
+						await queryClient.refetchQueries(['jobs']);
 						setDisplayNotification(true);
 						setEditMode(false);
 					}

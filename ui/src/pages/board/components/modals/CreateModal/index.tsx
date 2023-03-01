@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import {
@@ -26,6 +27,8 @@ import { validationSchema } from '../validation';
 const CreateModal = (props: IModal) => {
 	const { open, handleClose } = props;
 	const params = useParams();
+	const queryClient = useQueryClient();
+
 	const { mutate } = useCreateJob(Number(params.boardId));
 
 	const formik = useFormik({
@@ -39,9 +42,10 @@ const CreateModal = (props: IModal) => {
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
 			mutate(values, {
-				onSuccess: (response) => {
+				onSuccess: async (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
+						await queryClient.refetchQueries(['jobs']);
 						formik.resetForm();
 						handleClose(false);
 					}
