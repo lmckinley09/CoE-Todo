@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQueryClient } from 'react-query';
 import { JobBox } from './styled';
 import { IJobItem, IUpdateJob } from '@interfaces/jobs';
 import { Box, Checkbox, Grid, Typography } from '@mui/material';
@@ -8,11 +9,12 @@ import { StatusCodes } from 'http-status-codes';
 const JobItem = (props: IJobItem) => {
 	const { job } = props;
 	const { mutate } = useUpdateJob(job.id);
+	const queryClient = useQueryClient();
 
 	const isDone = job.status === 'Done';
 
 	const handleCheckboxChange = () => {
-		const status = job.status === 'Done' ? 'Done' : 'Not Started';
+		const status = job.status === 'Done' ? 'Not Started' : 'Done';
 
 		const updatedJob: IUpdateJob = {
 			title: job.title,
@@ -22,10 +24,8 @@ const JobItem = (props: IJobItem) => {
 			typeId: job.typeId,
 		};
 		mutate(updatedJob, {
-			onSuccess: (response) => {
-				// if (response.status === StatusCodes.OK) {
-				// 	console.log(response);
-				// }
+			onSuccess: async (response) => {
+				await queryClient.refetchQueries(['jobs']);
 			},
 			onError: (error: any) => {
 				// if (error.response.status === StatusCodes.BAD_REQUEST) {

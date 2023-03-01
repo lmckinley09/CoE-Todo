@@ -3,11 +3,16 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-const Toggle = () => {
+interface IToggle {
+	onChange: (event: any) => void;
+	checked: boolean;
+}
+
+const Toggle = (props: IToggle) => {
 	return (
 		<FormGroup>
 			<FormControlLabel
-				control={<Switch defaultChecked />}
+				control={<Switch checked={props.checked} onChange={props.onChange} />}
 				label="View Completed"
 				labelPlacement="top"
 			/>

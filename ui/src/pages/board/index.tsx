@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { sortBy } from 'lodash';
+import { orderBy } from 'lodash';
 import {
 	Alert,
+	CircularProgress,
 	CssBaseline,
 	Grid,
 	IconButton,
@@ -11,7 +12,7 @@ import {
 } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
 import { CreateModal, EditModal, JobItem, Toggle } from './components';
-import { IJob, IGetJobs } from '@interfaces/jobs';
+import { IJob } from '@interfaces/jobs';
 import AddIcon from '@mui/icons-material/Add';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
 import useGetJobs from '@hooks/integrationHooks/useGetJobs';
@@ -21,6 +22,64 @@ const Board = (): JSX.Element => {
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 	const [editModalOpen, setEditModalOpen] = useState(false);
 	const [displayNotification, setDisplayNotification] = useState(false);
+	const [displayDone, setDisplayDone] = useState(true);
+
+	const params = useParams();
+
+	const boardResponse = useGetBoard(Number(params.boardId));
+	const jobsResponse = useGetJobs(Number(params.boardId));
+
+	const board = boardResponse.data?.data;
+	const jobs = jobsResponse.data?.data;
+
+	const handleCreateModalOpen = () => setCreateModalOpen(true);
+	const handleCreateModalClose = () => setCreateModalOpen(false);
+
+	const handleEditModalClose = () => {
+		setSelectedJob(undefined);
+		setEditModalOpen(false);
+	};
+
+	useEffect(() => {
+		setEditModalOpen(true);
+	}, [selectedJob]);
+
+	const openEditModal = (job: IJob) => {
+		setSelectedJob(job);
+	};
+
+	const filterByJobType = (jobs: IJob[], jobType: string) => {
+		const filtered = jobs.filter((job) => {
+			return job.jobType?.description === jobType;
+		});
+		return orderBy(
+			filtered,
+			['status', 'completionDate', 'created'],
+			['desc', 'desc', 'desc']
+		);
+	};
+
+	const filterByStatus = (jobs: IJob[]) => {
+		return jobs.filter((job) => {
+			return job.status !== 'Done';
+		});
+	};
+
+	const toggleHandler = (event: any) => {
+		setDisplayDone(event.target.checked);
+	};
+
+	const displayByJobType = (jobType: string, errorMessage: string) => {
+		if (jobs) {
+			let filteredJobs = filterByJobType(jobs, jobType);
+			if (!displayDone) filteredJobs = filterByStatus(filteredJobs);
+			return filteredJobs?.map((job) => (
+				<JobItem key={job.id} job={job} openEditModal={openEditModal} />
+			));
+		} else {
+			return <Alert severity="error">{errorMessage}</Alert>;
+		}
+	};
 
 	const handleNotificationClose = (
 		event?: React.SyntheticEvent | Event,
@@ -50,49 +109,16 @@ const Board = (): JSX.Element => {
 			</Snackbar>
 		);
 	};
-
-	const params = useParams();
-	const { data: board } = useGetBoard(Number(params.boardId));
-	const { data: jobs } = useGetJobs(Number(params.boardId));
-
-	const handleCreateModalOpen = () => setCreateModalOpen(true);
-	const handleCreateModalClose = () => setCreateModalOpen(false);
-
-	const handleEditModalClose = () => {
-		setSelectedJob(undefined);
-		setEditModalOpen(false);
-	};
-
-	useEffect(() => {
-		setEditModalOpen(true);
-	}, [selectedJob]);
-
-	const openEditModal = (job: IJob) => {
-		setSelectedJob(job);
-	};
-
-	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
-		if (jobs && jobs.data) {
-			const filtered = jobs.data.filter((job) => {
-				return job.jobType?.description === jobType;
-			});
-			return sortBy(filtered, ['status', 'completionDate', 'created']);
-		}
-	};
-
-	const displayByJobType = (jobType: string, errorMessage: string) => {
-		if (jobs) {
-			const filteredJobs = filterByJobType(jobs, jobType);
-			return filteredJobs?.map((job) => (
-				<JobItem key={job.id} job={job} openEditModal={openEditModal} />
-			));
-		} else {
-			return <Alert severity="error">{errorMessage}</Alert>;
-		}
-	};
-
-	if (board && board.data) {
-		const { name } = board.data;
+	if (boardResponse.isLoading) return <CircularProgress />;
+	if (boardResponse.error) {
+		return (
+			<Alert severity="error">
+				{'An error has occurred: ' + boardResponse.error}
+			</Alert>
+		);
+	}
+	if (board) {
+		const { name } = board;
 		return (
 			<Grid container component="main" sx={{ height: '100vh' }}>
 				<CssBaseline />
@@ -100,7 +126,7 @@ const Board = (): JSX.Element => {
 					<Grid item xs={12} sm={6} md={4}>
 						<BoardActions>
 							<Typography variant="h4">{name}</Typography>
-							<Toggle />
+							<Toggle checked={displayDone} onChange={toggleHandler} />
 						</BoardActions>
 					</Grid>
 					<Grid item xs={12} sm={6} md={8}>
@@ -172,7 +198,7 @@ const Board = (): JSX.Element => {
 			</Grid>
 		);
 	}
-	return <Alert severity="error">Error Loading Board Details</Alert>;
+	return <></>;
 };
 
 export default Board;
