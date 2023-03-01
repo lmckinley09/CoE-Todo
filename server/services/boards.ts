@@ -1,9 +1,10 @@
 import { prisma } from "../utils/prisma";
-
+import { UserService } from "./users";
 interface IBoard {
   name: string;
   created?: string;
   last_modified: string;
+  users?: string[];
 }
 
 const getAll = async (userId: number) => {
@@ -69,16 +70,14 @@ const getSingle = async (boardId: number) => {
 };
 
 const createOne = async (userId: number, board: IBoard) => {
-  const owner = await prisma.access_type.findFirst({
-    where: {
-      description: "owner",
-    },
-    select: {
-      id: true,
-    },
+  const usersDetails = board.users.map((user) => {
+    return UserService.getUserByEmail(user);
   });
 
-  let createdBoard;
+  const x = await Promise.all(usersDetails);
+  const validUsers = x.filter((e) => e);
+
+  let createdBoard: IBoard;
 
   await prisma.$transaction(async (tx) => {
     createdBoard = await tx.board.create({
@@ -92,9 +91,18 @@ const createOne = async (userId: number, board: IBoard) => {
       data: {
         user_id: Number(userId),
         board_id: createdBoard.id,
-        type_id: owner.id,
+        type_id: 1,
       },
     });
+    for (const user of validUsers) {
+      await tx.user_board_access.create({
+        data: {
+          user_id: Number(user.id),
+          board_id: createdBoard.id,
+          type_id: 2,
+        },
+      });
+    }
   });
   return createdBoard;
 };

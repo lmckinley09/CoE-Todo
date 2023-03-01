@@ -25,7 +25,7 @@ const BoardItem = (props: IBoardItem) => {
 				<Typography variant="h6">{name}</Typography>
 
 				<Box display="inline-flex" alignItems="center">
-					{projectCount && (
+					{projectCount !== 0 && (
 						<>
 							<Typography>{projectCount}</Typography>
 							<Tooltip title="Projects" placement="top" enterDelay={500}>
@@ -36,7 +36,7 @@ const BoardItem = (props: IBoardItem) => {
 						</>
 					)}
 
-					{taskCount && (
+					{taskCount !== 0 && (
 						<>
 							<Typography>{taskCount}</Typography>
 							<Tooltip title="Tasks" placement="top" enterDelay={500}>
@@ -46,7 +46,7 @@ const BoardItem = (props: IBoardItem) => {
 							</Tooltip>
 						</>
 					)}
-					{tickCount && (
+					{tickCount !== 0 && (
 						<>
 							<Typography>{tickCount}</Typography>
 							<Tooltip title="Quick Ticks" placement="top" enterDelay={500}>
