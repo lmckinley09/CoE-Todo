@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
 import {
@@ -23,6 +24,7 @@ import isEmail from 'validator/lib/isEmail';
 
 const CreateModal = (props: IModal) => {
 	const { open, handleClose } = props;
+	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	const [displayShare, setDisplayShare] = useState(false);
@@ -50,6 +52,9 @@ const CreateModal = (props: IModal) => {
 					}
 				},
 				onError: (error: any) => {
+					if (error.response.status === StatusCodes.UNAUTHORIZED) {
+						navigate(`/login`);
+					}
 					if (error.response.status === StatusCodes.BAD_REQUEST) {
 						actions.setStatus({ statusCode: error.response.status });
 					}

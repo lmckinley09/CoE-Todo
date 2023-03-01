@@ -11,7 +11,7 @@
 			"@stores/*": ["./stores/*"],
 			"@test-utils": ["./test-utils"],
 			"@types": ["./types"],
-			"@utils": ["./utils"]
+			"@utils/*": ["./utils/*"]
 		}
 	}
 }

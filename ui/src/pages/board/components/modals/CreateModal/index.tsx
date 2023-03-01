@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { StatusCodes } from 'http-status-codes';
 import { useFormik } from 'formik';
@@ -26,6 +26,7 @@ import { validationSchema } from '../validation';
 
 const CreateModal = (props: IModal) => {
 	const { open, handleClose } = props;
+	const navigate = useNavigate();
 	const params = useParams();
 	const queryClient = useQueryClient();
 
@@ -51,6 +52,9 @@ const CreateModal = (props: IModal) => {
 					}
 				},
 				onError: (error: any) => {
+					if (error.response.status === StatusCodes.UNAUTHORIZED) {
+						navigate(`/login`);
+					}
 					if (error.response.status === StatusCodes.BAD_REQUEST) {
 						actions.setStatus({ statusCode: error.response.status });
 					}

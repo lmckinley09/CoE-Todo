@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
 import {
 	Alert,
@@ -27,6 +28,7 @@ import { validationSchema } from '../validation';
 const EditModal = (props: IEditModal) => {
 	const { job, open, handleClose, setDisplayNotification } = props;
 	const { mutate } = useUpdateJob(job.id);
+	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	const [editMode, setEditMode] = useState(false);
@@ -51,6 +53,9 @@ const EditModal = (props: IEditModal) => {
 					}
 				},
 				onError: (error: any) => {
+					if (error.response.status === StatusCodes.UNAUTHORIZED) {
+						navigate(`/login`);
+					}
 					if (error.response.status === StatusCodes.BAD_REQUEST) {
 						actions.setStatus({ statusCode: error.response.status });
 					}

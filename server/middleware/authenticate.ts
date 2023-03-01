@@ -47,7 +47,6 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const checkTokenValidity = (token, secret) => {
-  console.log(jwt.verify(token, secret));
   return jwt.verify(token, secret);
 };
 
