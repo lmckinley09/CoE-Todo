@@ -109,7 +109,23 @@ const Board = (): JSX.Element => {
 			</Snackbar>
 		);
 	};
-	if (boardResponse.isLoading) return <CircularProgress />;
+
+	if (boardResponse.isLoading) {
+		return (
+			<Grid
+				container
+				spacing={0}
+				direction="column"
+				alignItems="center"
+				justifyContent="center"
+				style={{ minHeight: '100vh' }}
+			>
+				<Grid item xs={3}>
+					<CircularProgress size="5rem" />
+				</Grid>
+			</Grid>
+		);
+	}
 	if (boardResponse.error) {
 		return (
 			<Alert severity="error">
