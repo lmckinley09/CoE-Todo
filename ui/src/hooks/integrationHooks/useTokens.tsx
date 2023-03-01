@@ -1,5 +1,5 @@
 import jwt_decode from 'jwt-decode';
-import { axiosInstance, setBearerToken } from '@integrations/instance';
+import { axiosInstance } from '@integrations/instance';
 import { useAuthState } from '@stores/useAuthState';
 
 interface IAccessToken {
@@ -28,7 +28,6 @@ const useTokens = (): IUseTokens => {
 		if (accessTokenDate > nowDate) {
 			localStorage.setItem('accessToken', tokens.accessToken);
 			localStorage.setItem('refreshToken', tokens.refreshToken);
-			setBearerToken(tokens.accessToken);
 			setIsAuthorized(true);
 		} else if (accessTokenDate < nowDate && refreshTokenDate > nowDate) {
 			const config = {

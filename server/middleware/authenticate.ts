@@ -25,7 +25,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const tokenVerified = checkTokenValidity(
         token,
-        req.path === "/auth/refresh"
+        req.path === "/authenticate/refresh"
           ? REFRESH_TOKEN_SECRET
           : ACCESS_TOKEN_SECRET
       );
@@ -47,6 +47,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const checkTokenValidity = (token, secret) => {
+  console.log(jwt.verify(token, secret));
   return jwt.verify(token, secret);
 };
 
