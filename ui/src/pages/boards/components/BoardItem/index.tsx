@@ -28,7 +28,7 @@ const BoardItem = (props: IBoardItem) => {
 					{projectCount !== 0 && (
 						<>
 							<Typography>{projectCount}</Typography>
-							<Tooltip title="Projects" placement="top" enterDelay={500}>
+							<Tooltip title="Projects" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<PlaylistAddCheckCircleOutlinedIcon />
 								</Avatar>
@@ -39,7 +39,7 @@ const BoardItem = (props: IBoardItem) => {
 					{taskCount !== 0 && (
 						<>
 							<Typography>{taskCount}</Typography>
-							<Tooltip title="Tasks" placement="top" enterDelay={500}>
+							<Tooltip title="Tasks" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<CheckCircleOutlineIcon />
 								</Avatar>
@@ -49,7 +49,7 @@ const BoardItem = (props: IBoardItem) => {
 					{tickCount !== 0 && (
 						<>
 							<Typography>{tickCount}</Typography>
-							<Tooltip title="Quick Ticks" placement="top" enterDelay={500}>
+							<Tooltip title="Quick Ticks" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<AlarmOnIcon />
 								</Avatar>

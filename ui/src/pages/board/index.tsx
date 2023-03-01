@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { sortBy } from 'lodash';
 import {
 	Alert,
 	CssBaseline,
@@ -72,9 +73,10 @@ const Board = (): JSX.Element => {
 
 	const filterByJobType = (jobs: IGetJobs, jobType: string) => {
 		if (jobs && jobs.data) {
-			return jobs.data.filter((job) => {
+			const filtered = jobs.data.filter((job) => {
 				return job.jobType?.description === jobType;
 			});
+			return sortBy(filtered, ['status', 'completionDate', 'created']);
 		}
 	};
 

@@ -23,6 +23,7 @@ import isEmail from 'validator/lib/isEmail';
 const CreateModal = (props: IModal) => {
 	const { open, handleClose } = props;
 
+	const [displayShare, setDisplayShare] = useState(false);
 	const [users, setUsers] = useState<string[]>([]);
 	const [email, setEmail] = useState('');
 	const [emailTouched, setEmailTouched] = useState(false);
@@ -40,8 +41,9 @@ const CreateModal = (props: IModal) => {
 				onSuccess: (response) => {
 					actions.setStatus();
 					if (response.status === StatusCodes.OK) {
-						// formik.resetForm();
-						// handleClose(false);
+						setDisplayShare(false);
+						formik.resetForm();
+						handleClose(false);
 					}
 				},
 				onError: (error: any) => {
@@ -68,7 +70,7 @@ const CreateModal = (props: IModal) => {
 	};
 
 	const addUsersForm = () => {
-		return (
+		return displayShare ? (
 			<>
 				<Grid container>
 					<Grid item width="90%">
@@ -105,7 +107,6 @@ const CreateModal = (props: IModal) => {
 						</IconButton>
 					</Grid>
 				</Grid>
-				{console.log(formik.values)}
 				{formik.values.users.map((user, index) => {
 					return (
 						<Box key={user} sx={{ mt: '10px' }}>
@@ -113,7 +114,6 @@ const CreateModal = (props: IModal) => {
 							<IconButton
 								size="small"
 								color="secondary"
-								aria-label="add quick tick"
 								onClick={() => removeUser(index)}
 							>
 								<CloseIcon />
@@ -122,6 +122,24 @@ const CreateModal = (props: IModal) => {
 					);
 				})}
 			</>
+		) : (
+			<Box mt="10px">
+				<Grid container alignItems="center">
+					<Grid item>
+						<Typography>Add users to collaborate on your board</Typography>
+					</Grid>
+					<Grid item>
+						<IconButton
+							size="small"
+							color="secondary"
+							onClick={() => setDisplayShare(true)}
+							sx={{ display: 'inline-flex' }}
+						>
+							<AddIcon />
+						</IconButton>
+					</Grid>
+				</Grid>
+			</Box>
 		);
 	};
 
@@ -130,7 +148,7 @@ const CreateModal = (props: IModal) => {
 			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
 				return (
 					<Alert severity="error" sx={{ mt: '10px' }}>
-						Error creating job
+						Error creating board
 					</Alert>
 				);
 			} else {
