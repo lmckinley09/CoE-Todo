@@ -29,9 +29,11 @@ const App = (): React.ReactElement => {
 			</Routes>
 		</Layout>
 	);
-
 	return (
-		<Router>{isAuthorized ? AuthenticatedRoutes : UnauthenticatedRoutes}</Router>
+		<Router>
+			{isAuthorized && AuthenticatedRoutes}
+			{isAuthorized === false && UnauthenticatedRoutes}
+		</Router>
 	);
 };
 

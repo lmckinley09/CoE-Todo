@@ -50,6 +50,8 @@ const useTokens = (): IUseTokens => {
 				accessToken: localStorageAccess,
 				refreshToken: localStorageRefresh,
 			});
+		} else {
+			setIsAuthorized(false);
 		}
 	};
 
