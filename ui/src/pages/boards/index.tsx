@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { CssBaseline, Grid, IconButton, Typography } from '@mui/material';
+import {
+	CircularProgress,
+	CssBaseline,
+	Grid,
+	IconButton,
+	Typography,
+} from '@mui/material';
 import { StyledBox } from './styled';
 import BoardItem from './components/BoardItem';
 import useGetBoards from '@hooks/integrationHooks/useGetBoards';
@@ -7,12 +13,30 @@ import AddIcon from '@mui/icons-material/Add';
 import CreateModal from './components/modals/CreateModal';
 
 const Boards = () => {
-	const { data: boards } = useGetBoards();
+	const boardsResponse = useGetBoards();
+
+	const boards = boardsResponse.data?.data;
 
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 
 	const handleCreateModalOpen = () => setCreateModalOpen(true);
 	const handleCreateModalClose = () => setCreateModalOpen(false);
+
+	const displayLoader = () => {
+		return (
+			<Grid
+				container
+				spacing={0}
+				direction="column"
+				alignItems="center"
+				style={{ minHeight: '100vh' }}
+			>
+				<Grid item xs={3} mt="1rem">
+					<CircularProgress size="5rem" />
+				</Grid>
+			</Grid>
+		);
+	};
 
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
@@ -32,8 +56,9 @@ const Boards = () => {
 				</Grid>
 
 				<StyledBox>
+					{boardsResponse.isLoading && displayLoader()}
 					{boards &&
-						boards?.data?.owner.map((board) => {
+						boards?.owner.map((board) => {
 							return <BoardItem key={board.id} board={board} />;
 						})}
 				</StyledBox>
@@ -43,8 +68,9 @@ const Boards = () => {
 					Shared Boards
 				</Typography>
 				<StyledBox>
+					{boardsResponse.isLoading && displayLoader()}
 					{boards &&
-						boards?.data?.shared.map((board) => {
+						boards?.shared.map((board) => {
 							return <BoardItem key={board.id} board={board} />;
 						})}
 				</StyledBox>
