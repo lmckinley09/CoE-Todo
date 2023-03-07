@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,7 +22,9 @@ root.render(
 			<SCThemeProvider theme={theme}>
 				<QueryClientProvider client={queryClient}>
 					<LocalizationProvider dateAdapter={AdapterDateFns}>
-						<App />
+						<Router>
+							<App />
+						</Router>
 					</LocalizationProvider>
 				</QueryClientProvider>
 			</SCThemeProvider>

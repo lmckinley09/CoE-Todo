@@ -1,6 +1,7 @@
 import jwt_decode from 'jwt-decode';
 import { axiosInstance } from '@integrations/instance';
 import { useAuthState } from '@stores/useAuthState';
+import { useNavigate } from 'react-router-dom';
 
 interface IAccessToken {
 	iat: number;
@@ -16,6 +17,7 @@ interface IUseTokens {
 }
 
 const useTokens = (): IUseTokens => {
+	const navigate = useNavigate();
 	const { setIsAuthorized } = useAuthState();
 
 	const checkIfValidToken = async (tokens: any) => {
@@ -33,10 +35,14 @@ const useTokens = (): IUseTokens => {
 			const config = {
 				headers: { Authorization: `Bearer ${tokens.refreshToken}` },
 			};
-			const resp = await axiosInstance.get('/authenticate/refresh', config);
-			localStorage.setItem('accessToken', resp.data.accessToken);
-			localStorage.setItem('refreshToken', resp.data.refreshToken);
-			setIsAuthorized(true);
+			try {
+				const resp = await axiosInstance.get('/authenticate/refresh', config);
+				localStorage.setItem('accessToken', resp.data.accessToken);
+				localStorage.setItem('refreshToken', resp.data.refreshToken);
+				setIsAuthorized(true);
+			} catch (error) {
+				clearLocalStorageTokens();
+			}
 		} else {
 			clearLocalStorageTokens();
 		}
@@ -51,7 +57,8 @@ const useTokens = (): IUseTokens => {
 				refreshToken: localStorageRefresh,
 			});
 		} else {
-			setIsAuthorized(false);
+			clearLocalStorageTokens();
+			navigate('/login');
 		}
 	};
 

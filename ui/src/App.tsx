@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from '@components';
 import { Board, Boards, Login, Error } from '@pages';
 import { useAuthState } from '@stores/useAuthState';
@@ -30,10 +29,10 @@ const App = (): React.ReactElement => {
 		</Layout>
 	);
 	return (
-		<Router>
+		<>
 			{isAuthorized && AuthenticatedRoutes}
 			{isAuthorized === false && UnauthenticatedRoutes}
-		</Router>
+		</>
 	);
 };
 
