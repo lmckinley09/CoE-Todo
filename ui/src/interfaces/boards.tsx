@@ -1,11 +1,15 @@
 export interface IBoard {
-	id: number;
+	id?: number;
 	name: string;
 	created: string;
 	last_modified: string;
 	tickCount: number;
 	taskCount: number;
 	projectCount: number;
+}
+
+export interface IUpdateBoard {
+	name: string;
 }
 
 export interface IGetBoards {

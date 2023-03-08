@@ -1,40 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useParams, useNavigate } from 'react-router-dom';
+import { StatusCodes } from 'http-status-codes';
 import { orderBy } from 'lodash';
 import {
 	Alert,
+	Box,
 	CircularProgress,
 	CssBaseline,
 	Grid,
 	IconButton,
 	Skeleton,
 	Snackbar,
+	TextField,
 	Typography,
 } from '@mui/material';
 import { BoardActions, FocusArea, StyledBox } from './styled';
-import { CreateModal, EditModal, JobItem, Toggle } from './components';
+import {
+	CreateModal,
+	EditModal,
+	ConfirmationModal,
+	JobItem,
+	Toggle,
+} from './components';
 import { IJob } from '@interfaces/jobs';
 import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
+import DeleteIcon from '@mui/icons-material/Delete';
 import useGetBoard from '@hooks/integrationHooks/useGetBoard';
 import useGetJobs from '@hooks/integrationHooks/useGetJobs';
+import useUpdateBoard from '@hooks/integrationHooks/useUpdateBoard';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object({
+	name: yup.string().min(3).required('Board Name is required'),
+});
 
 const Board = (): JSX.Element => {
 	const [selectedJob, setSelectedJob] = useState<IJob | undefined>();
 	const [createModalOpen, setCreateModalOpen] = useState(false);
 	const [editModalOpen, setEditModalOpen] = useState(false);
+	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+	const [editName, setEditName] = useState(false);
 	const [displayNotification, setDisplayNotification] = useState(false);
 	const [displayDone, setDisplayDone] = useState(true);
 
 	const params = useParams();
+	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const boardResponse = useGetBoard(Number(params.boardId));
 	const jobsResponse = useGetJobs(Number(params.boardId));
+	const { mutate } = useUpdateBoard(Number(params.boardId));
 
 	const board = boardResponse.data?.data;
 	const jobs = jobsResponse.data?.data;
 
 	const handleCreateModalOpen = () => setCreateModalOpen(true);
 	const handleCreateModalClose = () => setCreateModalOpen(false);
+
+	const handleConfirmationModalClose = () => setConfirmationModalOpen(false);
 
 	const handleEditModalClose = () => {
 		setSelectedJob(undefined);
@@ -48,6 +75,33 @@ const Board = (): JSX.Element => {
 	const openEditModal = (job: IJob) => {
 		setSelectedJob(job);
 	};
+
+	const formik = useFormik({
+		enableReinitialize: true,
+		initialValues: {
+			name: board?.name || '',
+		},
+		validationSchema: validationSchema,
+		onSubmit: (values, actions) => {
+			mutate(values, {
+				onSuccess: async (response) => {
+					actions.setStatus();
+					if (response.status === StatusCodes.OK) {
+						await queryClient.refetchQueries(['board']);
+						setEditName(false);
+					}
+				},
+				onError: (error: any) => {
+					if (error.response.status === StatusCodes.UNAUTHORIZED) {
+						navigate('/login');
+					}
+					if (error.response.status === StatusCodes.BAD_REQUEST) {
+						actions.setStatus({ statusCode: error.response.status });
+					}
+				},
+			});
+		},
+	});
 
 	const filterByJobType = (jobs: IJob[], jobType: string) => {
 		const filtered = jobs.filter((job) => {
@@ -126,22 +180,6 @@ const Board = (): JSX.Element => {
 		);
 	};
 
-	// const displayLoader = () => {
-	// 	return (
-	// 		<Grid
-	// 			container
-	// 			spacing={0}
-	// 			direction="column"
-	// 			alignItems="center"
-	// 			style={{ minHeight: '100vh' }}
-	// 		>
-	// 			<Grid item xs={3} mt="1rem">
-	// 				<CircularProgress size="5rem" />
-	// 			</Grid>
-	// 		</Grid>
-	// 	);
-	// };
-
 	if (boardResponse.error) {
 		return (
 			<Alert severity="error">
@@ -150,18 +188,64 @@ const Board = (): JSX.Element => {
 		);
 	}
 
-	// const { name } = board;
 	return (
 		<Grid container component="main" sx={{ height: '100vh' }}>
 			<CssBaseline />
 			<Grid container spacing={1}>
 				<Grid item xs={12} sm={6} md={4}>
 					<BoardActions>
-						{boardResponse.isLoading && (
-							<Skeleton variant="rounded" width={210} height={60} />
+						{editName ? (
+							<Box
+								component="form"
+								noValidate
+								onSubmit={formik.handleSubmit}
+								sx={{ display: 'flex', alignItems: 'center' }}
+							>
+								<TextField
+									margin="normal"
+									id="name"
+									label="Board Name"
+									name="name"
+									autoComplete="name"
+									autoFocus
+									value={formik.values.name}
+									onChange={formik.handleChange}
+									error={formik.touched.name && Boolean(formik.errors.name)}
+									helperText={formik.touched.name && formik.errors.name}
+								/>
+								<IconButton type="submit" color="secondary" sx={{ ml: '5px' }}>
+									<DoneIcon />
+								</IconButton>
+							</Box>
+						) : boardResponse.isLoading ? (
+							<Skeleton
+								variant="rounded"
+								width={210}
+								height={60}
+								sx={{ bgcolor: '#f6d8c5' }}
+							/>
+						) : (
+							<>
+								<Typography variant="h4">{board?.name}</Typography>
+								<IconButton
+									color="secondary"
+									aria-label="edit-board-name"
+									onClick={() => setEditName(true)}
+									sx={{ ml: '5px' }}
+								>
+									<EditIcon />
+								</IconButton>
+								<IconButton
+									color="secondary"
+									aria-label="board-settings"
+									sx={{ ml: '5px' }}
+									onClick={() => setConfirmationModalOpen(true)}
+								>
+									<DeleteIcon />
+								</IconButton>
+								<Toggle checked={displayDone} onChange={toggleHandler} />
+							</>
 						)}
-						<Typography variant="h4">{board?.name}</Typography>
-						<Toggle checked={displayDone} onChange={toggleHandler} />
 					</BoardActions>
 				</Grid>
 				<Grid item xs={12} sm={6} md={8}>
@@ -185,7 +269,6 @@ const Board = (): JSX.Element => {
 									<AddIcon />
 								</IconButton>
 							</Grid>
-							{/* {jobsResponse.isLoading && displayLoader()} */}
 							{displayByJobType('tick', 'Error Loading Quick Ticks')}
 						</>
 					</StyledBox>
@@ -202,7 +285,6 @@ const Board = (): JSX.Element => {
 								<AddIcon />
 							</IconButton>
 						</Grid>
-						{/* {jobsResponse.isLoading && displayLoader()} */}
 						{displayByJobType('task', 'Error Loading Tasks')}
 					</StyledBox>
 				</Grid>
@@ -218,7 +300,6 @@ const Board = (): JSX.Element => {
 								<AddIcon />
 							</IconButton>
 						</Grid>
-						{/* {jobsResponse.isLoading && displayLoader()} */}
 						{displayByJobType('project', 'Error Loading Projects')}
 					</StyledBox>
 				</Grid>
@@ -232,6 +313,10 @@ const Board = (): JSX.Element => {
 					setDisplayNotification={setDisplayNotification}
 				/>
 			)}
+			<ConfirmationModal
+				open={confirmationModalOpen}
+				handleClose={handleConfirmationModalClose}
+			/>
 			{displayNotificationMessage()}
 		</Grid>
 	);

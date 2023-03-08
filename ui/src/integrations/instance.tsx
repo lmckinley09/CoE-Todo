@@ -11,3 +11,12 @@ axiosInstance.interceptors.request.use((config): InternalAxiosRequestConfig => {
 	}
 	return config;
 });
+
+axiosInstance.interceptors.response.use(
+	(response) => {
+		return response;
+	},
+	(error) => {
+		return error;
+	}
+);

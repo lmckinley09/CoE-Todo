@@ -13,7 +13,7 @@ const Toggle = (props: IToggle) => {
 		<FormGroup>
 			<FormControlLabel
 				control={<Switch checked={props.checked} onChange={props.onChange} />}
-				label="View Completed"
+				label="Show Done"
 				labelPlacement="top"
 			/>
 		</FormGroup>
