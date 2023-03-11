@@ -4,7 +4,6 @@ import { Box } from '@mui/material';
 export const BoardActions = styled(Box)`
 	display: flex;
 	align-items: center;
-	margin-top: 20px;
 	min-height: 100px;
 	padding: 10px 0px;
 `;

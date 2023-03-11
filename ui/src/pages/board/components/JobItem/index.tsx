@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { JobBox } from './styled';
 import { IJobItem, IUpdateJob } from '@interfaces/jobs';
@@ -10,6 +11,7 @@ const JobItem = (props: IJobItem) => {
 	const { job } = props;
 	const { mutate } = useUpdateJob(job.id);
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const isDone = job.status === 'Done';
 
@@ -28,9 +30,9 @@ const JobItem = (props: IJobItem) => {
 				await queryClient.refetchQueries(['jobs']);
 			},
 			onError: (error: any) => {
-				// if (error.response.status === StatusCodes.BAD_REQUEST) {
-				// 	console.log('no');
-				// }
+				if (error.response.status === StatusCodes.UNAUTHORIZED) {
+					navigate('/login');
+				}
 			},
 		});
 	};

@@ -181,6 +181,9 @@ const Board = (): JSX.Element => {
 	};
 
 	if (boardResponse.error) {
+		console.log(boardResponse.error);
+		// if (boardResponse.error) {
+		// }
 		return (
 			<Alert severity="error">
 				{'An error has occurred: ' + boardResponse.error}
@@ -189,70 +192,62 @@ const Board = (): JSX.Element => {
 	}
 
 	return (
-		<Grid container component="main" sx={{ height: '100vh' }}>
-			<CssBaseline />
-			<Grid container spacing={1}>
-				<Grid item xs={12} sm={6} md={4}>
-					<BoardActions>
-						{editName ? (
-							<Box
-								component="form"
-								noValidate
-								onSubmit={formik.handleSubmit}
-								sx={{ display: 'flex', alignItems: 'center' }}
-							>
-								<TextField
-									margin="normal"
-									id="name"
-									label="Board Name"
-									name="name"
-									autoComplete="name"
-									autoFocus
-									value={formik.values.name}
-									onChange={formik.handleChange}
-									error={formik.touched.name && Boolean(formik.errors.name)}
-									helperText={formik.touched.name && formik.errors.name}
-								/>
-								<IconButton type="submit" color="secondary" sx={{ ml: '5px' }}>
-									<DoneIcon />
-								</IconButton>
-							</Box>
-						) : boardResponse.isLoading ? (
-							<Skeleton
-								variant="rounded"
-								width={210}
-								height={60}
-								sx={{ bgcolor: '#f6d8c5' }}
+		<Grid container sx={{ height: '100vh', flexDirection: 'column' }}>
+			<Grid item>
+				<BoardActions>
+					{editName ? (
+						<Box
+							component="form"
+							noValidate
+							onSubmit={formik.handleSubmit}
+							sx={{ display: 'flex', alignItems: 'center' }}
+						>
+							<TextField
+								margin="normal"
+								id="name"
+								label="Board Name"
+								name="name"
+								autoComplete="name"
+								autoFocus
+								value={formik.values.name}
+								onChange={formik.handleChange}
+								error={formik.touched.name && Boolean(formik.errors.name)}
+								helperText={formik.touched.name && formik.errors.name}
 							/>
-						) : (
-							<>
-								<Typography variant="h4">{board?.name}</Typography>
-								<IconButton
-									color="secondary"
-									aria-label="edit-board-name"
-									onClick={() => setEditName(true)}
-									sx={{ ml: '5px' }}
-								>
-									<EditIcon />
-								</IconButton>
-								<IconButton
-									color="secondary"
-									aria-label="board-settings"
-									sx={{ ml: '5px' }}
-									onClick={() => setConfirmationModalOpen(true)}
-								>
-									<DeleteIcon />
-								</IconButton>
-								<Toggle checked={displayDone} onChange={toggleHandler} />
-							</>
-						)}
-					</BoardActions>
-				</Grid>
-				<Grid item xs={12} sm={6} md={8}>
-					<FocusArea>
-						<Typography variant="h4">Next Task</Typography>
-					</FocusArea>
-				</Grid>
+							<IconButton type="submit" color="secondary" sx={{ ml: '5px' }}>
+								<DoneIcon />
+							</IconButton>
+						</Box>
+					) : boardResponse.isLoading ? (
+						<Skeleton
+							variant="rounded"
+							width={210}
+							height={60}
+							sx={{ bgcolor: '#f6d8c5' }}
+						/>
+					) : (
+						<>
+							<Typography variant="h4">{board?.name}</Typography>
+							<IconButton
+								color="secondary"
+								aria-label="edit-board-name"
+								onClick={() => setEditName(true)}
+								sx={{ ml: '5px' }}
+							>
+								<EditIcon />
+							</IconButton>
+							<IconButton
+								color="secondary"
+								aria-label="board-settings"
+								sx={{ ml: '5px' }}
+								onClick={() => setConfirmationModalOpen(true)}
+							>
+								<DeleteIcon />
+							</IconButton>
+							<Toggle checked={displayDone} onChange={toggleHandler} />
+						</>
+					)}
+				</BoardActions>
 			</Grid>
 
 			<Grid container spacing={2}>

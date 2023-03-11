@@ -2,12 +2,10 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { StatusCodes } from 'http-status-codes';
-
-import { Alert, Button, Box, Grid, Modal, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Button, Grid, Modal, Typography } from '@mui/material';
 import { IModal } from '@interfaces/modals';
-import useDeleteBoard from '@hooks/integrationHooks/useDeleteBoard';
 import { ModalBox } from '../styled';
+import useDeleteBoard from '@hooks/integrationHooks/useDeleteBoard';
 
 const ConfirmationModal = (props: IModal) => {
 	const { open, handleClose } = props;
