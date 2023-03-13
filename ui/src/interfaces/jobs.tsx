@@ -6,6 +6,8 @@ export interface IJob {
 	description: string;
 	status: string;
 	completionDate: string;
+	created?: string;
+	lastModified?: string;
 	jobType: IJobType;
 }
 export interface IJobType {

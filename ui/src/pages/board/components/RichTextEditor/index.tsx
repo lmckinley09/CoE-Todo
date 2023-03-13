@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Alert } from '@mui/material';
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorContiner } from './styled';
 import { convertToRaw, ContentState, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './react-draft-wysiwyg.css';
 
 interface IRichTextEditor {
 	value: string;
@@ -36,7 +35,7 @@ const RichTextEditor = (props: IRichTextEditor) => {
 	};
 
 	return (
-		<EditorContiner>
+		<>
 			<Editor
 				editorState={editorState}
 				onEditorStateChange={onEditorStateChange}
@@ -72,7 +71,7 @@ const RichTextEditor = (props: IRichTextEditor) => {
 					{error}
 				</Alert>
 			)}
-		</EditorContiner>
+		</>
 	);
 };
 

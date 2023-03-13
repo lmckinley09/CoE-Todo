@@ -7,7 +7,6 @@ import {
 	Alert,
 	Box,
 	CircularProgress,
-	CssBaseline,
 	Grid,
 	IconButton,
 	Skeleton,
@@ -15,7 +14,7 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { BoardActions, FocusArea, StyledBox } from './styled';
+import { BoardActions, StyledBox } from './styled';
 import {
 	CreateModal,
 	EditModal,
@@ -227,7 +226,9 @@ const Board = (): JSX.Element => {
 						/>
 					) : (
 						<>
-							<Typography variant="h4">{board?.name}</Typography>
+							<Typography variant="h4" data-testid="board-name">
+								{board?.name}
+							</Typography>
 							<IconButton
 								color="secondary"
 								aria-label="edit-board-name"

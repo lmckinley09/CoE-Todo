@@ -1,0 +1,31 @@
+{
+	"testEnvironment": "jsdom",
+	"transform": {
+		"^.+\\.tsx?$": "ts-jest",
+		".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+	},
+	"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$",
+	"moduleFileExtensions": ["ts", "tsx", "js"],
+	"setupFilesAfterEnv": [
+		"@testing-library/jest-dom/extend-expect",
+		"<rootDir>/src/setupTests.ts"
+	],
+	"clearMocks": true,
+	"collectCoverage": true,
+	"coverageDirectory": "coverage",
+	"moduleNameMapper": {
+		"^@assets(.*)$": "<rootDir>/src/assets$1",
+		"^@components(.*)$": "<rootDir>/src/components$1",
+		"^@config(.*)$": "<rootDir>/src/config$1",
+		"^@contexts(.*)$": "<rootDir>/src/contexts$1",
+		"^@constants(.*)$": "<rootDir>/src/constants$1",
+		"^@hooks(.*)$": "<rootDir>/src/hooks$1",
+		"^@integration(.*)$": "<rootDir>/src/integration$1",
+		"^@interfaces(.*)$": "<rootDir>/src/interfaces$1",
+		"^@pages(.*)$": "<rootDir>/src/pages$1",
+		"^@services(.*)$": "<rootDir>/src/services$1",
+		"^@stores(.*)$": "<rootDir>/src/stores$1",
+		"^@test-utils(.*)$": "<rootDir>/src/test-utils$1",
+		"^@utils(.*)$": "<rootDir>/src/utils$1"
+	}
+}
