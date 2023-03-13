@@ -48,7 +48,10 @@ const JobItem = (props: IJobItem) => {
 					/>
 				</Grid>
 				<Grid item>
-					<Box onClick={() => props.openEditModal(job)}>
+					<Box
+						data-testid={`job-${job.jobType.description}-${job.id}`}
+						onClick={() => props.openEditModal(job)}
+					>
 						<Typography>{job.title}</Typography>
 					</Box>
 				</Grid>

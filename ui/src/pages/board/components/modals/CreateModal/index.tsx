@@ -82,7 +82,7 @@ const CreateModal = (props: IModal) => {
 	};
 
 	return (
-		<Modal open={open} onClose={handleClose}>
+		<Modal open={open} onClose={handleClose} data-testid="create-job-modal">
 			<ModalBox>
 				<Grid container justifyContent="space-between">
 					<Grid item>
@@ -94,6 +94,7 @@ const CreateModal = (props: IModal) => {
 						<IconButton
 							color="secondary"
 							aria-label="close-create-modal"
+							data-testid="close-create-modal-button"
 							onClick={() => handleClose(false)}
 						>
 							<CloseIcon />

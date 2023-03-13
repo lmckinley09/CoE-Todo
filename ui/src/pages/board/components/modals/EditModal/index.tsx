@@ -83,7 +83,11 @@ const EditModal = (props: IEditModal) => {
 	};
 
 	return (
-		<Modal open={open} onClose={handleClose}>
+		<Modal
+			open={open}
+			onClose={handleClose}
+			data-testid={`edit-job-modal-${job.id}`}
+		>
 			<ModalBox>
 				<Grid container justifyContent="space-between">
 					<Grid item>
@@ -112,6 +116,7 @@ const EditModal = (props: IEditModal) => {
 						<IconButton
 							color="secondary"
 							aria-label="close-edit-modal"
+							data-testid="close-edit-modal-button"
 							onClick={() => handleClose(false)}
 						>
 							<CloseIcon />

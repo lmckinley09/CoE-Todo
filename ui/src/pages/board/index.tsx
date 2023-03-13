@@ -54,8 +54,8 @@ const Board = (): JSX.Element => {
 	const jobsResponse = useGetJobs(Number(params.boardId));
 	const { mutate } = useUpdateBoard(Number(params.boardId));
 
-	const board = boardResponse.data?.data;
-	const jobs = jobsResponse.data?.data;
+	const board = boardResponse?.data?.data;
+	const jobs = jobsResponse?.data?.data;
 
 	const handleCreateModalOpen = () => setCreateModalOpen(true);
 	const handleCreateModalClose = () => setCreateModalOpen(false);
@@ -134,7 +134,7 @@ const Board = (): JSX.Element => {
 					style={{ minHeight: '100vh' }}
 				>
 					<Grid item xs={3} mt="1rem">
-						<CircularProgress size="5rem" />
+						<CircularProgress size="5rem" data-testid="job-loader" />
 					</Grid>
 				</Grid>
 			);
@@ -146,7 +146,11 @@ const Board = (): JSX.Element => {
 				<JobItem key={job.id} job={job} openEditModal={openEditModal} />
 			));
 		} else {
-			return <Alert severity="error">{errorMessage}</Alert>;
+			return (
+				<Alert data-testid="jobs-error-alert" severity="error">
+					{errorMessage}
+				</Alert>
+			);
 		}
 	};
 
@@ -180,11 +184,8 @@ const Board = (): JSX.Element => {
 	};
 
 	if (boardResponse.error) {
-		console.log(boardResponse.error);
-		// if (boardResponse.error) {
-		// }
 		return (
-			<Alert severity="error">
+			<Alert data-testid="board-error-alert" severity="error">
 				{'An error has occurred: ' + boardResponse.error}
 			</Alert>
 		);
@@ -204,6 +205,7 @@ const Board = (): JSX.Element => {
 							<TextField
 								margin="normal"
 								id="name"
+								data-testid="board-name-input"
 								label="Board Name"
 								name="name"
 								autoComplete="name"
@@ -213,7 +215,12 @@ const Board = (): JSX.Element => {
 								error={formik.touched.name && Boolean(formik.errors.name)}
 								helperText={formik.touched.name && formik.errors.name}
 							/>
-							<IconButton type="submit" color="secondary" sx={{ ml: '5px' }}>
+							<IconButton
+								type="submit"
+								color="secondary"
+								data-testid="submit-board-name-button"
+								sx={{ ml: '5px' }}
+							>
 								<DoneIcon />
 							</IconButton>
 						</Box>
@@ -232,6 +239,7 @@ const Board = (): JSX.Element => {
 							<IconButton
 								color="secondary"
 								aria-label="edit-board-name"
+								data-testid="edit-board-name-button"
 								onClick={() => setEditName(true)}
 								sx={{ ml: '5px' }}
 							>
@@ -239,13 +247,18 @@ const Board = (): JSX.Element => {
 							</IconButton>
 							<IconButton
 								color="secondary"
-								aria-label="board-settings"
+								aria-label="delete-board"
+								data-testid="delete-board-button"
 								sx={{ ml: '5px' }}
 								onClick={() => setConfirmationModalOpen(true)}
 							>
 								<DeleteIcon />
 							</IconButton>
-							<Toggle checked={displayDone} onChange={toggleHandler} />
+							<Toggle
+								id="toggle-done-view"
+								checked={displayDone}
+								onChange={toggleHandler}
+							/>
 						</>
 					)}
 				</BoardActions>
@@ -260,6 +273,7 @@ const Board = (): JSX.Element => {
 								<IconButton
 									color="secondary"
 									aria-label="add quick tick"
+									data-testid="add-quick-tick-button"
 									onClick={() => handleCreateModalOpen()}
 								>
 									<AddIcon />
@@ -276,6 +290,7 @@ const Board = (): JSX.Element => {
 							<IconButton
 								color="secondary"
 								aria-label="add task"
+								data-testid="add-task-button"
 								onClick={() => handleCreateModalOpen()}
 							>
 								<AddIcon />
@@ -291,6 +306,7 @@ const Board = (): JSX.Element => {
 							<IconButton
 								color="secondary"
 								aria-label="add project"
+								data-testid="add-project-button"
 								onClick={() => handleCreateModalOpen()}
 							>
 								<AddIcon />
