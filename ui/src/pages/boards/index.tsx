@@ -30,6 +30,7 @@ const Boards = () => {
 				direction="column"
 				alignItems="center"
 				style={{ minHeight: '100vh' }}
+				data-testid="boards-loader"
 			>
 				<Grid item xs={3} mt="1rem">
 					<CircularProgress size="5rem" />
@@ -43,12 +44,18 @@ const Boards = () => {
 			<CssBaseline />
 			<Grid item xs={12} sm={6} md={6}>
 				<Grid container alignItems="baseline">
-					<Typography variant="h4" marginLeft="20px" mt="10px">
+					<Typography
+						variant="h4"
+						marginLeft="20px"
+						mt="10px"
+						data-testid="owner-boards-header"
+					>
 						My Boards
 					</Typography>
 					<IconButton
 						color="secondary"
-						aria-label="add quick tick"
+						aria-label="add-board"
+						data-testid="add-board-button"
 						onClick={() => handleCreateModalOpen()}
 					>
 						<AddIcon />
@@ -64,7 +71,12 @@ const Boards = () => {
 				</StyledBox>
 			</Grid>
 			<Grid item xs={12} sm={6} md={6}>
-				<Typography variant="h4" marginLeft="20px" mt="10px">
+				<Typography
+					variant="h4"
+					marginLeft="20px"
+					mt="10px"
+					data-testid="shared-boards-header"
+				>
 					Shared Boards
 				</Typography>
 				<StyledBox>

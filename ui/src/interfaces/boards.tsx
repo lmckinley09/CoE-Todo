@@ -2,7 +2,7 @@ export interface IBoard {
 	id?: number;
 	name: string;
 	created: string;
-	last_modified: string;
+	lastModified: string;
 	tickCount?: number;
 	taskCount?: number;
 	projectCount?: number;

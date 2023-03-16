@@ -1,14 +1,27 @@
 import { screen, fireEvent } from '@testing-library/react';
+import { useParams } from 'react-router-dom';
 import useGetBoard from '../../hooks/integrationHooks/useGetBoard';
 import useGetJobs from '../../hooks/integrationHooks/useGetJobs';
+import useCreateJob from '@hooks/integrationHooks/useCreateJob';
+import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
 import { Board } from '@pages';
 import TestUtils from '@test-utils';
 import { IBoard } from '@interfaces/boards';
 import { IJob } from '@interfaces/jobs';
 import dayjs from 'dayjs';
+import { when } from 'jest-when';
 
 jest.mock('../../hooks/integrationHooks/useGetBoard');
 jest.mock('../../hooks/integrationHooks/useGetJobs');
+jest.mock('../../hooks/integrationHooks/useCreateJob');
+jest.mock('react-router-dom');
+// const mockParams = jest.fn();
+// jest.mock('react-router-dom', () => ({
+// 	...jest.requireActual('react-router-dom'),
+// 	useParams: () => ({
+// 		boardId: 1,
+// 	}),
+// }));
 
 describe('Board page', () => {
 	const mockBoardData: { data: IBoard } = {
@@ -16,7 +29,7 @@ describe('Board page', () => {
 			id: 1,
 			name: "Lorna's Board",
 			created: '2023-02-07T15:58:11.689Z',
-			last_modified: '2023-03-10T12:41:14.930Z',
+			lastModified: '2023-03-10T12:41:14.930Z',
 		},
 	};
 
@@ -50,6 +63,7 @@ describe('Board page', () => {
 	};
 
 	const getAllBoardData = () => {
+		(useParams as jest.Mock).mockReturnValue({ boardId: 1 });
 		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
 		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
 	};
@@ -61,6 +75,7 @@ describe('Board page', () => {
 	it('should render board title and function buttons', () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
+		screen.debug();
 		expect(screen.getByTestId('board-name')).toBeInTheDocument();
 		expect(screen.getByTestId('edit-board-name-button')).toBeInTheDocument();
 		expect(screen.getByTestId('delete-board-button')).toBeInTheDocument();
@@ -119,6 +134,48 @@ describe('Board page', () => {
 		expect(screen.getByTestId('submit-board-name-button')).toBeInTheDocument();
 	});
 
+	it('should render create modal when add button clicked', async () => {
+		getAllBoardData();
+		TestUtils.render(<Board />);
+
+		const addTick = screen.getByTestId('add-quick-tick-button');
+		const addTask = screen.getByTestId('add-task-button');
+		const addProj = screen.getByTestId('add-project-button');
+		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+		fireEvent.click(addTick);
+		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
+
+		fireEvent.click(screen.getByTestId('close-create-modal-button'));
+		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+
+		fireEvent.click(addTask);
+		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
+
+		fireEvent.click(screen.getByTestId('close-create-modal-button'));
+		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+
+		fireEvent.click(addProj);
+		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
+		fireEvent.click(screen.getByTestId('close-create-modal-button'));
+		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+	});
+
+	it('should call useCreateJob hook onSubmit', async () => {
+		//fix
+		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
+		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
+		(useParams as jest.Mock).mockReturnValue({ boardId: 1 });
+		(useCreateJob as jest.Mock).mockReturnValue({
+			mutate: jest.fn(),
+		});
+		TestUtils.render(<Board />);
+
+		const addTick = screen.getByTestId('add-quick-tick-button');
+		fireEvent.click(addTick);
+		fireEvent.click(screen.getByTestId('submit-job-button'));
+		expect(useCreateJob).toHaveBeenCalledTimes(1);
+	});
+
 	it('should render edit modal when job name clicked', async () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
@@ -134,18 +191,20 @@ describe('Board page', () => {
 		expect(screen.queryByTestId('edit-job-modal-1')).not.toBeInTheDocument();
 	});
 
-	it('should render create modal when add button clicked', async () => {
+	it('should render confirmation modal when delete button clicked', async () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
 
-		const addTick = screen.getByTestId('add-quick-tick-button');
-		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+		const deleteButton = screen.getByTestId('delete-board-button');
+		const confirmModal = 'delete-confirmation-modal';
+		expect(screen.queryByTestId(confirmModal)).not.toBeInTheDocument();
+		fireEvent.click(deleteButton);
+		expect(screen.getByTestId(confirmModal)).toBeInTheDocument();
+		expect(screen.getByTestId('cancel-delete-button')).toBeInTheDocument();
+		expect(screen.getByTestId('confirm-delete-button')).toBeInTheDocument();
 
-		fireEvent.click(addTick);
-		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
-
-		fireEvent.click(screen.getByTestId('close-create-modal-button'));
-		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
+		fireEvent.click(screen.getByTestId('cancel-delete-button'));
+		expect(screen.queryByTestId(confirmModal)).not.toBeInTheDocument();
 	});
 });
 

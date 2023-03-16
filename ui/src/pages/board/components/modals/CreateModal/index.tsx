@@ -163,7 +163,13 @@ const CreateModal = (props: IModal) => {
 						error={formik.errors.description}
 					/>
 					{statusAlert()}
-					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						data-testid="submit-job-button"
+						sx={{ mt: 3, mb: 2 }}
+					>
 						Create
 					</Button>
 				</Box>

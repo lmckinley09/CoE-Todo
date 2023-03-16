@@ -12,6 +12,7 @@ const BoardItem = (props: IBoardItem) => {
 	const { id, name, projectCount, taskCount, tickCount } = props.board;
 	return (
 		<BoardBox
+			data-testid={`board-item-${id}`}
 			onClick={() => {
 				navigate(`/board/${id}`);
 			}}
@@ -27,7 +28,9 @@ const BoardItem = (props: IBoardItem) => {
 				<Box display="inline-flex" alignItems="center">
 					{projectCount !== 0 && (
 						<>
-							<Typography>{projectCount}</Typography>
+							<Typography data-testid={`project-count-board-${id}`}>
+								{projectCount}
+							</Typography>
 							<Tooltip title="Projects" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<PlaylistAddCheckCircleOutlinedIcon />
@@ -38,7 +41,9 @@ const BoardItem = (props: IBoardItem) => {
 
 					{taskCount !== 0 && (
 						<>
-							<Typography>{taskCount}</Typography>
+							<Typography data-testid={`task-count-board-${id}`}>
+								{taskCount}
+							</Typography>
 							<Tooltip title="Tasks" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<CheckCircleOutlineIcon />
@@ -48,7 +53,9 @@ const BoardItem = (props: IBoardItem) => {
 					)}
 					{tickCount !== 0 && (
 						<>
-							<Typography>{tickCount}</Typography>
+							<Typography data-testid={`tick-count-board-${id}`}>
+								{tickCount}
+							</Typography>
 							<Tooltip title="Quick Ticks" placement="top" enterDelay={200}>
 								<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
 									<AlarmOnIcon />

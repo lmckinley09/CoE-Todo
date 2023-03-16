@@ -35,17 +35,25 @@ const ConfirmationModal = (props: IModal) => {
 	};
 
 	return (
-		<Modal open={open}>
+		<Modal open={open} data-testid="delete-confirmation-modal">
 			<ModalBox>
 				<Grid container justifyContent="center">
 					<Typography id="modal-modal-title" variant="h6" component="h2">
 						Are you sure you want to delete this board?
 					</Typography>
 					<Grid container justifyContent="space-between" padding="10px 70px">
-						<Button variant="contained" onClick={() => handleClose(false)}>
+						<Button
+							variant="contained"
+							data-testid="cancel-delete-button"
+							onClick={() => handleClose(false)}
+						>
 							Cancel
 						</Button>
-						<Button variant="contained" onClick={() => deleteBoard()}>
+						<Button
+							variant="contained"
+							data-testid="confirm-delete-button"
+							onClick={() => deleteBoard()}
+						>
 							Confirm
 						</Button>
 					</Grid>
