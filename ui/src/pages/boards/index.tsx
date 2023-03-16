@@ -10,7 +10,7 @@ import { StyledBox } from './styled';
 import BoardItem from './components/BoardItem';
 import useGetBoards from '@hooks/integrationHooks/useGetBoards';
 import AddIcon from '@mui/icons-material/Add';
-import CreateModal from './components/modals/CreateModal';
+import CreateBoardModal from './components/modals/CreateBoardModal';
 
 const Boards = () => {
 	const boardsResponse = useGetBoards();
@@ -87,7 +87,10 @@ const Boards = () => {
 						})}
 				</StyledBox>
 			</Grid>
-			<CreateModal open={createModalOpen} handleClose={handleCreateModalClose} />
+			<CreateBoardModal
+				open={createModalOpen}
+				handleClose={handleCreateModalClose}
+			/>
 		</Grid>
 	);
 };

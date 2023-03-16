@@ -22,7 +22,7 @@ import { ModalBox } from '../styled';
 import { validationSchema } from '../validation';
 import isEmail from 'validator/lib/isEmail';
 
-const CreateModal = (props: IModal) => {
+const CreateBoardModal = (props: IModal) => {
 	const { open, handleClose } = props;
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -216,4 +216,4 @@ const CreateModal = (props: IModal) => {
 	);
 };
 
-export default CreateModal;
+export default CreateBoardModal;
