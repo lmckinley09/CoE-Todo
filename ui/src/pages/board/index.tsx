@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { BoardActions, StyledBox } from './styled';
 import {
-	CreateModal,
+	CreateJobModal,
 	EditModal,
 	ConfirmationModal,
 	JobItem,
@@ -316,7 +316,10 @@ const Board = (): JSX.Element => {
 					</StyledBox>
 				</Grid>
 			</Grid>
-			<CreateModal open={createModalOpen} handleClose={handleCreateModalClose} />
+			<CreateJobModal
+				open={createModalOpen}
+				handleClose={handleCreateModalClose}
+			/>
 			{selectedJob && (
 				<EditModal
 					open={editModalOpen}

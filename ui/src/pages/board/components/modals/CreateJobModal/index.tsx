@@ -24,7 +24,7 @@ import { ModalBox } from '../styled';
 import RichTextEditor from '../../RichTextEditor';
 import { validationSchema } from '../validation';
 
-const CreateModal = (props: IModal) => {
+const CreateJobModal = (props: IModal) => {
 	const { open, handleClose } = props;
 	const navigate = useNavigate();
 	const params = useParams();
@@ -178,4 +178,4 @@ const CreateModal = (props: IModal) => {
 	);
 };
 
-export default CreateModal;
+export default CreateJobModal;

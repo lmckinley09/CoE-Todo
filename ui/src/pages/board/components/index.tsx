@@ -1,4 +1,4 @@
-export { default as CreateModal } from './modals/CreateModal';
+export { default as CreateJobModal } from './modals/CreateJobModal';
 export { default as EditModal } from './modals/EditModal';
 export { default as ConfirmationModal } from './modals/ConfirmationModal';
 export { default as JobItem } from './JobItem';
