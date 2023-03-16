@@ -25,7 +25,7 @@ import { ModalBox } from '../styled';
 import RichTextEditor from '../../RichTextEditor';
 import { validationSchema } from '../validation';
 
-const EditModal = (props: IEditModal) => {
+const EditJobModal = (props: IEditModal) => {
 	const { job, open, handleClose, setDisplayNotification } = props;
 	const { mutate } = useUpdateJob(job.id);
 	const navigate = useNavigate();
@@ -215,4 +215,4 @@ const EditModal = (props: IEditModal) => {
 	);
 };
 
-export default EditModal;
+export default EditJobModal;

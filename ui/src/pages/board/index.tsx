@@ -17,7 +17,7 @@ import {
 import { BoardActions, StyledBox } from './styled';
 import {
 	CreateJobModal,
-	EditModal,
+	EditJobModal,
 	ConfirmationModal,
 	JobItem,
 	Toggle,
@@ -321,7 +321,7 @@ const Board = (): JSX.Element => {
 				handleClose={handleCreateModalClose}
 			/>
 			{selectedJob && (
-				<EditModal
+				<EditJobModal
 					open={editModalOpen}
 					handleClose={handleEditModalClose}
 					job={selectedJob}
