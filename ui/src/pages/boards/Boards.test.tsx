@@ -76,6 +76,12 @@ describe('Boards page', () => {
 		TestUtils.render(<Boards />);
 		expect(screen.getAllByTestId('boards-loader')).toHaveLength(2);
 	});
+
+	it('should render new board item when created', async () => {
+		(useGetBoards as jest.Mock).mockReturnValue({ isLoading: true });
+		TestUtils.render(<Boards />);
+		expect(screen.getAllByTestId('boards-loader')).toHaveLength(2);
+	});
 });
 
 export {};

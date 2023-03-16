@@ -15,7 +15,7 @@ describe('Boards page', () => {
 		jest.resetAllMocks();
 	});
 
-	it('should render boards summary page', () => {
+	it('should render create job modal', () => {
 		(useCreateJob as jest.Mock).mockReturnValue({ mutate: jest.fn() });
 		TestUtils.render(<CreateModal open={true} handleClose={jest.fn()} />);
 

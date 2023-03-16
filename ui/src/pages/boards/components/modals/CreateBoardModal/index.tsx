@@ -55,9 +55,7 @@ const CreateBoardModal = (props: IModal) => {
 					if (error.response.status === StatusCodes.UNAUTHORIZED) {
 						navigate(`/login`);
 					}
-					if (error.response.status === StatusCodes.BAD_REQUEST) {
-						actions.setStatus({ statusCode: error.response.status });
-					}
+					actions.setStatus({ statusCode: error.response.status });
 				},
 			});
 		},
@@ -72,9 +70,15 @@ const CreateBoardModal = (props: IModal) => {
 	};
 
 	const removeUser = (index: number) => {
-		const updatedUsers = users.splice(index, 1);
-		setUsers(updatedUsers);
-		formik.setFieldValue('users', updatedUsers);
+		const updated = [...users];
+		if (updated.length > 1) {
+			const updatedUsers = updated.splice(index, 1);
+			setUsers(updatedUsers);
+			formik.setFieldValue('users', updatedUsers);
+		} else {
+			setUsers([]);
+			formik.setFieldValue('users', []);
+		}
 	};
 
 	const addUsersForm = () => {
@@ -88,6 +92,7 @@ const CreateBoardModal = (props: IModal) => {
 							id="email"
 							name="email"
 							type="email"
+							inputProps={{ 'data-testid': 'email-input' }}
 							fullWidth
 							value={email}
 							onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +111,8 @@ const CreateBoardModal = (props: IModal) => {
 							sx={{ mt: '40px', ml: '10px' }}
 							size="small"
 							color="secondary"
-							aria-label="add quick tick"
+							aria-label="add-email"
+							data-testid="add-user-email-button"
 							disabled={!isEmail(email)}
 							onClick={() => addUser()}
 						>
@@ -116,11 +122,12 @@ const CreateBoardModal = (props: IModal) => {
 				</Grid>
 				{formik.values.users.map((user, index) => {
 					return (
-						<Box key={user} sx={{ mt: '10px' }}>
+						<Box key={user} sx={{ mt: '10px' }} data-testid={`email-${index}`}>
 							{user}
 							<IconButton
 								size="small"
 								color="secondary"
+								data-testid={`delete-user-${index}-email-button`}
 								onClick={() => removeUser(index)}
 							>
 								<CloseIcon />
@@ -139,6 +146,7 @@ const CreateBoardModal = (props: IModal) => {
 						<IconButton
 							size="small"
 							color="secondary"
+							data-testid="add-user-button"
 							onClick={() => setDisplayShare(true)}
 							sx={{ display: 'inline-flex' }}
 						>
@@ -154,13 +162,13 @@ const CreateBoardModal = (props: IModal) => {
 		if (formik.status) {
 			if (formik.status?.statusCode === StatusCodes.BAD_REQUEST) {
 				return (
-					<Alert severity="error" sx={{ mt: '10px' }}>
+					<Alert severity="error" data-testid="error-alert" sx={{ mt: '10px' }}>
 						Error creating board
 					</Alert>
 				);
 			} else {
 				return (
-					<Alert severity="warning" sx={{ mt: '10px' }}>
+					<Alert severity="warning" data-testid="warning-alert" sx={{ mt: '10px' }}>
 						Something went wrong, please try again later.
 					</Alert>
 				);
@@ -198,6 +206,7 @@ const CreateBoardModal = (props: IModal) => {
 							id="name"
 							name="name"
 							autoComplete="name"
+							inputProps={{ 'data-testid': 'board-name-input' }}
 							fullWidth
 							value={formik.values.name}
 							onChange={formik.handleChange}
@@ -207,7 +216,13 @@ const CreateBoardModal = (props: IModal) => {
 					</Grid>
 					{addUsersForm()}
 					{statusAlert()}
-					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+					<Button
+						type="submit"
+						data-testid="create-board-button"
+						fullWidth
+						variant="contained"
+						sx={{ mt: 3, mb: 2 }}
+					>
 						Create
 					</Button>
 				</Box>
