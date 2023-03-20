@@ -14,14 +14,16 @@ import { when } from 'jest-when';
 jest.mock('../../hooks/integrationHooks/useGetBoard');
 jest.mock('../../hooks/integrationHooks/useGetJobs');
 jest.mock('../../hooks/integrationHooks/useCreateJob');
-jest.mock('react-router-dom');
+// jest.mock('react-router-dom');
+
 // const mockParams = jest.fn();
-// jest.mock('react-router-dom', () => ({
-// 	...jest.requireActual('react-router-dom'),
-// 	useParams: () => ({
-// 		boardId: 1,
-// 	}),
-// }));
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		boardId: 1,
+	}),
+	useRouteMatch: () => ({ url: '/board/1' }),
+}));
 
 describe('Board page', () => {
 	const mockBoardData: { data: IBoard } = {
@@ -63,7 +65,6 @@ describe('Board page', () => {
 	};
 
 	const getAllBoardData = () => {
-		(useParams as jest.Mock).mockReturnValue({ boardId: 1 });
 		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
 		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
 	};
@@ -162,9 +163,10 @@ describe('Board page', () => {
 
 	it('should call useCreateJob hook onSubmit', async () => {
 		//fix
+		debugger;
 		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
 		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
-		(useParams as jest.Mock).mockReturnValue({ boardId: 1 });
+		// (useParams as jest.Mock).mockReturnValue({ boardId: 1 });
 		(useCreateJob as jest.Mock).mockReturnValue({
 			mutate: jest.fn(),
 		});
