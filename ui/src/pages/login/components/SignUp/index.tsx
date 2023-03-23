@@ -118,6 +118,7 @@ const SignUp = (props: ISignUp) => {
 						label="First Name"
 						name="firstName"
 						autoFocus
+						inputProps={{ 'data-testid': 'first-name-input' }}
 						value={formik.values.firstName}
 						onChange={formik.handleChange}
 						error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -129,6 +130,7 @@ const SignUp = (props: ISignUp) => {
 						id="lastName"
 						label="Last Name"
 						name="lastName"
+						inputProps={{ 'data-testid': 'last-name-input' }}
 						value={formik.values.lastName}
 						onChange={formik.handleChange}
 						error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -141,6 +143,7 @@ const SignUp = (props: ISignUp) => {
 						label="Email "
 						name="email"
 						autoComplete="email"
+						inputProps={{ 'data-testid': 'email-input' }}
 						value={formik.values.email}
 						onChange={formik.handleChange}
 						error={formik.touched.email && Boolean(formik.errors.email)}
@@ -153,21 +156,32 @@ const SignUp = (props: ISignUp) => {
 						label="Password"
 						type="password"
 						id="password"
+						inputProps={{ 'data-testid': 'password-input' }}
 						value={formik.values.password}
 						onChange={formik.handleChange}
 						error={formik.touched.password && Boolean(formik.errors.password)}
 						helperText={formik.touched.password && formik.errors.password}
 					/>
 
-					<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+					<Button
+						data-testid="signup-button"
+						type="submit"
+						fullWidth
+						variant="contained"
+						sx={{ mt: 3, mb: 2 }}
+					>
 						Register
 					</Button>
 					<Grid container>
-						<Grid item xs>
+						{/* <Grid item xs>
 							<Button variant="text">Forgot password?</Button>
-						</Grid>
+						</Grid> */}
 						<Grid item>
-							<Button variant="text" onClick={() => props.setToggleSignUp(false)}>
+							<Button
+								data-testid="toggle-login-button"
+								variant="text"
+								onClick={() => props.setToggleSignUp(false)}
+							>
 								Login
 							</Button>
 						</Grid>

@@ -88,10 +88,10 @@ export const handlers = [
 		return res(ctx.json(boardsData));
 	}),
 	rest.delete(baseUrl + '/api/boards', (req, res, ctx) => {
-		return res(ctx.status(200));
+		return res(ctx.status(204));
 	}),
 	rest.delete(baseUrl + '/api/jobs', (req, res, ctx) => {
-		return res(ctx.status(200));
+		return res(ctx.status(204));
 	}),
 ];
 

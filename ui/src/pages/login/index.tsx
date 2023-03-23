@@ -139,6 +139,7 @@ const Login = () => {
 								name="email"
 								autoComplete="email"
 								autoFocus
+								inputProps={{ 'data-testid': 'email-login-input' }}
 								value={formik.values.email}
 								onChange={formik.handleChange}
 								error={formik.touched.email && Boolean(formik.errors.email)}
@@ -152,6 +153,7 @@ const Login = () => {
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								inputProps={{ 'data-testid': 'password-login-input' }}
 								value={formik.values.password}
 								onChange={formik.handleChange}
 								error={formik.touched.password && Boolean(formik.errors.password)}
@@ -160,6 +162,7 @@ const Login = () => {
 
 							<Button
 								type="submit"
+								data-testid="login-button"
 								fullWidth
 								variant="contained"
 								sx={{ mt: 3, mb: 2 }}
