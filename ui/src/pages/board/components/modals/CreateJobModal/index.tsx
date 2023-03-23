@@ -42,6 +42,7 @@ const CreateJobModal = (props: IModal) => {
 		},
 		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
+			console.log('submit hit');
 			mutate(values, {
 				onSuccess: async (response) => {
 					actions.setStatus();

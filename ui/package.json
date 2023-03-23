@@ -44,6 +44,7 @@
 		"start": "PORT=3002 craco start",
 		"build": "craco build",
 		"test": "jest --coverage",
+		"test:debug": "jest --inspect-brk -- --config=jest.config.json --runInBand --no-cache",
 		"eject": "craco eject"
 	},
 	"eslintConfig": {

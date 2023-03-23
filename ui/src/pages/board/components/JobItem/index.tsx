@@ -42,6 +42,7 @@ const JobItem = (props: IJobItem) => {
 			<Grid container spacing={1}>
 				<Grid item>
 					<Checkbox
+						data-testid={`job-status-checkbox-${job.jobType.description}-${job.id}`}
 						color="secondary"
 						checked={isDone}
 						onChange={handleCheckboxChange}

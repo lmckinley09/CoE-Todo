@@ -67,6 +67,9 @@ describe('Board page', () => {
 	const getAllBoardData = () => {
 		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
 		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
+		(useCreateJob as jest.Mock).mockReturnValue({
+			mutate: jest.fn(),
+		});
 	};
 
 	afterEach(() => {
@@ -139,23 +142,20 @@ describe('Board page', () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
 
-		const addTick = screen.getByTestId('add-quick-tick-button');
-		const addTask = screen.getByTestId('add-task-button');
-		const addProj = screen.getByTestId('add-project-button');
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
-		fireEvent.click(addTick);
+		fireEvent.click(screen.getByTestId('add-quick-tick-button'));
 		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('close-create-modal-button'));
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
 
-		fireEvent.click(addTask);
+		fireEvent.click(screen.getByTestId('add-task-button'));
 		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('close-create-modal-button'));
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
 
-		fireEvent.click(addProj);
+		fireEvent.click(screen.getByTestId('add-project-button'));
 		expect(screen.getByTestId('create-job-modal')).toBeInTheDocument();
 		fireEvent.click(screen.getByTestId('close-create-modal-button'));
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
@@ -163,13 +163,8 @@ describe('Board page', () => {
 
 	it('should call useCreateJob hook onSubmit', async () => {
 		//fix
-		debugger;
-		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
-		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
-		// (useParams as jest.Mock).mockReturnValue({ boardId: 1 });
-		(useCreateJob as jest.Mock).mockReturnValue({
-			mutate: jest.fn(),
-		});
+		getAllBoardData();
+
 		TestUtils.render(<Board />);
 
 		const addTick = screen.getByTestId('add-quick-tick-button');
@@ -182,11 +177,10 @@ describe('Board page', () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
 
-		const job = screen.getByTestId('job-tick-1');
 		expect(screen.queryByTestId('edit-job-modal-1')).not.toBeInTheDocument();
-		expect(job).toBeInTheDocument();
+		expect(screen.getByTestId('job-tick-1')).toBeInTheDocument();
 
-		fireEvent.click(job);
+		fireEvent.click(screen.getByTestId('job-tick-1'));
 		expect(screen.getByTestId('edit-job-modal-1')).toBeInTheDocument();
 
 		fireEvent.click(screen.getByTestId('close-edit-modal-button'));

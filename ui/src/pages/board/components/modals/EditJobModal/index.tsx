@@ -102,6 +102,7 @@ const EditJobModal = (props: IEditModal) => {
 									<IconButton
 										color="secondary"
 										aria-label="view-button"
+										data-testid="toggle-edit-button"
 										onClick={() => setEditMode(true)}
 										sx={{ ml: '5px' }}
 									>
