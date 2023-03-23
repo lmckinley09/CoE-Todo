@@ -35,7 +35,7 @@ const RichTextEditor = (props: IRichTextEditor) => {
 	};
 
 	return (
-		<>
+		<div data-testid="rich-text-editor">
 			<Editor
 				editorState={editorState}
 				onEditorStateChange={onEditorStateChange}
@@ -71,7 +71,7 @@ const RichTextEditor = (props: IRichTextEditor) => {
 					{error}
 				</Alert>
 			)}
-		</>
+		</div>
 	);
 };
 

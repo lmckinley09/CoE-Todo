@@ -6,7 +6,7 @@ import { IJob } from '@interfaces/jobs';
 
 jest.mock('../../../../hooks/integrationHooks/useUpdateJob');
 
-describe('ConfirmationModal', () => {
+describe('JobItem', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -24,7 +24,7 @@ describe('ConfirmationModal', () => {
 		jobType: { id: 1, description: 'tick' },
 	};
 
-	it('should render confirmation modal', () => {
+	it('should render job item', () => {
 		(useUpdateJob as jest.Mock).mockReturnValue({ mutate: jest.fn() });
 		TestUtils.render(<JobItem openEditModal={jest.fn()} job={job} />);
 
