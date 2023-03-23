@@ -3,7 +3,6 @@ import useAuth from '@hooks//integrationHooks/useAuth';
 import useTokens from '@hooks//integrationHooks/useTokens';
 import Login from './index';
 import TestUtils from '@test-utils';
-import { IBoard } from '@interfaces/boards';
 
 jest.mock('../../hooks/integrationHooks/useAuth');
 jest.mock('../../hooks/integrationHooks/useTokens');
