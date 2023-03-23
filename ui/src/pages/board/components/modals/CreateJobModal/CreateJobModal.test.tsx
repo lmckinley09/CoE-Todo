@@ -10,7 +10,7 @@ import { when } from 'jest-when';
 
 jest.mock('../../../../../hooks/integrationHooks/useCreateJob');
 
-describe('Boards page', () => {
+describe('CreateJobModal', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});

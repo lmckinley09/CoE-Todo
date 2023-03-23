@@ -6,7 +6,7 @@ import { IJob } from '@interfaces/jobs';
 
 jest.mock('../../../../../hooks/integrationHooks/useUpdateJob');
 
-describe('Boards page', () => {
+describe('EditJobModal', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -26,7 +26,7 @@ describe('Boards page', () => {
 
 	const setDisplayFnc = jest.fn();
 
-	it('should render create job modal', () => {
+	it('should render edit job modal', () => {
 		(useUpdateJob as jest.Mock).mockReturnValue({ mutate: jest.fn() });
 		TestUtils.render(
 			<EditJobModal
