@@ -1,12 +1,9 @@
 import { screen, fireEvent } from '@testing-library/react';
-import { useParams } from 'react-router-dom';
+
 import useGetBoards from '../../hooks/integrationHooks/useGetBoards';
 import { Boards } from '@pages';
 import TestUtils from '@test-utils';
 import { IGetBoards } from '@interfaces/boards';
-import { IJob } from '@interfaces/jobs';
-import dayjs from 'dayjs';
-import { when } from 'jest-when';
 
 jest.mock('../../hooks/integrationHooks/useGetBoards');
 

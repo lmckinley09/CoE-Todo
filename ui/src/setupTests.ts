@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import { QueryCache, setLogger } from 'react-query';
 import { beforeAll, afterAll, afterEach } from '@jest/globals';
-import Server from './test-utils/sever';
+import Server from './test-utils/server';
 // https://react-query.tanstack.com/guides/testing
 setLogger({
 	log: console.log,

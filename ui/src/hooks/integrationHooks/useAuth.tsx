@@ -5,7 +5,7 @@ interface IAuthBody {
 	password: string;
 }
 
-const fetchAccessTokens = async (userDetails: IAuthBody) => {
+export const fetchAccessTokens = async (userDetails: IAuthBody) => {
 	const response = await axiosInstance.post('/authenticate', userDetails);
 	return response;
 };

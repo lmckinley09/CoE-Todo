@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import useUpdateJob from '@hooks//integrationHooks/useUpdateJob';
 import JobItem from './index';
 import TestUtils from '@test-utils';
@@ -30,6 +30,15 @@ describe('JobItem', () => {
 
 		expect(screen.getByTestId('job-tick-1')).toBeInTheDocument();
 		expect(screen.getByTestId('job-status-checkbox-tick-1')).toBeInTheDocument();
+	});
+
+	it('toggle checkbox should change status', async () => {
+		(useUpdateJob as jest.Mock).mockReturnValue({ mutate: jest.fn() });
+		TestUtils.render(<JobItem openEditModal={jest.fn()} job={job} />);
+
+		expect(screen.getByTestId('job-status-checkbox-tick-1')).toBeInTheDocument();
+		fireEvent.click(screen.getByTestId('job-status-checkbox-tick-1'));
+		await waitFor(() => expect(useUpdateJob).toHaveBeenCalled());
 	});
 });
 
