@@ -10,12 +10,12 @@ import { when } from 'jest-when';
 
 jest.mock('../../../../../hooks/integrationHooks/useCreateBoard');
 
-describe('Boards page', () => {
+describe('CreateBoardModal', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
 
-	it('should render boards summary page', () => {
+	it('should render create board modal', () => {
 		(useCreateBoard as jest.Mock).mockReturnValue({ mutate: jest.fn() });
 		TestUtils.render(<CreateModal open={true} handleClose={jest.fn()} />);
 

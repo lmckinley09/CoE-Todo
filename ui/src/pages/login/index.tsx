@@ -110,6 +110,7 @@ const Login = () => {
 					elevation={6}
 					square
 					sx={{ backgroundColor: '#FFFCF9' }}
+					data-testid="login-panel"
 				>
 					<Box
 						sx={{
@@ -166,11 +167,15 @@ const Login = () => {
 								Login
 							</Button>
 							<Grid container>
-								<Grid item xs>
+								{/* <Grid item xs>
 									<Button variant="text">Forgot password?</Button>
-								</Grid>
+								</Grid> */}
 								<Grid item>
-									<Button variant="text" onClick={() => setToggleSignUp(true)}>
+									<Button
+										variant="text"
+										onClick={() => setToggleSignUp(true)}
+										data-testid="sign-up-button"
+									>
 										Sign Up
 									</Button>
 								</Grid>

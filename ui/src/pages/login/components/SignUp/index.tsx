@@ -90,6 +90,7 @@ const SignUp = (props: ISignUp) => {
 			elevation={6}
 			square
 			sx={{ backgroundColor: '#FFFCF9' }}
+			data-testid="sign-up-panel"
 		>
 			<Box
 				sx={{
