@@ -69,28 +69,28 @@ export const handlers = [
 		}
 	}),
 
-	rest.get(baseUrl + '/api/boards', (req, res, ctx) => {
+	rest.get(baseUrl + '/boards', (req, res, ctx) => {
 		return res(ctx.json(boardsData));
 	}),
-	rest.get(baseUrl + '/api/jobs', (req, res, ctx) => {
+	rest.get(baseUrl + '/jobs', (req, res, ctx) => {
+		return res(ctx.json(jobsData));
+	}),
+	rest.post(baseUrl + '/boards', (req, res, ctx) => {
 		return res(ctx.json(boardsData));
 	}),
-	rest.post(baseUrl + '/api/boards', (req, res, ctx) => {
+	rest.post(baseUrl + '/jobs', (req, res, ctx) => {
+		return res(ctx.json(jobsData));
+	}),
+	rest.put(baseUrl + '/boards', (req, res, ctx) => {
 		return res(ctx.json(boardsData));
 	}),
-	rest.post(baseUrl + '/api/jobs', (req, res, ctx) => {
-		return res(ctx.json(boardsData));
+	rest.put(baseUrl + '/jobs', (req, res, ctx) => {
+		return res(ctx.json(jobsData));
 	}),
-	rest.put(baseUrl + '/api/boards', (req, res, ctx) => {
-		return res(ctx.json(boardsData));
-	}),
-	rest.put(baseUrl + '/api/jobs', (req, res, ctx) => {
-		return res(ctx.json(boardsData));
-	}),
-	rest.delete(baseUrl + '/api/boards', (req, res, ctx) => {
+	rest.delete(baseUrl + '/boards', (req, res, ctx) => {
 		return res(ctx.status(204));
 	}),
-	rest.delete(baseUrl + '/api/jobs', (req, res, ctx) => {
+	rest.delete(baseUrl + '/jobs', (req, res, ctx) => {
 		return res(ctx.status(204));
 	}),
 ];

@@ -40,9 +40,8 @@ const CreateJobModal = (props: IModal) => {
 			status: 'Not Started',
 			completionDate: new Date().toISOString(),
 		},
-		// validationSchema: validationSchema,
+		validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
-			console.log('submit hit', mutate);
 			mutate(values, {
 				onSuccess: async (response) => {
 					actions.setStatus();
@@ -112,6 +111,7 @@ const CreateJobModal = (props: IModal) => {
 								id="typeId"
 								name="typeId"
 								label="Job Type"
+								inputProps={{ 'data-testid': 'job-type-input' }}
 								onChange={formik.handleChange}
 								value={formik.values.typeId}
 							>
@@ -131,6 +131,7 @@ const CreateJobModal = (props: IModal) => {
 								onChange={(value) => formik.setFieldValue('completionDate', value)}
 								renderInput={(params) => (
 									<TextField
+										inputProps={{ 'data-testid': 'completion-date-input' }}
 										id="completionDate"
 										name="completionDate"
 										fullWidth
@@ -145,6 +146,7 @@ const CreateJobModal = (props: IModal) => {
 						Title
 					</InputLabel>
 					<TextField
+						inputProps={{ 'data-testid': 'title-input' }}
 						id="title"
 						name="title"
 						autoComplete="title"

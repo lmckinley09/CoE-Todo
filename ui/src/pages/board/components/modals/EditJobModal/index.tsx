@@ -134,6 +134,7 @@ const EditJobModal = (props: IEditModal) => {
 								id="typeId"
 								name="typeId"
 								label="Job Type"
+								inputProps={{ 'data-testid': 'job-type-input' }}
 								onChange={formik.handleChange}
 								value={formik.values.typeId}
 								disabled={!editMode}
@@ -169,6 +170,7 @@ const EditJobModal = (props: IEditModal) => {
 						Title
 					</InputLabel>
 					<TextField
+						inputProps={{ 'data-testid': 'title-input' }}
 						id="title"
 						name="title"
 						autoComplete="title"
@@ -197,6 +199,7 @@ const EditJobModal = (props: IEditModal) => {
 						id="status"
 						name="status"
 						label="Status"
+						inputProps={{ 'data-testid': 'status-input' }}
 						onChange={formik.handleChange}
 						value={formik.values.status}
 						disabled={!editMode}
@@ -206,7 +209,13 @@ const EditJobModal = (props: IEditModal) => {
 					</Select>
 					{statusAlert()}
 					{editMode && (
-						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						<Button
+							data-testid="submit-job-button"
+							type="submit"
+							fullWidth
+							variant="contained"
+							sx={{ mt: 3, mb: 2 }}
+						>
 							Save
 						</Button>
 					)}
