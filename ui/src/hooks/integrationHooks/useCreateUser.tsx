@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import { axiosInstance } from '@integrations/instance';
 
-interface ICreateUser {
+export interface ICreateUser {
 	firstName: string;
 	lastName: string;
 	email: string;

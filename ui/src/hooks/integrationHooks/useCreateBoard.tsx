@@ -1,10 +1,6 @@
 import { useMutation } from 'react-query';
 import { axiosInstance } from '@integrations/instance';
-
-interface ICreateBoard {
-	name: string;
-	users: Array<string>;
-}
+import { ICreateBoard } from '@interfaces/boards';
 
 export const createBoard = async (boardDetails: ICreateBoard) => {
 	const response = await axiosInstance.post(`/boards`, boardDetails);

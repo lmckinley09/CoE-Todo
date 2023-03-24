@@ -20,3 +20,8 @@ export interface IGetBoards {
 export interface IBoardItem {
 	board: IBoard;
 }
+
+export interface ICreateBoard {
+	name: string;
+	users: Array<string>;
+}

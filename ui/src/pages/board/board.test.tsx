@@ -2,8 +2,8 @@ import { screen, fireEvent } from '@testing-library/react';
 import { useParams } from 'react-router-dom';
 import useGetBoard from '../../hooks/integrationHooks/useGetBoard';
 import useGetJobs from '../../hooks/integrationHooks/useGetJobs';
-// import useCreateJob from '@hooks/integrationHooks/useCreateJob';
-// import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
+import useCreateJob from '@hooks/integrationHooks/useCreateJob';
+import useUpdateJob from '@hooks/integrationHooks/useUpdateJob';
 import { Board } from '@pages';
 import TestUtils from '@test-utils';
 import { IBoard } from '@interfaces/boards';
@@ -13,17 +13,16 @@ import { when } from 'jest-when';
 
 jest.mock('../../hooks/integrationHooks/useGetBoard');
 jest.mock('../../hooks/integrationHooks/useGetJobs');
-// jest.mock('../../hooks/integrationHooks/useCreateJob');
+jest.mock('../../hooks/integrationHooks/useCreateJob');
 // jest.mock('react-router-dom');
 
-// const mockParams = jest.fn();
-// jest.mock('react-router-dom', () => ({
-// 	...jest.requireActual('react-router-dom'),
-// 	useParams: () => ({
-// 		boardId: 1,
-// 	}),
-// 	useRouteMatch: () => ({ url: '/board/1' }),
-// }));
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		boardId: 1,
+	}),
+	useRouteMatch: () => ({ url: '/board/1' }),
+}));
 
 describe('Board page', () => {
 	const mockBoardData: { data: IBoard } = {
@@ -67,9 +66,9 @@ describe('Board page', () => {
 	const getAllBoardData = () => {
 		(useGetBoard as jest.Mock).mockReturnValue({ data: mockBoardData });
 		(useGetJobs as jest.Mock).mockReturnValue({ data: mockJobsData });
-		// (useCreateJob as jest.Mock).mockReturnValue({
-		// 	mutate: jest.fn(),
-		// });
+		(useCreateJob as jest.Mock).mockReturnValue({
+			mutate: jest.fn(),
+		});
 	};
 
 	afterEach(() => {
@@ -160,17 +159,28 @@ describe('Board page', () => {
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
 	});
 
-	// it('should call useCreateJob hook onSubmit', async () => {
-	// 	//fix
-	// 	getAllBoardData();
+	it('should call useCreateJob hook onSubmit', async () => {
+		//fix
+		getAllBoardData();
+		const mutate = jest.fn();
+		// (useCreateJob as jest.Mock).mockReturnValue({
+		// 	mutate: mutate,
+		// });
+		when(useCreateJob as jest.Mock)
+			.calledWith(1)
+			.mockReturnValue({
+				mutate: mutate,
+			});
+		TestUtils.render(<Board />);
 
-	// 	TestUtils.render(<Board />);
-
-	// 	const addTick = screen.getByTestId('add-quick-tick-button');
-	// 	fireEvent.click(addTick);
-	// 	fireEvent.click(screen.getByTestId('submit-job-button'));
-	// 	expect(useCreateJob).toHaveBeenCalledTimes(1);
-	// });
+		const addTick = screen.getByTestId('add-quick-tick-button');
+		fireEvent.click(addTick);
+		screen.debug(undefined, Infinity);
+		const submit = screen.getByTestId('submit-job-button');
+		// console.log(submit, mutate);
+		fireEvent.click(submit);
+		expect(mutate).toHaveBeenCalledTimes(1);
+	});
 
 	it('should render edit modal when job name clicked', async () => {
 		getAllBoardData();

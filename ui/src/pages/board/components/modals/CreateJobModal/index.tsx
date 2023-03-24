@@ -40,9 +40,9 @@ const CreateJobModal = (props: IModal) => {
 			status: 'Not Started',
 			completionDate: new Date().toISOString(),
 		},
-		validationSchema: validationSchema,
+		// validationSchema: validationSchema,
 		onSubmit: (values, actions) => {
-			console.log('submit hit');
+			console.log('submit hit', mutate);
 			mutate(values, {
 				onSuccess: async (response) => {
 					actions.setStatus();
