@@ -9,7 +9,31 @@ describe("Jobs Service", () => {
   describe("getAll", () => {
     it("Should return all jobs", async () => {
       const boardId = 1;
-      const jobs = [{ id: 1 }];
+      const date = new Date().toISOString();
+      const jobs = [
+        {
+          id: 1,
+          title: "title",
+          description: "desc",
+          status: "status",
+          completion_date: "12-12-23",
+          created: date,
+          last_modified: date,
+          job_type: { id: 2, type_description: "task" },
+        },
+      ];
+      const formattedJobs = [
+        {
+          id: 1,
+          title: "title",
+          description: "desc",
+          status: "status",
+          completionDate: "12-12-23",
+          created: date,
+          lastModified: date,
+          jobType: { id: 2, description: "task" },
+        },
+      ];
       prismaAsAny.job = { findMany: jest.fn().mockReturnValueOnce(jobs) };
 
       const result = await JobService.getAll(boardId);
@@ -34,7 +58,7 @@ describe("Jobs Service", () => {
           },
         })
       );
-      expect(result).toEqual(jobs);
+      expect(result).toEqual(formattedJobs);
     });
   });
 
@@ -42,13 +66,15 @@ describe("Jobs Service", () => {
     it("should return job when created", async () => {
       const boardId = 1;
       const typeId = 2;
+      const date = new Date().toISOString();
       const newJob = {
         typeId,
         title: "title",
         description: "desc",
         status: "status",
         completion_date: "12-12-23",
-        last_modified: new Date().toISOString(),
+        last_modified: date,
+        job_type: { id: 2, type_description: "task" },
       };
 
       prismaAsAny.job = {
@@ -58,19 +84,30 @@ describe("Jobs Service", () => {
       await JobService.createOne(boardId, typeId, newJob);
 
       expect(prisma.job.create).toHaveBeenCalledTimes(1);
-      expect(prisma.job.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          select: {
-            id: true,
-            board_id: true,
-            type_id: true,
-            title: true,
-            description: true,
-            status: true,
-            completion_date: true,
-          },
-        })
-      );
+      expect(prisma.job.create).toHaveBeenCalledWith({
+        data: {
+          board_id: 1,
+          completion_date: undefined,
+          created: date,
+          description: "desc",
+          last_modified: date,
+          status: "status",
+          title: "title",
+          type_id: 2,
+        },
+        select: {
+          board_id: true,
+          completion_date: true,
+          created: true,
+          description: true,
+          id: true,
+          job_type: true,
+          last_modified: true,
+          status: true,
+          title: true,
+          type_id: true,
+        },
+      });
     });
   });
 });

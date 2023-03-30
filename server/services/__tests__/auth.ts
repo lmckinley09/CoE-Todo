@@ -37,7 +37,7 @@ describe("Auth Service", () => {
 
       when(jwt.sign)
         .calledWith({ sub: id, roles: 2 }, ACCESS_TOKEN_SECRET, {
-          expiresIn: 1200,
+          expiresIn: 3600,
         })
         .mockReturnValueOnce(access);
 
@@ -61,7 +61,7 @@ describe("Auth Service", () => {
       expect(jwt.sign).toHaveBeenCalledWith(
         expect.objectContaining({ sub: id }),
         ACCESS_TOKEN_SECRET,
-        expect.objectContaining({ expiresIn: 1200 })
+        expect.objectContaining({ expiresIn: 3600 })
       );
       expect(jwt.sign).toHaveBeenCalledWith(
         expect.objectContaining({ sub: id }),

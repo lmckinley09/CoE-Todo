@@ -9,22 +9,37 @@ describe("Boards Service", () => {
     it("Should return all boards for a user", async () => {
       const TypeId = 1;
       const userId = 1;
-      const boards = [{ id: 1 }];
+      const boards = {
+        owner: [
+          {
+            created: undefined,
+            id: 1,
+            lastModified: undefined,
+            name: undefined,
+            projectCount: 0,
+            taskCount: 0,
+            tickCount: 0,
+          },
+        ],
+        shared: [],
+      };
       prismaAsAny.board = { findMany: jest.fn().mockReturnValueOnce(boards) };
 
       const result = await BoardService.getAll(userId);
 
-      expect(prisma.board.findMany).toHaveBeenCalledTimes(1);
-      expect(prisma.board.findMany).toHaveBeenCalledWith({
-        where: {
-          user_board_access: {
-            some: {
-              type_id: TypeId,
-              user_id: userId,
+      expect(prisma.board.findMany).toHaveBeenCalledTimes(2);
+      expect(prisma.board.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            user_board_access: {
+              some: {
+                type_id: TypeId,
+                user_id: userId,
+              },
             },
           },
-        },
-      });
+        })
+      );
       expect(result).toEqual(boards);
     });
   });

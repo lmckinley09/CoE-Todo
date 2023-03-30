@@ -35,16 +35,17 @@ const getAll = async (userId: number) => {
     },
   });
 
-  const formattedOwnerBoards =
-    ownerBoards?.map((x) => ({
-      id: x.id,
-      name: x.name,
-      created: x.created,
-      lastModified: x.last_modified,
-      tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
-      taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
-      projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
-    })) || [];
+  const formattedOwnerBoards = ownerBoards
+    ? ownerBoards.map((x) => ({
+        id: x.id,
+        name: x.name,
+        created: x.created,
+        lastModified: x.last_modified,
+        tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
+        taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
+        projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
+      }))
+    : [];
 
   const formattedSharedBoards =
     sharedBoards?.map((x) => ({
@@ -70,11 +71,16 @@ const getSingle = async (boardId: number) => {
 };
 
 const createOne = async (userId: number, board: IBoard) => {
-  const usersDetails = board.users.map((user) => {
+  const usersDetails = board.users?.map((user) => {
     return UserService.getUserByEmail(user);
   });
 
-  const x = await Promise.all(usersDetails);
+  let x = [];
+
+  if (usersDetails) {
+    x = await Promise.all(usersDetails);
+  }
+
   const validUsers = x.filter((e) => e);
 
   let createdBoard;
@@ -94,14 +100,16 @@ const createOne = async (userId: number, board: IBoard) => {
         type_id: 1,
       },
     });
-    for (const user of validUsers) {
-      await tx.user_board_access.create({
-        data: {
-          user_id: Number(user.id),
-          board_id: createdBoard.id,
-          type_id: 2,
-        },
-      });
+    if (validUsers) {
+      for (const user of validUsers) {
+        await tx.user_board_access.create({
+          data: {
+            user_id: Number(user.id),
+            board_id: createdBoard.id,
+            type_id: 2,
+          },
+        });
+      }
     }
   });
   return createdBoard;

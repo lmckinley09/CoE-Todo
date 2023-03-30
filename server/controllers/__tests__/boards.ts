@@ -32,7 +32,7 @@ describe("Board Controller", () => {
       expect(res.json).toHaveBeenCalledTimes(1);
       expect(res.json).toHaveBeenCalledWith(mockReturnValue);
     });
-    it("should return 404 when no users are found", async () => {
+    it("should return 404 when no boards are found", async () => {
       const userId = 1;
       const req = mockRequest({ query: { userId } });
       const res = mockResponse();
