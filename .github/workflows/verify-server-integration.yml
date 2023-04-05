@@ -2,8 +2,8 @@ name: Verify Server Integration
 
 on:
   pull_request:
-    # paths:
-    #   - "server/**"
+    paths:
+      - "server/**"
 
 defaults:
   run:
