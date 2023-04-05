@@ -15,41 +15,34 @@ describe("/jobs", () => {
 
 describe("POST /jobs", () => {
   const verifyJobValidation = (res) => {
-    expect(res.body).toEqual(
-      expect.objectContaining({
-        error: expect.arrayContaining([
-          expect.objectContaining({
-            location: "body",
-            param: "title",
-            msg: "Invalid value",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "title",
-            msg: "job title should have minimum length of 3",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "description",
-            msg: "Invalid value",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "description",
-            msg: "description should have minimum length of 3",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "completionDate",
-            msg: "Invalid value",
-          }),
-        ]),
-      })
-    );
+    expect(res.body).toEqual({
+      error: [
+        {
+          location: "body",
+          param: "title",
+          msg: "Invalid value",
+        },
+        {
+          location: "body",
+          param: "title",
+          msg: "job title should have minimum length of 3",
+        },
+        {
+          location: "body",
+          param: "description",
+          msg: "Invalid value",
+        },
+        {
+          location: "body",
+          param: "completionDate",
+          msg: "Invalid value",
+        },
+      ],
+    });
   };
   it("respond with 200 when job created successfully", async () => {
     const newJob = {
-      type_id: 1,
+      typeId: 1,
       title: "new name",
       description: "desc",
       completionDate: new Date().toISOString(),
@@ -77,37 +70,30 @@ describe("POST /jobs", () => {
 
 describe("PUT /jobs/:jobId", () => {
   const verifyJobUpdateValidation = (res) => {
-    expect(res.body).toEqual(
-      expect.objectContaining({
-        error: expect.arrayContaining([
-          expect.objectContaining({
-            location: "body",
-            param: "title",
-            msg: "Invalid value",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "title",
-            msg: "job title should have minimum length of 3",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "description",
-            msg: "Invalid value",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "description",
-            msg: "description should have minimum length of 3",
-          }),
-          expect.objectContaining({
-            location: "body",
-            param: "completionDate",
-            msg: "Invalid value",
-          }),
-        ]),
-      })
-    );
+    expect(res.body).toEqual({
+      error: [
+        {
+          location: "body",
+          param: "title",
+          msg: "Invalid value",
+        },
+        {
+          location: "body",
+          param: "title",
+          msg: "job title should have minimum length of 3",
+        },
+        {
+          location: "body",
+          param: "description",
+          msg: "Invalid value",
+        },
+        {
+          location: "body",
+          param: "completionDate",
+          msg: "Invalid value",
+        },
+      ],
+    });
   };
 
   it("respond with 200 when job updated successfully", async () => {

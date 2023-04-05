@@ -1,5 +1,5 @@
 import { prisma } from "../utils/prisma";
-interface IJob {
+export interface IJob {
   boardId?: number;
   typeId: number;
   title: string;

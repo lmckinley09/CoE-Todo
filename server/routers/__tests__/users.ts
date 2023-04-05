@@ -88,9 +88,9 @@ describe("/users", () => {
       const newUser = {
         email: "email@unosquare.com",
         password: "password1!",
-        first_name: "fname",
-        last_name: "lname",
-        profile_picture: "profile.png",
+        firstName: "fname",
+        lastName: "lname",
+        profilePicture: "profile.png",
         created: new Date().toISOString(),
         last_modified: new Date().toISOString(),
       };
@@ -152,8 +152,8 @@ describe("/users", () => {
       const updatedUser = {
         email: "email1@unosquare.com",
         password: "password1!",
-        first_name: "first",
-        last_name: "last",
+        firstName: "first",
+        lastName: "last",
       };
       await request(app)
         .put("/users/1")

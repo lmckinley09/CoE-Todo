@@ -1,10 +1,19 @@
 import { prisma } from "../utils/prisma";
 import { UserService } from "./users";
+import { IJob } from "../services/jobs";
 interface IBoard {
   name: string;
   created?: string;
   last_modified: string;
   users?: string[];
+}
+
+interface IBoards {
+  name: string;
+  created?: string;
+  last_modified: string;
+  users?: string[];
+  job: IJob[];
 }
 
 const getAll = async (userId: number) => {

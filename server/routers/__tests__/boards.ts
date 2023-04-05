@@ -5,7 +5,7 @@ describe("/boards", () => {
   describe("GET /boards", () => {
     it("respond with json containing a list of a boards for a user", async () => {
       await request(app)
-        .get("/boards?userId=1")
+        .get("/boards")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200);
