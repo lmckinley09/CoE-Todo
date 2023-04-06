@@ -1,0 +1,21 @@
+name: Verify UI Unit
+
+on:
+  pull_request:
+    paths:
+      - "ui/**"
+
+defaults:
+  run:
+    working-directory: ./ui
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v2
+      - name: Install
+        run: npm i
+      - name: Test
+        run: npm run test
