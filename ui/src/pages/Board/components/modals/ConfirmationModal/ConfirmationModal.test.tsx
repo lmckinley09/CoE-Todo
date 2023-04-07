@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import useDeleteBoard from '@hooks//integrationHooks/useDeleteBoard';
+import useDeleteBoard from '@hooks/integrationHooks/useDeleteBoard';
 import ConfirmationModal from './index';
 import TestUtils from '@test-utils';
 
