@@ -8,7 +8,6 @@ import TestUtils from '@test-utils';
 import { IBoard } from '@interfaces/boards';
 import { IJob } from '@interfaces/jobs';
 import dayjs from 'dayjs';
-import { when } from 'jest-when';
 
 jest.mock('../../hooks/integrationHooks/useGetBoard');
 jest.mock('../../hooks/integrationHooks/useGetJobs');

@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { waitFor } from '@testing-library/react';
 import { IUpdateJob } from '@interfaces/jobs';
 
-jest.mock('../../integrations/Instance', () => ({
+jest.mock('../../integrations/instance', () => ({
 	axiosInstance: {
 		put: jest.fn(),
 	},

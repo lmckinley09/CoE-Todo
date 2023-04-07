@@ -4,7 +4,7 @@ import useDeleteBoard, { deleteBoard } from './useDeleteBoard';
 import { axiosInstance } from '@integrations/instance';
 import { waitFor } from '@testing-library/react';
 
-jest.mock('../../integrations/Instance');
+jest.mock('../../integrations/instance');
 
 describe('useDeleteBoard', () => {
 	afterEach(() => {

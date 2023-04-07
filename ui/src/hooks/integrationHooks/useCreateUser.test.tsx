@@ -4,7 +4,7 @@ import { axiosInstance } from '@integrations/instance';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { waitFor } from '@testing-library/react';
 
-jest.mock('../../integrations/Instance', () => ({
+jest.mock('../../integrations/instance', () => ({
 	axiosInstance: {
 		post: jest.fn(),
 	},

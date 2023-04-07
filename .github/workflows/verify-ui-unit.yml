@@ -16,6 +16,8 @@ jobs:
       - name: 🛎 Checkout
         uses: actions/checkout@v2
       - name: Install
-        run: npm i
+        run: npm i --legacy-peer-deps
       - name: Test
+        env:
+          CI: false
         run: npm run test

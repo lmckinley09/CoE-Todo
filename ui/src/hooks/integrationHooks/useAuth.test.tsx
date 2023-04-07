@@ -3,13 +3,13 @@ import useAuth, { fetchAccessTokens } from './useAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { waitFor } from '@testing-library/react';
 
-jest.mock('../../integrations/Instance', () => ({
+jest.mock('../../integrations/instance', () => ({
 	axiosInstance: {
 		post: jest.fn(),
 	},
 }));
 
-const mockAxiosInstance = require('../../integrations/Instance').axiosInstance;
+const mockAxiosInstance = require('../../integrations/instance').axiosInstance;
 
 describe('useAuth', () => {
 	afterEach(() => {
