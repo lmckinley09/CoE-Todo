@@ -155,16 +155,6 @@ describe('Board page', () => {
 		expect(screen.queryByTestId('create-job-modal')).not.toBeInTheDocument();
 	});
 
-	// it('should call useCreateJob hook onSubmit', async () => {
-	// 	getAllBoardData();
-	// 	TestUtils.render(<Board />);
-	// 	const addTick = screen.getByTestId('add-quick-tick-button');
-	// 	fireEvent.click(addTick);
-	// 	const submit = screen.getByTestId('submit-job-button');
-	// 	fireEvent.click(submit);
-	// 	await waitFor(() => expect(mutate).toHaveBeenCalled());
-	// });
-
 	it('should render edit modal when job name clicked', async () => {
 		getAllBoardData();
 		TestUtils.render(<Board />);
