@@ -10,7 +10,7 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => (
 	<>
-		<TempNav>nav</TempNav>
+		{/* <TempNav>nav</TempNav> */}
 		<LayoutContainer>
 			{/* <Navigation /> */}
 			{/* <PageContainer> */}
