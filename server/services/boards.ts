@@ -17,58 +17,37 @@ interface IBoards {
 }
 
 const getAll = async (userId: number) => {
-  const ownerBoards = await prisma.board.findMany({
+  const boards = await prisma.board.findMany({
     where: {
       user_board_access: {
         some: {
           user_id: Number(userId),
-          type_id: 1,
+          type_id: 1 || 2 || 3,
         },
       },
     },
     include: {
       job: true,
-    },
-  });
-  const sharedBoards = await prisma.board.findMany({
-    where: {
-      user_board_access: {
-        some: {
-          user_id: Number(userId),
-          type_id: 2 || 3,
-        },
-      },
-    },
-    include: {
-      job: true,
+      user_board_access: true,
     },
   });
 
-  const formattedOwnerBoards = ownerBoards
-    ? ownerBoards.map((x) => ({
-        id: x.id,
-        name: x.name,
-        created: x.created,
-        lastModified: x.last_modified,
-        tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
-        taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
-        projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
-      }))
-    : [];
+  const formattedBoards = boards.map((x) => ({
+    id: x.id,
+    name: x.name,
+    created: x.created,
+    lastModified: x.last_modified,
+    tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
+    taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
+    projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
+    owned: x.user_board_access.some((y) => y.type_id === 1),
+    shared: x.user_board_access.some((y) => [2, 3].includes(y.type_id)),
+  }));
 
-  const formattedSharedBoards =
-    sharedBoards?.map((x) => ({
-      id: x.id,
-      name: x.name,
-      created: x.created,
-      lastModified: x.last_modified,
-      tickCount: x.job?.filter((obj) => obj.type_id === 1).length | 0,
-      taskCount: x.job?.filter((obj) => obj.type_id === 2).length | 0,
-      projectCount: x.job?.filter((obj) => obj.type_id === 3).length | 0,
-    })) || [];
-
-  const boards = { owner: formattedOwnerBoards, shared: formattedSharedBoards };
-  return boards;
+  return {
+    owner: formattedBoards.filter((x) => x.owned),
+    shared: formattedBoards.filter((x) => x.shared),
+  };
 };
 
 const getSingle = async (boardId: number) => {

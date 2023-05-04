@@ -9,7 +9,20 @@ describe("Boards Service", () => {
     it("Should return all boards for a user", async () => {
       const TypeId = 1;
       const userId = 1;
-      const boards = {
+      const boards = [
+        {
+          created: undefined,
+          id: 1,
+          lastModified: undefined,
+          name: undefined,
+          projectCount: 0,
+          taskCount: 0,
+          tickCount: 0,
+          user_board_access: [{ type_id: TypeId }],
+        },
+      ];
+
+      const formattedBoards = {
         owner: [
           {
             created: undefined,
@@ -19,6 +32,8 @@ describe("Boards Service", () => {
             projectCount: 0,
             taskCount: 0,
             tickCount: 0,
+            owned: true,
+            shared: false,
           },
         ],
         shared: [],
@@ -27,7 +42,7 @@ describe("Boards Service", () => {
 
       const result = await BoardService.getAll(userId);
 
-      expect(prisma.board.findMany).toHaveBeenCalledTimes(2);
+      expect(prisma.board.findMany).toHaveBeenCalledTimes(1);
       expect(prisma.board.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: {
@@ -40,7 +55,7 @@ describe("Boards Service", () => {
           },
         })
       );
-      expect(result).toEqual(boards);
+      expect(result).toEqual(formattedBoards);
     });
   });
 

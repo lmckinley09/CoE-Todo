@@ -6,6 +6,7 @@ interface mockRequestArgs {
   query?: any;
   headers?: any;
   token?: string;
+  locals?: any;
 }
 
 const mockRequest = (args?: mockRequestArgs) => {
@@ -26,11 +27,12 @@ const mockRequest = (args?: mockRequestArgs) => {
   } as unknown as Request;
 };
 
-const mockResponse = () => {
+const mockResponse = (userId?: number) => {
   const res = {} as Response;
   res.sendStatus = jest.fn().mockReturnValue(res);
   res.status = jest.fn().mockReturnValue(res);
   res.json = jest.fn().mockReturnValue(res);
+  res.locals = { userId: userId ?? 1 };
   return res;
 };
 

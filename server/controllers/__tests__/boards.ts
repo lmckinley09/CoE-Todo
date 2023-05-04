@@ -15,8 +15,8 @@ describe("Board Controller", () => {
   describe("getAll", () => {
     it("should return 200 when boards are found", async () => {
       const userId = 1;
-      const req = mockRequest({ query: { userId } });
-      const res = mockResponse();
+      const req = mockRequest({ locals: { userId: userId } });
+      const res = mockResponse(userId);
       const mockReturnValue = {} as any;
 
       when(BoardService.getAll)
