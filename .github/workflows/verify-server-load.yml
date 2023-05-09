@@ -1,7 +1,7 @@
 name: verify server load
 
 on:
-  pull_request:
+  push:
 
 jobs:
   load_execution:
