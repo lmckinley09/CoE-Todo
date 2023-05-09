@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: start docker
         run: docker-compose up -d
       - name: Make Directory for results
         run: mkdir -p LoadTestResults
