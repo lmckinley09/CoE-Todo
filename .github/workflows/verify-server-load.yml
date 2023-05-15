@@ -15,7 +15,7 @@ jobs:
         run: mkdir -p LoadTestResults
       - name: Start application
         run: |
-          npm i --prefix ./server && (npm start --prefix ./server&)
+          npm i --prefix ./server && (npm start --prefix ./server&) && sleep 10
       - name: Run k6 local test
         uses: grafana/k6-action@v0.2.0
         with:
