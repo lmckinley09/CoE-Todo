@@ -10,7 +10,7 @@ import { check, sleep } from "k6";
 // };
 
 export default function () {
-  const res = http.post("http://localhost:3001/authenticate", {
+  const res = http.post("http://127.0.0.1:3001/authenticate", {
     email: "admin@email.com",
     password: "password1!",
   });
