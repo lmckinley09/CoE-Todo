@@ -15,15 +15,13 @@ jobs:
         run: mkdir -p LoadTestResults
       - name: Start application
         run: |
-          npm i --prefix ./server && npm run build --prefix ./server && (npm start --prefix ./server&)
-      # - name: REST API with curl
-      #   run: |
-      #     curl -X GET "http://localhost:3001/authenticate"
+          npm i --prefix ./server && (npm start --prefix ./server&) & sleep 10
+      - name: Install k6
+        run: |
+          curl https://github.com/grafana/k6/releases/download/v0.44.0/k6-v0.44.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1
       - name: Run k6 local test
-        uses: grafana/k6-action@v0.2.0
-        with:
-          filename: test/load/index.js
-          flags: --vus 10 --duration 10s --out json=./LoadTestResults/loadOutput.json
+        run: |
+          ./k6 run tests/load/index.js --vus 10 --duration 10s --out json=./LoadTestResults/loadOutput.json
       - name: Output the run Details
         uses: actions/upload-artifact@v3
         if: success()
