@@ -15,7 +15,7 @@ jobs:
         run: mkdir -p LoadTestResults
       - name: Start application
         run: |
-          npm i --prefix ./server && (npm start --prefix ./server&) && sleep 10
+          npm i --prefix ./server && npm run build --prefix ./server && (npm start --prefix ./server&)
       # - name: REST API with curl
       #   run: |
       #     curl -X GET "http://localhost:3001/authenticate"
